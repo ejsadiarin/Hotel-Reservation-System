@@ -28,23 +28,30 @@ public class Hotel {
   }
   
   public Room getRoom(String roomName) {
-    return rooms.get()
+    for (Room room : rooms) {
+      if (room.getName().equals(roomName))
+        return room;
+    }
+    return null;
   }
   
-  public void addRoom(Room newRoom) {
-    
+  public void addRoom(String roomName) {
+    rooms.add(new Room(roomName, this.basePrice));
   }
   
   public void removeRoom(String roomName) {
-    
+    rooms.removeIf(room -> room.getName().equals(roomName) && room.isAvailable());
   }
   
   public int getNumOfRooms() {
-    
+    return this.numOfRooms;
+  }
+  
+  public void setNumOfRooms(int maxRooms) {
+    this.numOfRooms = maxRooms;
   }
   
   public int getAvailableRooms() {
-    
   }
 
   public ArrayList<Reservation> getReservations() {

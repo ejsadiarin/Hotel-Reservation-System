@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 public class HRSController {
   private ArrayList<Hotel> hotels;
   
@@ -12,7 +14,7 @@ public class HRSController {
         return;
       }
     }
-    hotels.add(new Hotel(name));
+    hotels.add(new Hotel(name, 50));
   }
   
   public void viewHotel(String hotel) {
@@ -22,5 +24,13 @@ public class HRSController {
   }
   
   public void simulateBooking() {
+  }
+  
+  public Hotel findHotelByName(String name) {
+    for (Hotel hotel : hotels) {
+      if (hotel.getName().equals(name)) 
+        return hotel;
+    }
+    return null;
   }
 }
