@@ -6,6 +6,13 @@ public class HRSController {
   }
   
   public void createHotel(String name) {
+    for (Hotel hotel : hotels) {
+      if (hotel.getName().equals(name)) {
+        System.out.println("Hotel with this name already exists.");
+        return;
+      }
+    }
+    hotels.add(new Hotel(name));
   }
   
   public void viewHotel(String hotel) {
