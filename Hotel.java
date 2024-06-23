@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+    
 public class Hotel {
   private String name;
   private ArrayList<Room> rooms;
@@ -6,7 +8,11 @@ public class Hotel {
   private int numOfRooms;
   
   Hotel(String name, int maxRooms) {
-    
+    this.name = name; // must be unique
+    this.rooms = new ArrayList<Room>();
+    this.reservations = new ArrayList<Reservation>();
+    this.basePrice = 1299.0;
+    this.numOfRooms = maxRooms;
   }
 
   public String getName() {
@@ -18,10 +24,11 @@ public class Hotel {
   }
   
   public ArrayList<Room> getRooms() {
+    return rooms;
   }
   
-  public Room getRoom() {
-    
+  public Room getRoom(String roomName) {
+    return rooms.get()
   }
   
   public void addRoom(Room newRoom) {
