@@ -1,3 +1,5 @@
+package Model;
+
 import java.util.ArrayList;
     
 public class Hotel {
@@ -7,7 +9,7 @@ public class Hotel {
   private double basePrice;
   private int numOfRooms;
   
-  Hotel(String name, int maxRooms) {
+  public Hotel(String name, int maxRooms) {
     this.name = name; // must be unique
     this.rooms = new ArrayList<Room>();
     this.reservations = new ArrayList<Reservation>();
@@ -36,6 +38,12 @@ public class Hotel {
   }
   
   public void addRoom(String roomName) {
+    for (Room room : rooms) {
+      if (room.getName().equals(roomName)) {
+        System.out.printf("Room name already exists.\n");
+        return;
+      }
+    }
     rooms.add(new Room(roomName, this.basePrice));
   }
   
@@ -59,15 +67,15 @@ public class Hotel {
   }
   
   public Reservation getReservation(String guestName) {
-    
+    if ()
   }
   
   public void addReservation(Reservation reservation) {
-    
+    reservations.add(reservation);
   }
   
   public void removeReservation(String guestName) {
-
+    reservations.removeIf(reservation -> reservation.getGuestName().equals(guestName));
   }
 
   public double getBasePrice() {
@@ -75,10 +83,15 @@ public class Hotel {
   }
 
   public void setBasePrice(double basePrice) {
-    this.basePrice = basePrice;
+    if (reservations.isEmpty() && basePrice >= 100.0) {
+      this.basePrice = basePrice;
+      for (Room room : rooms) {
+        room.setPricePerNight(basePrice);
+      }
+    }
   }
   
   public double getEstimatedEarnings() {
-    
+    return 
   }
 }

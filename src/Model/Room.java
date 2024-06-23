@@ -1,10 +1,14 @@
+package Model;
+
 public class Room {
   private String name;
   private double pricePerNight;
   private boolean available;
   
   public Room(String name, double pricePerNight) {
-    
+    this.name = name; // must be unique
+    this.pricePerNight = pricePerNight;
+    this.available = true;
   }
 
   public String getName() {

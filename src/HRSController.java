@@ -1,3 +1,5 @@
+import Model.Hotel;
+
 import java.util.ArrayList;
 
 public class HRSController {
@@ -10,7 +12,7 @@ public class HRSController {
   public void createHotel(String name) {
     for (Hotel hotel : hotels) {
       if (hotel.getName().equals(name)) {
-        System.out.println("Hotel with this name already exists.");
+        System.out.println("Model.Hotel with this name already exists.");
         return;
       }
     }
