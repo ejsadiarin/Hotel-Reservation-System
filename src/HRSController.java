@@ -9,28 +9,52 @@ public class HRSController {
     this.hotels = new ArrayList<>();
   }
   
-  public void createHotel(String name) {
+  public void createHotel(String hotelName) {
     for (Hotel hotel : hotels) {
-      if (hotel.getName().equals(name)) {
-        System.out.println("Model.Hotel with this name already exists.");
+      if (hotel.getName().equals(hotelName)) {
+        System.out.println("Model.Hotel with this hotelName already exists.");
         return;
       }
     }
-    hotels.add(new Hotel(name, 50));
+    hotels.add(new Hotel(hotelName, 50));
+  }
+
+  public void viewAllHotels() {
+    if (this.hotels.isEmpty()) {
+      System.out.printf("No hotels found.\n");
+    }
+    else {
+      System.out.printf("\nHotels Created:\n");
+      for (Hotel hotel : hotels) {
+        System.out.printf("%s\n", hotel.getName());
+      }
+    }
   }
   
-  public void viewHotel(String hotel) {
+  public void viewSpecificHotel(String hotelName) {
+    for (Hotel hotel : hotels) {
+      if (hotel.getName().equals(hotelName)) {
+        // TODO: display all hotel information
+        System.out.printf("\n==============================\n");
+        System.out.printf("Hotel Name: %s\n", hotel.getName());
+        System.out.printf("Number of Rooms: %s\n", hotel.getNumOfRooms());
+        System.out.printf("Available Rooms: %s\n", hotel.getAvailableRooms());
+        System.out.printf("Base Price per Room: %s\n", hotel.getBasePrice());
+        System.out.printf("Estimated Earnings: %s\n", hotel.getEstimatedEarnings());
+        System.out.printf("\n==============================\n");
+      }
+    }
   }
   
-  public void manageHotel(String hotel) {
+  public void manageHotel(String hotelName) {
   }
   
   public void simulateBooking() {
   }
   
-  public Hotel findHotelByName(String name) {
+  public Hotel findHotelByName(String hotelName) {
     for (Hotel hotel : hotels) {
-      if (hotel.getName().equals(name)) 
+      if (hotel.getName().equals(hotelName)) 
         return hotel;
     }
     return null;

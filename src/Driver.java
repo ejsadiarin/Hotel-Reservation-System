@@ -11,16 +11,28 @@ public class Driver {
       scanner.nextLine();
       
       switch (choice) {
-        case 1:
+        case 1: // create hotel
+          System.out.printf("\nCreating hotel...\n");
+          System.out.printf("Enter hotel name: ");
+          String hotelName = scanner.nextLine();
+          hrsController.createHotel(hotelName);
           break;
-        case 2:
+        case 2: // view hotel
+          System.out.printf("\nViewing hotels...\n");
+          // hrsController.viewHotel();
           break;
-        case 3:
+        case 3: // manage hotel
+          System.out.printf("\nManage Hotel\n");
           break;
-        case 4:
+        case 4: // simulate booking
+          System.out.printf("\nSimulate Booking\n");
           break;
+        case 5: // exit
+          System.out.printf("Exiting...\n");
+          scanner.close();
+          return;
         default:
-          break;
+          System.out.printf("Invalid choice. Please try again.");
       }
       
     }

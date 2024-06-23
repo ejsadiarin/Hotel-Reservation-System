@@ -11,8 +11,8 @@ public class Hotel {
   
   public Hotel(String name, int maxRooms) {
     this.name = name; // must be unique
-    this.rooms = new ArrayList<Room>();
-    this.reservations = new ArrayList<Reservation>();
+    this.rooms = new ArrayList<>();
+    this.reservations = new ArrayList<>();
     this.basePrice = 1299.0;
     this.numOfRooms = maxRooms;
   }
@@ -60,6 +60,12 @@ public class Hotel {
   }
   
   public int getAvailableRooms() {
+    int sum = 0;
+    for (Room room : rooms) {
+      if (room.isAvailable())
+        sum += 1;
+    }
+    return sum;
   }
 
   public ArrayList<Reservation> getReservations() {
@@ -67,7 +73,11 @@ public class Hotel {
   }
   
   public Reservation getReservation(String guestName) {
-    if ()
+    for (Reservation reservation : reservations) {
+      if (reservation.getGuestName().equals(guestName))
+        return reservation;
+    }
+    return null;
   }
   
   public void addReservation(Reservation reservation) {
@@ -92,6 +102,10 @@ public class Hotel {
   }
   
   public double getEstimatedEarnings() {
-    return 
+    double totalEarnings = 0;
+    for (Reservation reservation : reservations) {
+      totalEarnings += reservation.getTotalPrice();
+    }
+    return totalEarnings;
   }
 }

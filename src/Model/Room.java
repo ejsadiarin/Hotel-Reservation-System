@@ -6,7 +6,7 @@ public class Room {
   private boolean available;
   
   public Room(String name, double pricePerNight) {
-    this.name = name; // must be unique
+    this.name = name;
     this.pricePerNight = pricePerNight;
     this.available = true;
   }
