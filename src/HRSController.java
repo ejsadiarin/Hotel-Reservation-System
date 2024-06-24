@@ -10,7 +10,6 @@ public class HRSController {
     this.hotels = new ArrayList<>();
   }
   
-  // By default, hotel should have 50 maxRooms
   public void createHotel(String hotelName, int numOfRooms) {
     for (Hotel hotel : hotels) {
       if (hotel.getName().equals(hotelName)) {
@@ -45,7 +44,7 @@ public class HRSController {
           System.out.printf("Hotel Name: %s\n", hotel.getName());
           System.out.printf("Estimated Earnings: %s\n", hotel.getEstimatedEarnings());
           System.out.printf("\n=========ROOM DETAILS=========\n");
-          System.out.printf("Number of Rooms: %s\n", hotel.getMaxRooms());
+          System.out.printf("Number of Rooms: %s\n", hotel.getNumOfRooms());
           System.out.printf("Available Rooms: %s\n", hotel.getAvailableRooms());
           System.out.printf("Base Price per Room: %s\n", hotel.getBasePrice());
           System.out.printf("\n=====RESERVATION DETAILS======\n");
@@ -89,7 +88,6 @@ public class HRSController {
         switch (choice) {
           case 0: // go back to previous          
             System.out.printf("Exiting...\n");
-            scanner.close();
             return;          
           case 1:// change name of hotel (name must still be unique)
             System.out.printf("Set new name: ");
@@ -104,8 +102,9 @@ public class HRSController {
               System.out.printf("%s already exists. Going back...\n", newHotelName);
             break;
           case 2: // add room(s)
-            System.out.printf("Enter room name to add: ");
-            
+            // TODO: option to add multiple rooms in one go
+            chosenHotel.addRoom();
+            System.out.printf("Successfully added a new room to %s!\n", chosenHotel.getName());
             break;
           case 3: // remove room(s)
             break;

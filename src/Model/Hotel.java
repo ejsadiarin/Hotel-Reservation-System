@@ -17,7 +17,7 @@ public class Hotel {
     this.basePrice = 1299.0;
     this.maxRooms = 50;
     this.setNumOfRooms(numOfRooms);
-    this.initializeRooms(numOfRooms);
+    this.initializeRooms(this.numOfRooms);
   }
 
   public String getName() {
@@ -33,11 +33,11 @@ public class Hotel {
   }
   
   private void initializeRooms(int numOfRooms) {
-    // automated unique naming of room names until maxRooms
+    // automated unique naming of room names until numOfRooms
     int roomNumber = 1;
     while (roomNumber <= numOfRooms) {
       String roomName = "Room-" + roomNumber;
-      addRoom(roomName);
+      rooms.add(new Room(roomName, this.basePrice));
       roomNumber++;
     }
   }
@@ -50,22 +50,9 @@ public class Hotel {
     return null;
   }
   
-  public void addRoom(String roomName) {
-    for (Room room : rooms) {
-      if (room.getName().equals(roomName)) {
-        System.out.printf("Room name already exists.\n");
-        return;
-      }
-    }
-    if (getNumOfRooms() > getMaxRooms()) {
-      System.out.printf("Limit reached (%d). Cannot add more rooms.\n", getMaxRooms());
-      return;
-    }
-    rooms.add(new Room(roomName, this.basePrice));
-  }
-  
   public void addRoom() {
-    String roomName = "Room-" + getNumOfRooms();
+    // automated unique naming of room names until numOfRooms
+    String roomName = "Room-" + (getNumOfRooms() + 1);
     for (Room room : rooms) {
       if (room.getName().equals(roomName)) {
         System.out.printf("Room name already exists.\n");
@@ -73,7 +60,7 @@ public class Hotel {
       }
     }
     if (getNumOfRooms() > getMaxRooms()) {
-      System.out.printf("Limit reached (%d). Cannot add more rooms.\n", getMaxRooms());
+      System.out.printf("Limit reached (%d). Cannot add more rooms.\n", getNumOfRooms());
       return;
     }
     rooms.add(new Room(roomName, this.basePrice));
@@ -88,10 +75,13 @@ public class Hotel {
   }
 
   public void setNumOfRooms(int numOfRooms) {
+    // if invalid numOfRooms then set to default minimum of 1 room
     if (numOfRooms > getMaxRooms() || numOfRooms < 1) {
-      System.out.printf("Cannot set max rooms to %d (minimum is 1, maximum is 50). Defaulting to 50.\n", numOfRooms);
+      System.out.printf("Cannot have %d number of rooms (minimum is 1, maximum is 50). Defaulting to minimum of 1 room.\n", numOfRooms);
+      this.numOfRooms = 1;
     }
-    this.numOfRooms = numOfRooms;
+    else
+      this.numOfRooms = numOfRooms;
   }
   
   public int getMaxRooms() {

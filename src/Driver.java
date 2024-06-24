@@ -28,7 +28,7 @@ public class Driver {
           System.out.printf("\nCreating hotel...\n");
           System.out.printf("Enter hotel name: ");
           String createHotelName = scanner.nextLine();
-          System.out.printf("Enter hotel name: ");
+          System.out.printf("Enter number of rooms in the hotel: ");
           int numOfRooms = scanner.nextInt();
           hrsController.createHotel(createHotelName, numOfRooms);
           break;
