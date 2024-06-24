@@ -7,11 +7,15 @@ public class Driver {
     
     while (true) {
       // display manager here
-      System.out.printf("\nChoose your action: ");
+      System.out.printf("\nChoose your action (Enter 0 to exit): ");
       int choice = scanner.nextInt();
       scanner.nextLine();
       
       switch (choice) {
+        case 0: // exit
+          System.out.printf("Exiting...\n");
+          scanner.close();
+          return;
         case 1: // create hotel
           System.out.printf("\nCreating hotel...\n");
           System.out.printf("Enter hotel name: ");
@@ -33,15 +37,16 @@ public class Driver {
           break;
         case 3: // manage hotel
           System.out.printf("\nManage Hotel\n");
-          System.out.printf("Enter the name of the hotel you want to manage: ");
+          System.out.printf("Enter the name of the hotel you want to manage (Enter 0 to exit): ");
+          hotelName = scanner.nextLine();
+          if (hotelName.equals("0"))
+            System.out.printf("Going back...\n");
+          else
+            hrsController.manageHotel(hotelName);
           break;
         case 4: // simulate booking
           System.out.printf("\nSimulate Booking\n");
           break;
-        case 5: // exit
-          System.out.printf("Exiting...\n");
-          scanner.close();
-          return;
         default:
           System.out.printf("Invalid choice. Please try again.");
       }

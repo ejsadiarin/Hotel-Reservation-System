@@ -18,7 +18,7 @@ public class HRSController {
         return;
       }
     }
-    hotels.add(new Hotel(hotelName, 50)); // TODO: should i change default maxRooms?
+    hotels.add(new Hotel(hotelName, 50)); // TODO: should i change default maxRooms to 1 (min)?
   }
 
   public void viewAllHotels() {
@@ -65,34 +65,49 @@ public class HRSController {
   public void manageHotel(String hotelName) {
     Scanner scanner = new Scanner(System.in);
     
-    int choice = scanner.nextInt();
-    scanner.nextLine();    
-    
-    switch (choice) {
-      case 1:// change name of hotel (name must still be unique)
-        Hotel chosenHotel = findHotelByName(hotelName);
-        if (chosenHotel != null) {
-          System.out.printf("Set new name: ");
-          String newHotelName = scanner.nextLine();
-          chosenHotel.setName(newHotelName);
-        }
-        break;
-      case 2: // add room(s)
-        break;
-      case 3: // remove room(s)
-        break;
-      case 4: // update base price of rooms
-        break;
-      case 5: // remove reservation
-        break;
-      case 6: // remove hotel
-        break;
-      case 7: // go back to previous
-        System.out.printf("Exiting...\n");
-        scanner.close();
+    while (true) {
+      Hotel chosenHotel = findHotelByName(hotelName);
+      
+      if (chosenHotel == null) {
+        System.out.printf("Hotel name '%s' not found. Exiting...\n", hotelName);
         return;
-      default:
-        System.out.printf("Invalid choice. Please try again.\n");
+      }
+      else {
+        System.out.printf("\nChoose your action (Enter 0 to exit): ");
+        int choice = scanner.nextInt();
+        scanner.nextLine();        
+        
+        switch (choice) {
+          case 0: // go back to previous          
+            System.out.printf("Exiting...\n");
+            scanner.close();
+            return;          
+          case 1:// change name of hotel (name must still be unique)
+            System.out.printf("Set new name: ");
+            // System.out.printf("Set new name (Enter 0 to exit): ");
+            String newHotelName = scanner.nextLine();
+            if (findHotelByName(newHotelName) == null) {
+              chosenHotel.setName(newHotelName);
+              System.out.printf("Successfully changed name to %s!\n", newHotelName);
+            }
+            else
+              System.out.printf("%s already exists. Going back...\n", newHotelName);
+            break;
+          case 2: // add room(s)
+            
+            break;
+          case 3: // remove room(s)
+            break;
+          case 4: // update base price of rooms
+            break;
+          case 5: // remove reservation
+            break;
+          case 6: // remove hotel
+            break;
+          default:
+            System.out.printf("Invalid choice. Please try again.\n");
+        }
+      }
     }
   }
 
