@@ -1,5 +1,8 @@
 import Model.Hotel;
+import Model.Reservation;
 import Model.Room;
+import View.DisplayManager;
+
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -39,20 +42,16 @@ public class HRSController {
     else {
       for (Hotel hotel : hotels) {
         if (findHotelByName(hotelName) != null) {
-          // TODO: display all hotel information
-          System.out.printf("\n=========================================\n");
-          System.out.printf("Hotel Name: %s\n", hotel.getName());
-          System.out.printf("Estimated Earnings: %s\n", hotel.getEstimatedEarnings());
+          DisplayManager.displayHotelGeneralInfo(hotel);
           System.out.printf("\n=========ROOM DETAILS=========\n");
-          System.out.printf("Number of Rooms: %s\n", hotel.getNumOfRooms());
           System.out.printf("Available Rooms: %s\n", hotel.getAvailableRooms());
           System.out.printf("Base Price per Room: %s\n", hotel.getBasePrice());
+          System.out.printf("\n=====SEE AVAILABLE ROOMS======\n");
+          for (Room room : hotel.getRooms()) {
+            System.out.printf("%s - %s\n", room.getName(), room.isAvailable() ? "Available" : "Unavailable");
+          }
           System.out.printf("\n=====RESERVATION DETAILS======\n");
           System.out.printf("Base Price per Room: %s\n", hotel.getBasePrice());
-          System.out.printf("\n=====See room names======\n");
-          for (Room room : hotel.getRooms()) {
-            System.out.printf("%s\n", room.getName());
-          }
           System.out.printf("=========================================\n");
         }
         else
@@ -71,15 +70,7 @@ public class HRSController {
     }
     else {
       while (true) {
-        System.out.printf("\n==============================================\n");
-        System.out.printf("1 - Change name of the hotel\n");
-        System.out.printf("2 - Add a room\n");
-        System.out.printf("3 - Remove a room\n");
-        System.out.printf("4 - Update the base price of the rooms\n");
-        System.out.printf("5 - Remove a reservation\n");
-        System.out.printf("6 - Remove hotel\n");
-        System.out.printf("0 - Go back to previous menu\n");
-        System.out.printf("==============================================\n");
+        DisplayManager.displayManageHotelUI();
 
         System.out.printf("Choose your action (Enter 0 to exit): ");
         int choice = scanner.nextInt();
@@ -139,10 +130,25 @@ public class HRSController {
     // select specific hotel
     Hotel chosenHotel = findHotelByName(hotelName);
     // specify check-in and check-out dates (1-31) - automate
-    // creates a new reservation
-    // update room's status (setAvailable)
-    // store reservation details
-    // --> should be viewable in View Hotel
+    // --> check-in <= check-out, but check-in != 31 and check-out != 1
+    if (chosenHotel != null) {
+      for (Room room : chosenHotel.getRooms()) {
+        if (room.isAvailable()) {
+          // creates a new reservation
+          // update room's status (setAvailable)
+          // store reservation details
+          // --> should be viewable in View Hotel
+          Reservation reservation = new Reservation(guestName, checkInDate, checkOutDate, room);
+          chosenHotel.addReservation(reservation);
+          room.setAvailable(false);
+          System.out.printf("Booking successful.\n");
+          return;
+        }
+      }
+      System.out.printf("No rooms available");
+    }
+    else
+      System.out.printf("Hotel not found.\n");
   }
 
   private Hotel findHotelByName(String hotelName) {

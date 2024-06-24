@@ -1,3 +1,5 @@
+import View.DisplayManager;
+
 import java.util.Scanner;
 
 public class Driver {
@@ -6,14 +8,7 @@ public class Driver {
     Scanner scanner = new Scanner(System.in);
     
     while (true) {
-      // display manager here
-      System.out.printf("\n==============================================\n");
-      System.out.printf("1 - Create a new hotel\n");
-      System.out.printf("2 - View all hotels\n");
-      System.out.printf("3 - Manage a hotel\n");
-      System.out.printf("4 - Simulate booking\n");
-      System.out.printf("0 - Exit the program\n");
-      System.out.printf("==============================================\n");
+      DisplayManager.displayMainUI();
       
       System.out.printf("Choose your action (Enter 0 to exit): ");
       int choice = scanner.nextInt();
@@ -46,7 +41,7 @@ public class Driver {
           }
           break;
         case 3: // manage hotel
-          System.out.printf("\n============Manage Hotel============k\n");
+          System.out.printf("\n============Manage Hotel============\n");
           hrsController.viewAllHotels();
           System.out.println();
           System.out.printf("Enter the name of the hotel you want to MANAGE (Enter 0 to exit): ");
@@ -57,7 +52,16 @@ public class Driver {
             hrsController.manageHotel(manageHotelName);
           break;
         case 4: // simulate booking
-          System.out.printf("\nSimulate Booking\n");
+          System.out.printf("\n==========Simulate Booking===========\n");
+          System.out.print("Enter hotel name to BOOK from: ");
+          String simulateHotelName = scanner.nextLine();
+          System.out.print("Enter guest name: ");
+          String simulateGuestName = scanner.nextLine();
+          System.out.print("Enter check-in date (1-31): ");
+          int simulateCheckInDate = scanner.nextInt();
+          System.out.print("Enter check-out date (1-31): ");
+          int simulateCheckOutDate = scanner.nextInt();
+          hrsController.simulateBooking(simulateHotelName, simulateGuestName, simulateCheckInDate, simulateCheckOutDate);
           break;
         default:
           System.out.printf("Invalid choice. Please try again.");
