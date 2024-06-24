@@ -21,6 +21,7 @@ public class Driver {
         case 2: // view hotel
           System.out.printf("\nViewing hotels...\n");
            hrsController.viewAllHotels();
+          // add option to view specific Hotel via hotelName
           break;
         case 3: // manage hotel
           System.out.printf("\nManage Hotel\n");
