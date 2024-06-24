@@ -12,7 +12,7 @@ public class HRSController {
   public void createHotel(String hotelName) {
     for (Hotel hotel : hotels) {
       if (hotel.getName().equals(hotelName)) {
-        System.out.println("Model.Hotel with this hotelName already exists.");
+        System.out.printf("Hotel name '%s' already exists.\n", hotelName);
         return;
       }
     }

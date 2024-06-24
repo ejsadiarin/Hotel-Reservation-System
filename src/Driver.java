@@ -7,6 +7,7 @@ public class Driver {
     
     while (true) {
       // display manager here
+      System.out.printf("\nChoose your action: ");
       int choice = scanner.nextInt();
       scanner.nextLine();
       
@@ -19,7 +20,7 @@ public class Driver {
           break;
         case 2: // view hotel
           System.out.printf("\nViewing hotels...\n");
-          // hrsController.viewHotel();
+           hrsController.viewAllHotels();
           break;
         case 3: // manage hotel
           System.out.printf("\nManage Hotel\n");
