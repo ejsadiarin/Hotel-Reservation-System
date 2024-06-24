@@ -20,11 +20,13 @@ public class Driver {
           break;
         case 2: // view hotel
           System.out.printf("\nViewing hotels...\n");
-           hrsController.viewAllHotels();
+          hrsController.viewAllHotels();
           // add option to view specific Hotel via hotelName
-          System.out.printf("\nEnter the name of the hotel you want to view: \n");
-          hotelName = scanner.nextLine();
-          hrsController.viewSpecificHotel(hotelName);
+          if (!hrsController.getHotels().isEmpty()) {
+            System.out.printf("\nEnter the name of the hotel you want to view: ");
+            hotelName = scanner.nextLine();
+            hrsController.viewSpecificHotel(hotelName);
+          }
           break;
         case 3: // manage hotel
           System.out.printf("\nManage Hotel\n");

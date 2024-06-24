@@ -1,6 +1,5 @@
 import Model.Hotel;
 import Model.Room;
-
 import java.util.ArrayList;
 
 public class HRSController {
@@ -24,6 +23,7 @@ public class HRSController {
   public void viewAllHotels() {
     if (this.hotels.isEmpty()) {
       System.out.printf("No hotels found.\n");
+      return;
     }
     else {
       System.out.printf("\nHotels Created:\n");
@@ -34,6 +34,10 @@ public class HRSController {
   }
   
   public void viewSpecificHotel(String hotelName) {
+    if (this.hotels.isEmpty()) {
+      System.out.printf("No hotels found.\n");
+      return;
+    }
     for (Hotel hotel : hotels) {
       if (findHotelByName(hotelName) != null) {
         // TODO: display all hotel information
@@ -50,36 +54,52 @@ public class HRSController {
         for (Room room : hotel.getRooms()) {
           System.out.printf("%s\n", room.getName());
         }
-        System.out.printf("\n=========================================\n");
+        System.out.printf("=========================================\n");
       }
       else
         System.out.printf("Hotel name '%s' not found.\n", hotel.getName());
     }
   }
   
-  public void manageHotel(String hotelName) {
-    // change name of hotel (name must still be unique)
-    // add room(s)
-    // remove room(s)
-    // update base price of rooms
-    // remove reservation
-    // remove hotel
-  }
-  
-  public void simulateBooking() {
-    // select specific hotel
-    // specify check-in and check-out dates (1-31) - automate
-    // creates a new reservation
-    // update room's status (setAvailable)
-    // store reservation details
-    // --> should be viewable in View Hotel
-  }
-  
+//  public void manageHotel(String hotelName) {
+//    int choice;
+//    switch (choice) {
+//      case 1:// change name of hotel (name must still be unique)
+//        break;
+//      case 2: // add room(s)
+//        break;
+//      case 3: // remove room(s)
+//        break;
+//      case 4: // update base price of rooms
+//        break;
+//      case 5: // remove reservation
+//        break;
+//      case 6: // remove hotel
+//        break;
+//      case 7: // go back to previous
+//        break;
+//      default:
+//    }
+//  }
+//  
+//  public void simulateBooking() {
+//    // select specific hotel
+//    // specify check-in and check-out dates (1-31) - automate
+//    // creates a new reservation
+//    // update room's status (setAvailable)
+//    // store reservation details
+//    // --> should be viewable in View Hotel
+//  }
+//  
   private Hotel findHotelByName(String hotelName) {
     for (Hotel hotel : hotels) {
       if (hotel.getName().equals(hotelName)) 
         return hotel;
     }
     return null;
+  }
+  
+  public ArrayList<Hotel> getHotels() {
+    return this.hotels;
   }
 }
