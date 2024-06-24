@@ -23,13 +23,17 @@ public class Driver {
           hrsController.viewAllHotels();
           // add option to view specific Hotel via hotelName
           if (!hrsController.getHotels().isEmpty()) {
-            System.out.printf("\nEnter the name of the hotel you want to view: ");
+            System.out.printf("\nEnter the name of the hotel you want to view (Enter 0 to exit): ");
             hotelName = scanner.nextLine();
-            hrsController.viewSpecificHotel(hotelName);
+            if (hotelName.equals("0"))
+              System.out.printf("Going back...\n");
+            else
+              hrsController.viewSpecificHotel(hotelName);
           }
           break;
         case 3: // manage hotel
           System.out.printf("\nManage Hotel\n");
+          System.out.printf("Enter the name of the hotel you want to manage: ");
           break;
         case 4: // simulate booking
           System.out.printf("\nSimulate Booking\n");
