@@ -7,14 +7,17 @@ public class Hotel {
   private ArrayList<Room> rooms;
   private ArrayList<Reservation> reservations;
   private double basePrice;
-  private int numOfRooms;
+  private int maxRooms;
   
   public Hotel(String name, int maxRooms) {
     this.name = name; // must be unique
     this.rooms = new ArrayList<>();
     this.reservations = new ArrayList<>();
     this.basePrice = 1299.0;
-    this.numOfRooms = maxRooms;
+    this.setMaxRooms(maxRooms);
+    this.initializeRooms(maxRooms);
+    // TODO: limit maxRooms to 50
+    // TODO: have a ArrayList<Room> initializeRooms limit to maxRooms?
   }
 
   public String getName() {
@@ -27,6 +30,16 @@ public class Hotel {
   
   public ArrayList<Room> getRooms() {
     return rooms;
+  }
+  
+  private void initializeRooms(int maxRooms) {
+    // automated unique naming of room names until maxRooms
+    int roomNumber = 1;
+    while (roomNumber <= maxRooms) {
+      String roomName = "Room-" + roomNumber;
+      addRoom(roomName);
+      roomNumber++;
+    }
   }
   
   public Room getRoom(String roomName) {
@@ -44,6 +57,10 @@ public class Hotel {
         return;
       }
     }
+    if (getNumOfRooms() > getMaxRooms()) {
+      System.out.printf("Limit reached (%d). Cannot add more rooms.\n", getMaxRooms());
+      return;
+    }
     rooms.add(new Room(roomName, this.basePrice));
   }
   
@@ -52,18 +69,25 @@ public class Hotel {
   }
   
   public int getNumOfRooms() {
-    return this.numOfRooms;
+    return rooms.size();
   }
   
-  public void setNumOfRooms(int maxRooms) {
-    this.numOfRooms = maxRooms;
+  public int getMaxRooms() {
+    return this.maxRooms;
+  }
+  
+  public void setMaxRooms(int maxRooms) {
+    if (maxRooms > 50 || maxRooms < 1) {
+      System.out.printf("Cannot set max rooms to %d (minimum is 1, maximum is 50). Defaulting to 50.\n", maxRooms);
+    }
+    this.maxRooms = maxRooms;
   }
   
   public int getAvailableRooms() {
     int sum = 0;
     for (Room room : rooms) {
       if (room.isAvailable())
-        sum += 1;
+        sum++;
     }
     return sum;
   }
