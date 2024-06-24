@@ -64,19 +64,28 @@ public class HRSController {
   
   public void manageHotel(String hotelName) {
     Scanner scanner = new Scanner(System.in);
-    
-    while (true) {
-      Hotel chosenHotel = findHotelByName(hotelName);
-      
-      if (chosenHotel == null) {
-        System.out.printf("Hotel name '%s' not found. Exiting...\n", hotelName);
-        return;
-      }
-      else {
-        System.out.printf("\nChoose your action (Enter 0 to exit): ");
+
+    Hotel chosenHotel = findHotelByName(hotelName);
+
+    if (chosenHotel == null) {
+      System.out.printf("Hotel name '%s' not found. Exiting...\n", hotelName);
+    }
+    else {
+      while (true) {
+        System.out.printf("\n==============================================\n");
+        System.out.printf("1 - Change name of the hotel\n");
+        System.out.printf("2 - Add a room\n");
+        System.out.printf("3 - Remove a room\n");
+        System.out.printf("4 - Update the base price of the rooms\n");
+        System.out.printf("5 - Remove a reservation\n");
+        System.out.printf("6 - Remove hotel\n");
+        System.out.printf("0 - Go back to previous menu\n");
+        System.out.printf("==============================================\n");
+
+        System.out.printf("Choose your action (Enter 0 to exit): ");
         int choice = scanner.nextInt();
         scanner.nextLine();        
-        
+          
         switch (choice) {
           case 0: // go back to previous          
             System.out.printf("Exiting...\n");
@@ -89,6 +98,7 @@ public class HRSController {
             if (findHotelByName(newHotelName) == null) {
               chosenHotel.setName(newHotelName);
               System.out.printf("Successfully changed name to %s!\n", newHotelName);
+              return;
             }
             else
               System.out.printf("%s already exists. Going back...\n", newHotelName);
