@@ -135,7 +135,7 @@ public class HRSController {
     }
   }
 
-  public void simulateBooking(String hotelName) {
+  public void simulateBooking(String hotelName, String guestName, int checkInDate, int checkOutDate) {
     // select specific hotel
     Hotel chosenHotel = findHotelByName(hotelName);
     // specify check-in and check-out dates (1-31) - automate
