@@ -11,14 +11,14 @@ public class HRSController {
   }
   
   // By default, hotel should have 50 maxRooms
-  public void createHotel(String hotelName) {
+  public void createHotel(String hotelName, int numOfRooms) {
     for (Hotel hotel : hotels) {
       if (hotel.getName().equals(hotelName)) {
         System.out.printf("Hotel name '%s' already exists.\n", hotelName);
         return;
       }
     }
-    hotels.add(new Hotel(hotelName, 50)); // TODO: should i change default maxRooms to 1 (min)?
+    hotels.add(new Hotel(hotelName, numOfRooms));
   }
 
   public void viewAllHotels() {
@@ -104,6 +104,7 @@ public class HRSController {
               System.out.printf("%s already exists. Going back...\n", newHotelName);
             break;
           case 2: // add room(s)
+            System.out.printf("Enter room name to add: ");
             
             break;
           case 3: // remove room(s)

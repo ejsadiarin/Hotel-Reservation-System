@@ -27,8 +27,10 @@ public class Driver {
         case 1: // create hotel
           System.out.printf("\nCreating hotel...\n");
           System.out.printf("Enter hotel name: ");
-          String hotelName = scanner.nextLine();
-          hrsController.createHotel(hotelName);
+          String createHotelName = scanner.nextLine();
+          System.out.printf("Enter hotel name: ");
+          int numOfRooms = scanner.nextInt();
+          hrsController.createHotel(createHotelName, numOfRooms);
           break;
         case 2: // view hotel
           System.out.printf("\nViewing hotels...\n");
@@ -36,11 +38,11 @@ public class Driver {
           // add option to view specific Hotel via hotelName
           if (!hrsController.getHotels().isEmpty()) {
             System.out.printf("\nEnter the name of the hotel you want to VIEW (Enter 0 to exit): ");
-            hotelName = scanner.nextLine();
-            if (hotelName.equals("0"))
+            String viewHotelName = scanner.nextLine();
+            if (viewHotelName.equals("0"))
               System.out.printf("Going back...\n");
             else
-              hrsController.viewSpecificHotel(hotelName);
+              hrsController.viewSpecificHotel(viewHotelName);
           }
           break;
         case 3: // manage hotel
@@ -48,11 +50,11 @@ public class Driver {
           hrsController.viewAllHotels();
           System.out.println();
           System.out.printf("Enter the name of the hotel you want to MANAGE (Enter 0 to exit): ");
-          hotelName = scanner.nextLine();
-          if (hotelName.equals("0"))
+          String manageHotelName = scanner.nextLine();
+          if (manageHotelName.equals("0"))
             System.out.printf("Going back...\n");
           else
-            hrsController.manageHotel(hotelName);
+            hrsController.manageHotel(manageHotelName);
           break;
         case 4: // simulate booking
           System.out.printf("\nSimulate Booking\n");
