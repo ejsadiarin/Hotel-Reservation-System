@@ -107,13 +107,27 @@ public class HRSController {
             System.out.printf("Successfully added a new room to %s!\n", chosenHotel.getName());
             break;
           case 3: // remove room(s)
+            System.out.printf("Enter room name to remove: ");
+            String removeRoomName = scanner.nextLine();
+            chosenHotel.removeRoom(removeRoomName);
+            System.out.printf("Successfully removed Room %s from hotel %s!\n", removeRoomName, chosenHotel.getName());
             break;
           case 4: // update base price of rooms
+            System.out.printf("Enter new base price for rooms: ");
+            double newBasePrice = scanner.nextDouble();
+            chosenHotel.setBasePrice(newBasePrice);
+            System.out.printf("Base price updated to %.2f for hotel '%s'.\n", newBasePrice, chosenHotel.getName());
             break;
           case 5: // remove reservation
+            System.out.printf("Enter guest name to remove reservation: ");
+            String guestName = scanner.nextLine();
+            chosenHotel.removeReservation(guestName);
+            System.out.printf("Reservation for guest '%s' removed from hotel '%s'.\n", guestName, chosenHotel.getName());
             break;
           case 6: // remove hotel
-            break;
+            hotels.remove(chosenHotel);
+            System.out.printf("Successfully removed hotel '%s'!\n", chosenHotel.getName());
+            return;
           default:
             System.out.printf("Invalid choice. Please try again.\n");
         }
