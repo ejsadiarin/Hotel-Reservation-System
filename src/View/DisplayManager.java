@@ -35,7 +35,7 @@ public class DisplayManager {
       System.out.printf("Room Earnings: %.2f\n", selectedRoom.getTotalEarnings());
       System.out.printf("Number of Reservations: %d\n", selectedRoom.getReservations().size());
       System.out.printf("\n-----Availability for the entire month:-----\n");
-      for (int i = 1; i < 31; i++) {
+      for (int i = 1; i < 32; i++) {
         System.out.printf("Day %d: %s\n", i, selectedRoom.isAvailable(i, i) ? "Available" : "Booked");
       }
       

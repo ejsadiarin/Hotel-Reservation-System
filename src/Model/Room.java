@@ -11,10 +11,10 @@ public class Room {
   public Room(String name, double pricePerNight) {
     this.name = name;
     this.pricePerNight = pricePerNight;
-    this.availability = new boolean[32];
+    this.availability = new boolean[31];
     this.reservations = new ArrayList<>();
     // Initialize all days to available
-    for (int i = 0; i < 32; i++) {
+    for (int i = 0; i < 31; i++) {
       this.availability[i] = true;
     }
   }
@@ -34,9 +34,9 @@ public class Room {
   public boolean isAvailable(int checkIn, int checkOut) {
     // handle overnight reservations
     if (checkIn == checkOut)
-      return availability[checkIn];
+      return availability[checkIn - 1];
     
-    for (int i = checkIn; i < checkOut; i++) {
+    for (int i = checkIn - 1; i < checkOut; i++) {
       if (!availability[i])
         return false;
     }
@@ -80,9 +80,9 @@ public class Room {
     if (isAvailable(checkInDate, checkOutDate)) {
       // handle overnight reservations
       if (checkInDate == checkOutDate)
-        availability[checkInDate] = false;
+        availability[checkInDate - 1] = false;
       else {
-        for (int i = checkInDate; i < checkOutDate; i++)
+        for (int i = checkInDate - 1; i < checkOutDate; i++)
           availability[i] = false;
       }
       return true;
