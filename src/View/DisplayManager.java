@@ -11,6 +11,7 @@ public class DisplayManager {
     // display high-level information about the hotel
     System.out.printf("\n===========HIGH-LEVEL INFORMATION==============\n");
     System.out.printf("Hotel Name: %s\n", hotel.getName());
+    System.out.printf("Base Price Per Room: %.2f\n", hotel.getBasePrice());
     System.out.printf("Estimated Earnings: %s\n", hotel.getEstimatedEarnings());
     System.out.printf("Number of Rooms: %s\n", hotel.getNumOfRooms());
   }

@@ -91,7 +91,7 @@ public class Room {
   }
 
   public void cancelReserveDates(int checkInDate, int checkOutDate) {
-    for (int i = checkInDate; i < checkOutDate; i++) {
+    for (int i = checkInDate - 1; i < checkOutDate; i++) {
       availability[i] = true;
     }
   }
