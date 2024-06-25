@@ -69,10 +69,10 @@ public class Room {
     if (reservation != null) {
       reservation.getRoom().cancelReserveDates(reservation.getCheckInDate(), reservation.getCheckOutDate());
       reservations.remove(reservation);
-      System.out.printf("Reservation for '%s' removed.\n", guestName);
+      System.out.printf("Reservation for '%s' removed from room '%s'.\n", guestName, reservation.getRoom().getName());
     }
     else
-      System.out.printf("Reservation for '%s' not found.\n", guestName);
+      System.out.printf("Reservation for '%s' not found. Exiting...\n", guestName);
   }
   
 

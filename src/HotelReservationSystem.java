@@ -162,12 +162,15 @@ public class HotelReservationSystem {
             String roomName = scanner.nextLine();
             Room room = chosenHotel.getRoom(roomName);
             
-            if (room != null) {
+            if (room != null && !room.getReservations().isEmpty()) {
+              DisplayManager.displayReservationInfoByRoom(chosenHotel, room);
               System.out.printf("Enter guest name to remove reservation: ");
               String guestName = scanner.nextLine();
               room.removeReservation(guestName);
-              System.out.printf("Reservation for guest '%s' removed from room '%s'.\n", guestName, roomName);
             }
+            else
+              System.out.printf("Room '%s' not found.\n", roomName);
+              
             
             break;
           case 6: // remove hotel
