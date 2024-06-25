@@ -1,5 +1,4 @@
 import Model.Hotel;
-import Model.Reservation;
 import Model.Room;
 import View.DisplayManager;
 
@@ -36,27 +35,45 @@ public class HRSController {
   }
   
   public void viewSpecificHotel(String hotelName) {
+    Scanner scanner = new Scanner(System.in);
     if (this.hotels.isEmpty()) {
       System.out.printf("No hotels found.\n");
+      return;
     }
-    else {
-      for (Hotel hotel : hotels) {
-        if (findHotelByName(hotelName) != null) {
-          DisplayManager.displayHotelGeneralInfo(hotel);
-          System.out.printf("\n=========ROOM DETAILS=========\n");
-          System.out.printf("Base Price per Room: %s\n", hotel.getBasePrice());
-//          System.out.printf("\n=====SEE AVAILABLE ROOMS======\n");
-//          for (Room room : hotel.getRooms()) {
-//            System.out.printf("%s - %s\n", room.getName(), room.getAvailability() ? "Available" : "Unavailable");
-//          }
-          System.out.printf("\n=====RESERVATION DETAILS======\n");
-          System.out.printf("Base Price per Room: %s\n", hotel.getBasePrice());
-          System.out.printf("=========================================\n");
-        }
-        else
-          System.out.printf("Hotel name '%s' not found.\n", hotelName);
-      }
+
+    Hotel hotel = findHotelByName(hotelName);
+    if (hotel == null) {
+      System.out.printf("Hotel name '%s' not found.\n", hotelName);
+      return;
     }
+
+    DisplayManager.displayHotelGeneralInfo(hotel);
+    System.out.printf("\n0 - Go back to main menu");
+    System.out.printf("\n1 - View more details");
+    System.out.printf("\nChoose your action: ");
+    String choice = scanner.nextLine();
+    if (choice.equals("0")) {
+      System.out.printf("\nGoing back...\n");
+      return;
+    } 
+    else if (choice.equals("1")) {
+      System.out.printf("\n===========LOW-LEVEL INFORMATION==============\n");
+
+      System.out.printf("\nSelect a date to view available and booked rooms: ");
+      int date = scanner.nextInt();
+      scanner.nextLine();
+      DisplayManager.displayRoomsOnDate(hotel, date);
+
+      System.out.printf("\nSelect a room to view in detail: ");
+      String roomName = scanner.nextLine();
+      DisplayManager.displaySpecificRoomInfo(hotel, roomName);
+
+      System.out.printf("\nEnter a guest name to view their reservations in detail: ");
+      String guestName = scanner.nextLine();
+      DisplayManager.displaySelectedReservation(hotel, guestName);
+    } 
+    else
+      System.out.printf("\nInvalid choice.\n");
   }
   
   public void manageHotel(String hotelName) {

@@ -12,9 +12,9 @@ public class DisplayManager {
     System.out.printf("Estimated Earnings: %s\n", hotel.getEstimatedEarnings());
     System.out.printf("Number of Rooms: %s\n", hotel.getNumOfRooms());
   }
-  
-  public static void displayHotelSpecificInfo(Hotel hotel, int date, String roomName, String guestName) {
-    // i. Total number of available and booked rooms for a selected date
+
+  // 1: Total number of available and booked rooms for a selected date
+  public static void displayRoomsOnDate(Hotel hotel, int date) {
     int availableRooms = 0;
     int bookedRooms = 0;
 
@@ -25,12 +25,12 @@ public class DisplayManager {
         bookedRooms++;
       }
     }
-
-    System.out.printf("\n===========LOW-LEVEL INFORMATION==============\n");
     System.out.printf("Total number of available rooms on day %d: %d\n", date, availableRooms);
     System.out.printf("Total number of booked rooms on day %d: %d\n", date, bookedRooms);
+  }
 
-    // ii. Information about a selected room
+  // 2: Information about a selected room
+  public static void displaySpecificRoomInfo(Hotel hotel, String roomName) {
     Room selectedRoom = null;
     for (Room room : hotel.getRooms()) {
       if (room.getName().equals(roomName)) {
@@ -51,8 +51,11 @@ public class DisplayManager {
     } else {
       System.out.printf("\nRoom '%s' not found.\n", roomName);
     }
+    
+  }
 
-    // iii. Information about a selected reservation
+  // 3: Information about a selected reservation
+  public static void displaySelectedReservation(Hotel hotel, String guestName) {
     Reservation selectedReservation = null;
     for (Reservation reservation : hotel.getReservations()) {
       if (reservation.getGuestName().equals(guestName)) {
