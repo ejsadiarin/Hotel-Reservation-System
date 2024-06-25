@@ -137,10 +137,16 @@ public class HotelReservationSystem {
             System.out.printf("Successfully added a new room to %s!\n", chosenHotel.getName());
             break;
           case 3: // remove room(s)
+            DisplayManager.displayAllRoomsInHotel(chosenHotel);
             System.out.printf("Enter room name to remove: ");
             String removeRoomName = scanner.nextLine();
-            chosenHotel.removeRoom(removeRoomName);
-            System.out.printf("Successfully removed Room %s from hotel %s!\n", removeRoomName, chosenHotel.getName());
+            Room roomToRemove = chosenHotel.getRoom(removeRoomName);
+            if (roomToRemove != null && roomToRemove.getReservations().isEmpty()) {
+              chosenHotel.removeRoom(removeRoomName);
+              System.out.printf("Successfully removed Room %s from hotel %s!\n", removeRoomName, chosenHotel.getName());
+            }
+            else
+              System.out.printf("Cannot remove rooms since there are some reservations existing or room doesn't exist at all.\n");
             break;
           case 4: // update base price of rooms
             if (chosenHotel.areEmptyReservations()) {
@@ -170,13 +176,16 @@ public class HotelReservationSystem {
             }
             else
               System.out.printf("Room '%s' not found.\n", roomName);
-              
-            
             break;
           case 6: // remove hotel
-            hotels.remove(chosenHotel);
-            System.out.printf("Successfully removed hotel '%s'!\n", chosenHotel.getName());
-            return;
+            if (chosenHotel.areEmptyReservations()) {
+              hotels.remove(chosenHotel);
+              System.out.printf("Successfully removed hotel '%s'!\n", chosenHotel.getName());
+              return;
+            }
+            else
+              System.out.printf("Cannot remove hotel since there are some reservations left.\n");
+            break;
           default:
             System.out.printf("Invalid choice. Please try again.\n");
         }

@@ -34,11 +34,7 @@ public class Reservation {
   public double getTotalPrice() {
     int diff = checkOutDate - checkInDate;
     
-    // handle overnight reservations
-    if (diff == 0)
-      return 1 * getCostPerNight();
-    
-    return diff * getCostPerNight();
+    return diff * getCostPerNight() + getCostPerNight();
   }
 
   public double getCostPerNight() {
