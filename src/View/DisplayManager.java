@@ -16,19 +16,12 @@ public class DisplayManager {
   }
 
   // 1: Total number of available and booked rooms for a selected date
-  public static void displayRoomsOnDate(Hotel hotel, int date) {
-    int availableRooms = 0;
-    int bookedRooms = 0;
-
-    for (Room room : hotel.getRooms()) {
-      if (room.isAvailable(date, date + 1)) {
-        availableRooms++;
-      } else {
-        bookedRooms++;
-      }
-    }
-    System.out.printf("Total number of available rooms on day %d: %d\n", date, availableRooms);
-    System.out.printf("Total number of booked rooms on day %d: %d\n", date, bookedRooms);
+  public static void displayRoomsOnDate(Hotel hotel, int checkInDate, int checkOutDate) {
+    ArrayList<Room> availableRooms = hotel.getAvailableRoomsOnDate(checkInDate, checkOutDate);
+    int bookedRooms = hotel.getNumOfRooms() - availableRooms.size();
+    
+    System.out.printf("Total number of available rooms from day %d to %d: %d\n", checkInDate, checkOutDate, availableRooms.size());
+    System.out.printf("Total number of booked rooms from day %d to %d: %d\n", checkInDate, checkOutDate, bookedRooms);
   }
 
   // 2: Information about a selected room
@@ -42,8 +35,8 @@ public class DisplayManager {
       System.out.printf("Room Earnings: %.2f\n", selectedRoom.getTotalEarnings());
       System.out.printf("Number of Reservations: %d\n", selectedRoom.getReservations().size());
       System.out.printf("\n-----Availability for the entire month:-----\n");
-      for (int i = 1; i <= 30; i++) {
-        System.out.printf("Day %d: %s\n", i, selectedRoom.isAvailable(i, i + 1) ? "Available" : "Booked");
+      for (int i = 1; i < 31; i++) {
+        System.out.printf("Day %d: %s\n", i, selectedRoom.isAvailable(i, i) ? "Available" : "Booked");
       }
       
     } 
@@ -52,11 +45,10 @@ public class DisplayManager {
   }
 
   public static void displayReservationInfoByRoom(Hotel hotel, Room room) {
-    System.out.printf("\n===========RESERVATION INFORMATION for Room %s==============\n", room.getName());
     if (room.getReservations().isEmpty()) {
       System.out.printf("No reservations found for room '%s'.\n", room.getName());
     } else {
-      System.out.printf("Reservations for room '%s' (%d in total):\n", room.getName(), room.getReservations().size());
+      System.out.printf("\n-------RESERVATIONS for room '%s' (%d in total)-------\n", room.getName(), room.getReservations().size());
       
       // shows the reservations in the selected room separated by guest name
       for (Reservation reservation : room.getReservations()) {
@@ -64,10 +56,10 @@ public class DisplayManager {
         System.out.printf("Guest: %s, Check-in: %d, Check-out: %d\n", reservation.getGuestName(), reservation.getCheckInDate(), reservation.getCheckOutDate());
         System.out.printf("Total Price: %.2f\n", reservation.getTotalPrice());
         System.out.printf("Price Breakdown per Night:\n");
-        for (int i = reservation.getCheckInDate(); i < reservation.getCheckOutDate(); i++) {
+        for (int i = reservation.getCheckInDate(); i <= reservation.getCheckOutDate(); i++) {
           System.out.printf("Day %d: %.2f\n", i, reservation.getRoom().getPricePerNight());
         }
-        System.out.printf("\n======================================\n");
+        System.out.printf("======================================\n");
       }
     }
   }

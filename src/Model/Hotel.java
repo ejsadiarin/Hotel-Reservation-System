@@ -1,7 +1,8 @@
 package Model;
 
 import java.util.ArrayList;
-    
+import java.util.Formattable;
+
 public class Hotel {
   private String name;
   private ArrayList<Room> rooms;
@@ -96,36 +97,25 @@ public class Hotel {
     
     return availableRooms;
   }
+  
+  public boolean areEmptyReservations() {
+    for (Room room : rooms) {
+      if (!room.getReservations().isEmpty()) {
+        return false;
+      }
+    }
+    return true;
+  }
 
   public double getBasePrice() {
     return basePrice;
   }
 
   public void setBasePrice(double basePrice) {
-    // before setting the base price, ensure ALL ROOMS in the hotel has no reservations
-    if (basePrice >= 100.0) {
-      boolean isAllEmpty = true;
-      // check if all empty first
-      for (Room room : rooms) {
-        if (!room.getReservations().isEmpty()) {
-          isAllEmpty = false;
-          break;
-        }
-      }
-      
-      // then if true then update base price
-      if (isAllEmpty) {
-        this.basePrice = basePrice;
-        for (Room room : rooms) {
-          room.setPricePerNight(basePrice);
-        }
-        System.out.printf("Base price updated to %.2f for hotel '%s'.\n", basePrice, this.name);
-      }
-      else
-        System.out.println("Cannot update base price. Some rooms have reservations.");
-    } 
-    else
-      System.out.println("Base price must be at least 100.0.");
+    // assumes that there are no reservations for ALL rooms
+    this.basePrice = basePrice;
+    for (Room room : rooms)
+      room.setPricePerNight(basePrice);
   }
   
   public double getEstimatedEarnings() {

@@ -11,10 +11,10 @@ public class Room {
   public Room(String name, double pricePerNight) {
     this.name = name;
     this.pricePerNight = pricePerNight;
-    this.availability = new boolean[31];
+    this.availability = new boolean[32];
     this.reservations = new ArrayList<>();
     // Initialize all days to available
-    for (int i = 0; i < 31; i++) {
+    for (int i = 0; i < 32; i++) {
       this.availability[i] = true;
     }
   }
@@ -31,15 +31,14 @@ public class Room {
     this.pricePerNight = price;
   }
 
-  public boolean isAvailable(int day) {
-    return availability[day - 1];
-  }
-  
   public boolean isAvailable(int checkIn, int checkOut) {
-    for (int i = checkIn - 1; i <= checkOut - 1; i++) {
-      if (!availability[i]) {
+    // handle overnight reservations
+    if (checkIn == checkOut)
+      return availability[checkIn];
+    
+    for (int i = checkIn; i < checkOut; i++) {
+      if (!availability[i])
         return false;
-      }
     }
     return true;
   }
@@ -79,8 +78,12 @@ public class Room {
 
   public boolean reserveDates(int checkInDate, int checkOutDate) {
     if (isAvailable(checkInDate, checkOutDate)) {
-      for (int i = checkInDate - 1; i <= checkOutDate - 1; i++) {
-        availability[i] = false;
+      // handle overnight reservations
+      if (checkInDate == checkOutDate)
+        availability[checkInDate] = false;
+      else {
+        for (int i = checkInDate; i < checkOutDate; i++)
+          availability[i] = false;
       }
       return true;
     }
@@ -88,7 +91,7 @@ public class Room {
   }
 
   public void cancelReserveDates(int checkInDate, int checkOutDate) {
-    for (int i = checkInDate - 1; i < checkOutDate - 1; i++) {
+    for (int i = checkInDate; i < checkOutDate; i++) {
       availability[i] = true;
     }
   }

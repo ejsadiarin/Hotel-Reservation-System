@@ -77,7 +77,7 @@ public class Driver {
               System.out.printf("\nInvalid check-in date. Enter check-in date from 1-30 only: ");
               simulateCheckInDate = scanner.nextInt();
             }
-            System.out.printf("\nEnter check-out date (2-31): ");
+            System.out.printf("Enter check-out date (2-31): ");
             int simulateCheckOutDate = scanner.nextInt();
             while (simulateCheckOutDate < 2 || simulateCheckOutDate > 31) {
               System.out.printf("\nInvalid check-out date. Enter check-out date from 2-31 only: ");

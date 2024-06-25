@@ -46,8 +46,9 @@ public class HotelReservationSystem {
 
     DisplayManager.displayHotelGeneralInfo(hotel);
     System.out.printf("\n0 - Go back to main menu");
-    System.out.printf("\n1 - View more details");
-    System.out.printf("\n2 - View reservation details by provided guest name");
+    System.out.printf("\n1 - View all room details");
+    System.out.printf("\n2 - View available rooms by provided check-in and check-out dates");
+    System.out.printf("\n3 - View reservation details by provided guest name");
     System.out.printf("\nChoose your action: ");
     String choice = scanner.nextLine();
     if (choice.equals("0")) {
@@ -56,18 +57,11 @@ public class HotelReservationSystem {
     } 
     else if (choice.equals("1")) {
       System.out.printf("\n===========LOW-LEVEL INFORMATION==============\n");
-      
       // maybe display ALL reservation first here with details
-
       DisplayManager.displayAllRoomsInHotel(hotel);
       System.out.printf("\nSelect a room to view in detail: ");
       String roomName = scanner.nextLine();
       DisplayManager.displaySpecificRoomInfo(hotel, roomName);
-
-      System.out.printf("\nSelect a date to view available and booked rooms (1-31): ");
-      int date = scanner.nextInt();
-      scanner.nextLine();
-      DisplayManager.displayRoomsOnDate(hotel, date);
 
       Room selectedRoom = hotel.getRoom(roomName);
       if (selectedRoom != null) {
@@ -87,6 +81,16 @@ public class HotelReservationSystem {
       }
     }
     else if (choice.equals("2")) {
+      System.out.printf("\nSelect a date to view available and booked rooms\n");
+      System.out.printf("Enter check-in date: ");
+      int checkInDate = scanner.nextInt();
+      scanner.nextLine();
+      System.out.printf("Enter check-out date: ");
+      int checkOutDate = scanner.nextInt();
+      scanner.nextLine();
+      DisplayManager.displayRoomsOnDate(hotel, checkInDate, checkOutDate);
+    }
+    else if (choice.equals("3")) {
       System.out.printf("\nEnter a guest name to view their reservations in detail: ");
       String guestName = scanner.nextLine();
       DisplayManager.displayReservationsByGuestName(hotel, guestName);
@@ -139,10 +143,18 @@ public class HotelReservationSystem {
             System.out.printf("Successfully removed Room %s from hotel %s!\n", removeRoomName, chosenHotel.getName());
             break;
           case 4: // update base price of rooms
-            System.out.printf("Enter new base price for rooms: ");
-            double newBasePrice = scanner.nextDouble();
-            chosenHotel.setBasePrice(newBasePrice);
-            System.out.printf("Base price updated to %.2f for hotel '%s'.\n", newBasePrice, chosenHotel.getName());
+            if (chosenHotel.areEmptyReservations()) {
+              System.out.printf("Enter new base price for rooms: ");
+              double newBasePrice = scanner.nextDouble();
+              while (newBasePrice < 100.0) {
+                System.out.printf("Base price must be at least 100.0. Please try again.\n");
+                newBasePrice = scanner.nextDouble();
+              }
+              chosenHotel.setBasePrice(newBasePrice);
+              System.out.printf("Base price updated to %.2f for hotel '%s'.\n", newBasePrice, chosenHotel.getName());
+            }
+            else
+              System.out.printf("There are some reservations in rooms. Cannot update new base price.\n");
             break;
           case 5: // remove reservation
             DisplayManager.displayAllRoomsInHotel(chosenHotel);
