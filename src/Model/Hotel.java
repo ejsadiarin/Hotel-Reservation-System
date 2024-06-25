@@ -5,7 +5,6 @@ import java.util.ArrayList;
 public class Hotel {
   private String name;
   private ArrayList<Room> rooms;
-  private ArrayList<Reservation> reservations;
   private double basePrice;
   private final int maxRooms; // always 50
   private int numOfRooms; // actual number of rooms (initialized rooms)
@@ -13,7 +12,6 @@ public class Hotel {
   public Hotel(String name, int numOfRooms) {
     this.name = name; // must be unique
     this.rooms = new ArrayList<>();
-    this.reservations = new ArrayList<>();
     this.basePrice = 1299.0;
     this.maxRooms = 50;
     this.setNumOfRooms(numOfRooms);
@@ -99,56 +97,41 @@ public class Hotel {
     return availableRooms;
   }
 
-  public ArrayList<Reservation> getReservations() {
-    return reservations;
-  }
-  
-  public Reservation getReservation(String guestName) {
-    for (Reservation reservation : reservations) {
-      if (reservation.getGuestName().equals(guestName))
-        return reservation;
-    }
-    return null;
-  }
-  
-  public void addReservation(String guestName, String roomName, int checkInDate, int checkOutDate) {
-    Room room = getRoom(roomName);
-    if (room != null && room.reserve(checkInDate, checkOutDate)) {
-      reservations.add(new Reservation(guestName, room, checkInDate, checkOutDate));
-      System.out.printf("Reservation for '%s' added to room '%s' from day %d to day %d.\n", guestName, roomName, checkInDate, checkOutDate);
-    } 
-    else 
-      System.out.printf("Room '%s' is not available from day %d to day %d.\n", roomName, checkInDate, checkOutDate);
-  }
-  
-  public void removeReservation(String guestName) {
-    Reservation reservation = getReservation(guestName);
-    if (reservation != null) {
-      reservation.getRoom().cancelReservation(reservation.getCheckInDate(), reservation.getCheckOutDate());
-      reservations.remove(reservation);
-      System.out.printf("Reservation for '%s' removed.\n", guestName);
-    } 
-    else 
-      System.out.printf("Reservation for '%s' not found.\n", guestName);
-  }
-
   public double getBasePrice() {
     return basePrice;
   }
 
   public void setBasePrice(double basePrice) {
-    if (reservations.isEmpty() && basePrice >= 100.0) {
-      this.basePrice = basePrice;
+    // before setting the base price, ensure ALL ROOMS in the hotel has no reservations
+    if (basePrice >= 100.0) {
+      boolean isAllEmpty = true;
+      // check if all empty first
       for (Room room : rooms) {
-        room.setPricePerNight(basePrice);
+        if (!room.getReservations().isEmpty()) {
+          isAllEmpty = false;
+          break;
+        }
       }
-    }
+      
+      // then if true then update base price
+      if (isAllEmpty) {
+        this.basePrice = basePrice;
+        for (Room room : rooms) {
+          room.setPricePerNight(basePrice);
+        }
+        System.out.printf("Base price updated to %.2f for hotel '%s'.\n", basePrice, this.name);
+      }
+      else
+        System.out.println("Cannot update base price. Some rooms have reservations.");
+    } 
+    else
+      System.out.println("Base price must be at least 100.0.");
   }
   
   public double getEstimatedEarnings() {
     double totalEarnings = 0;
-    for (Reservation reservation : reservations) {
-      totalEarnings += reservation.getTotalPrice();
+    for (Room room : rooms) {
+      totalEarnings += room.getTotalEarnings();
     }
     return totalEarnings;
   }

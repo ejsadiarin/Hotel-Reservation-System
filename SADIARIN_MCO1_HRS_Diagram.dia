@@ -89,6 +89,7 @@
     </dia:attribute>
   </dia:diagramdata>
   <dia:layer name="Background" visible="true" connectable="true"/>
+  <dia:layer name="Background" visible="true" connectable="true"/>
   <dia:layer name="Background" visible="true" connectable="true" active="true">
     <dia:object type="UML - Class" version="0" id="O0">
       <dia:attribute name="obj_pos">
@@ -1624,7 +1625,7 @@
         <dia:point val="25.85,0.05"/>
       </dia:attribute>
       <dia:attribute name="obj_bb">
-        <dia:rectangle val="25.8,-1.80411e-16;47.96,9.9"/>
+        <dia:rectangle val="25.8,0;47.96,9.9"/>
       </dia:attribute>
       <dia:attribute name="elem_corner">
         <dia:point val="25.85,0.05"/>
@@ -2157,13 +2158,13 @@
     </dia:object>
     <dia:object type="UML - Class" version="0" id="O3">
       <dia:attribute name="obj_pos">
-        <dia:point val="45.09,8.635"/>
+        <dia:point val="41.7183,12.8497"/>
       </dia:attribute>
       <dia:attribute name="obj_bb">
-        <dia:rectangle val="45.04,8.585;60.655,17.685"/>
+        <dia:rectangle val="41.6683,12.7997;57.2833,21.8997"/>
       </dia:attribute>
       <dia:attribute name="elem_corner">
-        <dia:point val="45.09,8.635"/>
+        <dia:point val="41.7183,12.8497"/>
       </dia:attribute>
       <dia:attribute name="elem_width">
         <dia:real val="15.515000000000001"/>
@@ -2626,18 +2627,18 @@ room - name must be unique (can have auto generated naming)#</dia:string>
     </dia:object>
     <dia:object type="UML - Association" version="2" id="O5">
       <dia:attribute name="obj_pos">
-        <dia:point val="52.8475,17.635"/>
+        <dia:point val="49.4758,21.8497"/>
       </dia:attribute>
       <dia:attribute name="obj_bb">
-        <dia:rectangle val="44.305,16.885;54.9375,27.45"/>
+        <dia:rectangle val="44.305,21.0997;51.5658,27.45"/>
       </dia:attribute>
       <dia:attribute name="meta">
         <dia:composite type="dict"/>
       </dia:attribute>
       <dia:attribute name="orth_points">
-        <dia:point val="52.8475,17.635"/>
-        <dia:point val="52.8475,22.4925"/>
-        <dia:point val="44.355,22.4925"/>
+        <dia:point val="49.4758,21.8497"/>
+        <dia:point val="49.4758,24.5998"/>
+        <dia:point val="44.355,24.5998"/>
         <dia:point val="44.355,26.65"/>
       </dia:attribute>
       <dia:attribute name="orth_orient">
@@ -2709,7 +2710,7 @@ room - name must be unique (can have auto generated naming)#</dia:string>
         <dia:point val="25.85,3.75"/>
       </dia:attribute>
       <dia:attribute name="obj_bb">
-        <dia:rectangle val="14.105,2.85;26.6,11.55"/>
+        <dia:rectangle val="14.105,2.83;26.6,11.55"/>
       </dia:attribute>
       <dia:attribute name="meta">
         <dia:composite type="dict"/>
@@ -2787,16 +2788,16 @@ room - name must be unique (can have auto generated naming)#</dia:string>
         <dia:point val="23.26,20.85"/>
       </dia:attribute>
       <dia:attribute name="obj_bb">
-        <dia:rectangle val="22.51,11.235;45.14,21.6"/>
+        <dia:rectangle val="22.51,15.4297;41.7683,21.6"/>
       </dia:attribute>
       <dia:attribute name="meta">
         <dia:composite type="dict"/>
       </dia:attribute>
       <dia:attribute name="orth_points">
         <dia:point val="23.26,20.85"/>
-        <dia:point val="34.525,20.85"/>
-        <dia:point val="34.525,12.135"/>
-        <dia:point val="45.09,12.135"/>
+        <dia:point val="32.8391,20.85"/>
+        <dia:point val="32.8391,16.3497"/>
+        <dia:point val="41.7183,16.3497"/>
       </dia:attribute>
       <dia:attribute name="orth_orient">
         <dia:enum val="0"/>
@@ -2867,7 +2868,7 @@ room - name must be unique (can have auto generated naming)#</dia:string>
         <dia:point val="14.155,32.55"/>
       </dia:attribute>
       <dia:attribute name="obj_bb">
-        <dia:rectangle val="13.405,31.8;35.3,35.1"/>
+        <dia:rectangle val="13.405,31.8;35.3,34.35"/>
       </dia:attribute>
       <dia:attribute name="meta">
         <dia:composite type="dict"/>

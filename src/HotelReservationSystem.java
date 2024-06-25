@@ -5,10 +5,10 @@ import View.DisplayManager;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class HRSController {
+public class HotelReservationSystem {
   private ArrayList<Hotel> hotels;
   
-  public HRSController() {
+  public HotelReservationSystem() {
     this.hotels = new ArrayList<>();
   }
   
@@ -27,10 +27,7 @@ public class HRSController {
       System.out.printf("No hotels found.\n");
     }
     else {
-      System.out.printf("\nHotels Created:\n");
-      for (Hotel hotel : hotels) {
-        System.out.printf("%s\n", hotel.getName());
-      }
+      DisplayManager.displayAllHotels(this.hotels);
     }
   }
   
@@ -50,6 +47,7 @@ public class HRSController {
     DisplayManager.displayHotelGeneralInfo(hotel);
     System.out.printf("\n0 - Go back to main menu");
     System.out.printf("\n1 - View more details");
+    System.out.printf("\n2 - View reservation details by provided guest name");
     System.out.printf("\nChoose your action: ");
     String choice = scanner.nextLine();
     if (choice.equals("0")) {
@@ -58,20 +56,41 @@ public class HRSController {
     } 
     else if (choice.equals("1")) {
       System.out.printf("\n===========LOW-LEVEL INFORMATION==============\n");
+      
+      // maybe display ALL reservation first here with details
 
-      System.out.printf("\nSelect a date to view available and booked rooms: ");
-      int date = scanner.nextInt();
-      scanner.nextLine();
-      DisplayManager.displayRoomsOnDate(hotel, date);
-
+      DisplayManager.displayAllRoomsInHotel(hotel);
       System.out.printf("\nSelect a room to view in detail: ");
       String roomName = scanner.nextLine();
       DisplayManager.displaySpecificRoomInfo(hotel, roomName);
 
+      System.out.printf("\nSelect a date to view available and booked rooms (1-31): ");
+      int date = scanner.nextInt();
+      scanner.nextLine();
+      DisplayManager.displayRoomsOnDate(hotel, date);
+
+      Room selectedRoom = hotel.getRoom(roomName);
+      if (selectedRoom != null) {
+        System.out.printf("\n0 - Go back to main menu");
+        System.out.printf("\n1 - View reservation details in the selected room '%s'", roomName);
+        System.out.printf("\nChoose your action: ");
+        String subChoice = scanner.nextLine();
+        if (subChoice.equals("0")) {
+          System.out.printf("\nGoing back...\n");
+          return;
+        }
+        else if (subChoice.equals("1")) {
+          DisplayManager.displayReservationInfoByRoom(hotel, selectedRoom);
+        }
+        else
+          System.out.printf("\nInvalid choice.\n");
+      }
+    }
+    else if (choice.equals("2")) {
       System.out.printf("\nEnter a guest name to view their reservations in detail: ");
       String guestName = scanner.nextLine();
-      DisplayManager.displaySelectedReservation(hotel, guestName);
-    } 
+      DisplayManager.displayReservationsByGuestName(hotel, guestName);
+    }
     else
       System.out.printf("\nInvalid choice.\n");
   }
@@ -126,10 +145,18 @@ public class HRSController {
             System.out.printf("Base price updated to %.2f for hotel '%s'.\n", newBasePrice, chosenHotel.getName());
             break;
           case 5: // remove reservation
-            System.out.printf("Enter guest name to remove reservation: ");
-            String guestName = scanner.nextLine();
-            chosenHotel.removeReservation(guestName);
-            System.out.printf("Reservation for guest '%s' removed from hotel '%s'.\n", guestName, chosenHotel.getName());
+            DisplayManager.displayAllRoomsInHotel(chosenHotel);
+            System.out.printf("Enter room to remove a reservation from: ");
+            String roomName = scanner.nextLine();
+            Room room = chosenHotel.getRoom(roomName);
+            
+            if (room != null) {
+              System.out.printf("Enter guest name to remove reservation: ");
+              String guestName = scanner.nextLine();
+              room.removeReservation(guestName);
+              System.out.printf("Reservation for guest '%s' removed from room '%s'.\n", guestName, roomName);
+            }
+            
             break;
           case 6: // remove hotel
             hotels.remove(chosenHotel);
@@ -156,7 +183,7 @@ public class HRSController {
 
         // automated booking of room - get first available room
         Room roomToBook = availableRooms.getFirst();
-        chosenHotel.addReservation(guestName, roomToBook.getName(), checkInDate, checkOutDate);
+        roomToBook.addReservation(guestName, checkInDate, checkOutDate);
         System.out.printf("Booking successful for room '%s'.\n", roomToBook.getName());
       }
     }
@@ -164,7 +191,7 @@ public class HRSController {
       System.out.printf("Hotel '%s' not found.\n", hotelName);
   }
 
-  private Hotel findHotelByName(String hotelName) {
+  public Hotel findHotelByName(String hotelName) {
     for (Hotel hotel : hotels) {
       if (hotel.getName().equals(hotelName)) 
         return hotel;
