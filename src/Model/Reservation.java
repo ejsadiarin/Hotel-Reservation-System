@@ -7,11 +7,11 @@ public class Reservation {
   private Room room;
   private double costPerNight;
   
-  public Reservation(String guestName, int checkInDate, int checkOutDate, Room room) {
+  public Reservation(String guestName, Room room, int checkInDate, int checkOutDate) {
     this.guestName = guestName;
+    this.room = room;
     this.checkInDate = checkInDate;
     this.checkOutDate = checkOutDate;
-    this.room = room;
     this.costPerNight = room.getPricePerNight();
   }
 

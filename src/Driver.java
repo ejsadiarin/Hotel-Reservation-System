@@ -53,15 +53,18 @@ public class Driver {
           break;
         case 4: // simulate booking
           System.out.printf("\n==========Simulate Booking===========\n");
-          System.out.print("Enter hotel name to BOOK from: ");
+          System.out.printf("Enter hotel name to BOOK from: ");
           String simulateHotelName = scanner.nextLine();
-          System.out.print("Enter guest name: ");
+          System.out.printf("\nEnter guest name: ");
           String simulateGuestName = scanner.nextLine();
-          System.out.print("Enter check-in date (1-31): ");
+          System.out.printf("\nEnter check-in date (1-30): ");
           int simulateCheckInDate = scanner.nextInt();
-          System.out.print("Enter check-out date (1-31): ");
+          System.out.printf("\nEnter check-out date (2-31): ");
           int simulateCheckOutDate = scanner.nextInt();
-          hrsController.simulateBooking(simulateHotelName, simulateGuestName, simulateCheckInDate, simulateCheckOutDate);
+          if (simulateCheckInDate <= simulateCheckOutDate)
+            hrsController.simulateBooking(simulateHotelName, simulateGuestName, simulateCheckInDate, simulateCheckOutDate);
+          else
+            System.out.printf("\nInvalid check-in and check-out dates. Please try again.\n");
           break;
         default:
           System.out.printf("Invalid choice. Please try again.");

@@ -44,12 +44,11 @@ public class HRSController {
         if (findHotelByName(hotelName) != null) {
           DisplayManager.displayHotelGeneralInfo(hotel);
           System.out.printf("\n=========ROOM DETAILS=========\n");
-          System.out.printf("Available Rooms: %s\n", hotel.getAvailableRooms());
           System.out.printf("Base Price per Room: %s\n", hotel.getBasePrice());
-          System.out.printf("\n=====SEE AVAILABLE ROOMS======\n");
-          for (Room room : hotel.getRooms()) {
-            System.out.printf("%s - %s\n", room.getName(), room.isAvailable() ? "Available" : "Unavailable");
-          }
+//          System.out.printf("\n=====SEE AVAILABLE ROOMS======\n");
+//          for (Room room : hotel.getRooms()) {
+//            System.out.printf("%s - %s\n", room.getName(), room.getAvailability() ? "Available" : "Unavailable");
+//          }
           System.out.printf("\n=====RESERVATION DETAILS======\n");
           System.out.printf("Base Price per Room: %s\n", hotel.getBasePrice());
           System.out.printf("=========================================\n");
@@ -127,28 +126,25 @@ public class HRSController {
   }
 
   public void simulateBooking(String hotelName, String guestName, int checkInDate, int checkOutDate) {
-    // select specific hotel
     Hotel chosenHotel = findHotelByName(hotelName);
-    // specify check-in and check-out dates (1-31) - automate
-    // --> check-in <= check-out, but check-in != 31 and check-out != 1
+    
     if (chosenHotel != null) {
-      for (Room room : chosenHotel.getRooms()) {
-        if (room.isAvailable()) {
-          // creates a new reservation
-          // update room's status (setAvailable)
-          // store reservation details
-          // --> should be viewable in View Hotel
-          Reservation reservation = new Reservation(guestName, checkInDate, checkOutDate, room);
-          chosenHotel.addReservation(reservation);
-          room.setAvailable(false);
-          System.out.printf("Booking successful.\n");
-          return;
-        }
+      ArrayList<Room> availableRooms = chosenHotel.getAvailableRoomsOnDate(checkInDate, checkOutDate);
+      if (availableRooms.isEmpty())
+        System.out.printf("No rooms available from day %d to day %d in hotel '%s'.\n", checkInDate, checkOutDate, hotelName);
+      else {
+        System.out.printf("Available rooms from day %d to day %d in hotel '%s':\n", checkInDate, checkOutDate, hotelName);
+        for (Room room : availableRooms)
+          System.out.printf("%s\n", room.getName());
+
+        // automated booking of room - get first available room
+        Room roomToBook = availableRooms.getFirst();
+        chosenHotel.addReservation(guestName, roomToBook.getName(), checkInDate, checkOutDate);
+        System.out.printf("Booking successful for room '%s'.\n", roomToBook.getName());
       }
-      System.out.printf("No rooms available");
     }
     else
-      System.out.printf("Hotel not found.\n");
+      System.out.printf("Hotel '%s' not found.\n", hotelName);
   }
 
   private Hotel findHotelByName(String hotelName) {

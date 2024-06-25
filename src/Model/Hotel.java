@@ -67,7 +67,7 @@ public class Hotel {
   }
   
   public void removeRoom(String roomName) {
-    rooms.removeIf(room -> room.getName().equals(roomName) && room.isAvailable());
+    rooms.removeIf(room -> room.getName().equals(roomName));
   }
   
   public int getNumOfRooms() {
@@ -88,13 +88,15 @@ public class Hotel {
     return this.maxRooms;
   }
   
-  public int getAvailableRooms() {
-    int sum = 0;
+  public ArrayList<Room> getAvailableRoomsOnDate(int checkInDate, int checkOutDate) {
+    ArrayList<Room> availableRooms = new ArrayList<>();
+    
     for (Room room : rooms) {
-      if (room.isAvailable())
-        sum++;
+      if (room.isAvailable(checkInDate, checkOutDate))
+        availableRooms.add(room);
     }
-    return sum;
+    
+    return availableRooms;
   }
 
   public ArrayList<Reservation> getReservations() {
@@ -109,12 +111,25 @@ public class Hotel {
     return null;
   }
   
-  public void addReservation(Reservation reservation) {
-    reservations.add(reservation);
+  public void addReservation(String guestName, String roomName, int checkInDate, int checkOutDate) {
+    Room room = getRoom(roomName);
+    if (room != null && room.reserve(checkInDate, checkOutDate)) {
+      reservations.add(new Reservation(guestName, room, checkInDate, checkOutDate));
+      System.out.printf("Reservation for '%s' added to room '%s' from day %d to day %d.\n", guestName, roomName, checkInDate, checkOutDate);
+    } 
+    else 
+      System.out.printf("Room '%s' is not available from day %d to day %d.\n", roomName, checkInDate, checkOutDate);
   }
   
   public void removeReservation(String guestName) {
-    reservations.removeIf(reservation -> reservation.getGuestName().equals(guestName));
+    Reservation reservation = getReservation(guestName);
+    if (reservation != null) {
+      reservation.getRoom().cancelReservation(reservation.getCheckInDate(), reservation.getCheckOutDate());
+      reservations.remove(reservation);
+      System.out.printf("Reservation for '%s' removed.\n", guestName);
+    } 
+    else 
+      System.out.printf("Reservation for '%s' not found.\n", guestName);
   }
 
   public double getBasePrice() {
