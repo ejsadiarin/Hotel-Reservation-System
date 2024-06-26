@@ -1,7 +1,6 @@
 package Model;
 
 import java.util.ArrayList;
-import java.util.Formattable;
 
 public class Hotel {
   private String name;
