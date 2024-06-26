@@ -91,6 +91,7 @@
   <dia:layer name="Background" visible="true" connectable="true"/>
   <dia:layer name="Background" visible="true" connectable="true"/>
   <dia:layer name="Background" visible="true" connectable="true"/>
+  <dia:layer name="Background" visible="true" connectable="true"/>
   <dia:layer name="Background" visible="true" connectable="true" active="true">
     <dia:object type="UML - Class" version="0" id="O0">
       <dia:attribute name="obj_pos">
@@ -1506,7 +1507,7 @@
         <dia:real val="9.7999999999999989"/>
       </dia:attribute>
       <dia:attribute name="name">
-        <dia:string>#Main.HotelReservationSystem#</dia:string>
+        <dia:string>#HotelReservationSystem#</dia:string>
       </dia:attribute>
       <dia:attribute name="stereotype">
         <dia:string>##</dia:string>

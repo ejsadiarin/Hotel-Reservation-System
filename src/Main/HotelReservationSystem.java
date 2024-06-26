@@ -35,6 +35,7 @@ public class HotelReservationSystem {
       }
     }
     hotels.add(new Hotel(hotelName, numOfRooms));
+    System.out.printf("Hotel '%s' successfully created with %d rooms.\n", hotelName, numOfRooms);
   }
 
   /**
@@ -160,7 +161,6 @@ public class HotelReservationSystem {
               System.out.printf("%s already exists. Going back...\n", newHotelName);
             break;
           case 2: // add room(s)
-            // TODO: option to add multiple rooms in one go
             chosenHotel.addRoom();
             System.out.printf("Successfully added a new room to %s!\n", chosenHotel.getName());
             break;
