@@ -1506,7 +1506,7 @@
         <dia:real val="9.7999999999999989"/>
       </dia:attribute>
       <dia:attribute name="name">
-        <dia:string>#HotelReservationSystem#</dia:string>
+        <dia:string>#Main.HotelReservationSystem#</dia:string>
       </dia:attribute>
       <dia:attribute name="stereotype">
         <dia:string>##</dia:string>
@@ -1623,7 +1623,7 @@
       <dia:attribute name="operations">
         <dia:composite type="umloperation">
           <dia:attribute name="name">
-            <dia:string>#HotelReservationSystem#</dia:string>
+            <dia:string>#Main.HotelReservationSystem#</dia:string>
           </dia:attribute>
           <dia:attribute name="stereotype">
             <dia:string>##</dia:string>

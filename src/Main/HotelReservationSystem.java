@@ -1,3 +1,5 @@
+package Main;
+
 import Model.Hotel;
 import Model.Room;
 import View.DisplayManager;
@@ -13,7 +15,7 @@ public class HotelReservationSystem {
   private ArrayList<Hotel> hotels;
 
   /**
-   * Constructs a new HotelReservationSystem with an empty list of hotels.
+   * Constructs a new Main.HotelReservationSystem with an empty list of hotels.
    */
   public HotelReservationSystem() {
     this.hotels = new ArrayList<>();

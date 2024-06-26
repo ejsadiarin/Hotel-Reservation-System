@@ -1,3 +1,5 @@
+package Main;
+
 import View.DisplayManager;
 
 import java.util.Scanner;
