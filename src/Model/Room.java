@@ -2,12 +2,22 @@ package Model;
 
 import java.util.ArrayList;
 
+/**
+ * The Room class represents a hotel room, including its name, price per night, availability, 
+ * and reservations. It provides methods to manage reservations and check availability.
+ */
 public class Room {
   private String name;
   private double pricePerNight;
   private boolean[] availability;
   private ArrayList<Reservation> reservations;
 
+  /**
+   * Constructs a new Room with the specified name and price per night.
+   *
+   * @param name the name of the room
+   * @param pricePerNight the price per night for the room
+   */
   public Room(String name, double pricePerNight) {
     this.name = name;
     this.pricePerNight = pricePerNight;
@@ -19,18 +29,40 @@ public class Room {
     }
   }
 
+  /**
+   * Gets the name of the room.
+   *
+   * @return the name of the room
+   */
   public String getName() {
     return name;
   }
 
+  /**
+   * Gets the price per night for the room.
+   *
+   * @return the price per night
+   */
   public double getPricePerNight() {
     return pricePerNight;
   }
 
+  /**
+   * Sets the price per night for the room.
+   *
+   * @param price the new price per night
+   */
   public void setPricePerNight(double price) {
     this.pricePerNight = price;
   }
 
+  /**
+   * Checks if the room is available between the specified check-in and check-out dates.
+   *
+   * @param checkIn the check-in date
+   * @param checkOut the check-out date
+   * @return true if the room is available, otherwise false
+   */
   public boolean isAvailable(int checkIn, int checkOut) {
     // handle overnight reservations
     if (checkIn == checkOut)
@@ -43,10 +75,21 @@ public class Room {
     return true;
   }
 
+  /**
+   * Gets the list of reservations for the room.
+   *
+   * @return the list of reservations
+   */
   public ArrayList<Reservation> getReservations() {
     return reservations;
   }
 
+  /**
+   * Gets the reservation for the specified guest name.
+   *
+   * @param guestName the name of the guest
+   * @return the reservation for the specified guest name, or null if not found
+   */
   public Reservation getReservation(String guestName) {
     for (Reservation reservation : reservations) {
       if (reservation.getGuestName().equals(guestName))
@@ -55,6 +98,13 @@ public class Room {
     return null;
   }
 
+  /**
+   * Adds a new reservation for the specified guest name, check-in date, and check-out date.
+   *
+   * @param guestName the name of the guest
+   * @param checkInDate the check-in date
+   * @param checkOutDate the check-out date
+   */
   public void addReservation(String guestName, int checkInDate, int checkOutDate) {
     if (reserveDates(checkInDate, checkOutDate)) {
       reservations.add(new Reservation(guestName, this, checkInDate, checkOutDate));
@@ -64,6 +114,11 @@ public class Room {
     }
   }
 
+  /**
+   * Removes the reservation for the specified guest name.
+   *
+   * @param guestName the name of the guest
+   */
   public void removeReservation(String guestName) {
     Reservation reservation = getReservation(guestName);
     if (reservation != null) {
@@ -74,8 +129,14 @@ public class Room {
     else
       System.out.printf("Reservation for '%s' not found. Exiting...\n", guestName);
   }
-  
 
+  /**
+   * Reserves the room for the specified check-in and check-out dates.
+   *
+   * @param checkInDate the check-in date
+   * @param checkOutDate the check-out date
+   * @return true if the reservation is successful, false otherwise
+   */
   public boolean reserveDates(int checkInDate, int checkOutDate) {
     if (isAvailable(checkInDate, checkOutDate)) {
       // handle overnight reservations
@@ -90,12 +151,23 @@ public class Room {
     return false;
   }
 
+  /**
+   * Cancels the reservation for the specified check-in and check-out dates.
+   *
+   * @param checkInDate the check-in date
+   * @param checkOutDate the check-out date
+   */
   public void cancelReserveDates(int checkInDate, int checkOutDate) {
     for (int i = checkInDate - 1; i < checkOutDate; i++) {
       availability[i] = true;
     }
   }
-  
+
+  /**
+   * Gets the total earnings from all reservations for the room.
+   *
+   * @return the total earnings
+   */
   public double getTotalEarnings() {
     double totalEarnings = 0;
     for (Reservation reservation : reservations) {

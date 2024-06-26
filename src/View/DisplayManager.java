@@ -6,7 +6,16 @@ import Model.Room;
 
 import java.util.ArrayList;
 
+/**
+ * The DisplayManager class provides static methods to display various pieces of information about hotels, rooms, and reservations.
+ */
 public class DisplayManager {
+
+  /**
+   * Displays high-level information about the specified hotel.
+   *
+   * @param hotel the hotel to display high-level information
+   */
   public static void displayHotelGeneralInfo(Hotel hotel) {
     // display high-level information about the hotel
     System.out.printf("\n===========HIGH-LEVEL INFORMATION==============\n");
@@ -16,7 +25,13 @@ public class DisplayManager {
     System.out.printf("Number of Rooms: %s\n", hotel.getNumOfRooms());
   }
 
-  // 1: Total number of available and booked rooms for a selected date
+  /**
+   * Displays the total number of available and booked rooms for the specified date range.
+   *
+   * @param hotel the hotel to check room availability
+   * @param checkInDate the check-in date
+   * @param checkOutDate the check-out date
+   */
   public static void displayRoomsOnDate(Hotel hotel, int checkInDate, int checkOutDate) {
     ArrayList<Room> availableRooms = hotel.getAvailableRoomsOnDate(checkInDate, checkOutDate);
     int bookedRooms = hotel.getNumOfRooms() - availableRooms.size();
@@ -25,7 +40,12 @@ public class DisplayManager {
     System.out.printf("Total number of booked rooms from day %d to %d: %d\n", checkInDate, checkOutDate, bookedRooms);
   }
 
-  // 2: Information about a selected room
+  /**
+   * Displays information about the specified room in the hotel.
+   *
+   * @param hotel the hotel containing the room
+   * @param roomName the name of the specific room to be displayed
+   */
   public static void displaySpecificRoomInfo(Hotel hotel, String roomName) {
     Room selectedRoom = hotel.getRoom(roomName);
     
@@ -45,6 +65,12 @@ public class DisplayManager {
       System.out.printf("\nRoom '%s' not found.\n", roomName);
   }
 
+  /**
+   * Displays information about all reservations for the specified room.
+   *
+   * @param hotel the hotel containing the room
+   * @param room the room containing the reservations to be displayed
+   */
   public static void displayReservationInfoByRoom(Hotel hotel, Room room) {
     if (room.getReservations().isEmpty()) {
       System.out.printf("No reservations found for room '%s'.\n", room.getName());
@@ -65,7 +91,12 @@ public class DisplayManager {
     }
   }
 
-  // 3: Information about a selected reservation
+  /**
+   * Displays information about all reservations for the specified guest name.
+   *
+   * @param hotel the hotel to search for reservations
+   * @param guestName the name of the guest to search for reservations
+   */
   public static void displayReservationsByGuestName(Hotel hotel, String guestName) {
     boolean hasReservation = false; // false, bc assume that there is no reservation for guest yet
     
@@ -94,8 +125,10 @@ public class DisplayManager {
 
     System.out.printf("=========================================\n");
   }
-  
-  
+
+  /**
+   * Displays the main user interface options.
+   */
   public static void displayMainUI() {
     System.out.printf("\n==============================================\n");
     System.out.printf("1 - Create a new hotel\n");
@@ -105,7 +138,10 @@ public class DisplayManager {
     System.out.printf("0 - Exit the program\n");
     System.out.printf("==============================================\n");
   }
-  
+
+  /**
+   * Displays the user interface options for managing a hotel.
+   */
   public static void displayManageHotelUI() {
     System.out.printf("\n==============================================\n");
     System.out.printf("1 - Change name of the hotel\n");
@@ -117,14 +153,24 @@ public class DisplayManager {
     System.out.printf("0 - Go back to previous menu\n");
     System.out.printf("==============================================\n");
   }
-  
+
+  /**
+   * Displays the names of all hotels in the specified list.
+   *
+   * @param hotels the list of hotels to be displayed
+   */
   public static void displayAllHotels(ArrayList<Hotel> hotels) {
     System.out.printf("\n-----ALL HOTELS------\n");
     for (Hotel hotel : hotels) {
       System.out.printf("%s\n", hotel.getName());
     }
   }
-  
+
+  /**
+   * Displays the names and number of reservations for all rooms in the specified hotel.
+   *
+   * @param hotel the hotel of the rooms to be displayed
+   */
   public static void displayAllRoomsInHotel(Hotel hotel) {
     System.out.printf("\n-----ALL ROOMS in Hotel %s------\n", hotel.getName());
     for (Room room : hotel.getRooms()) {

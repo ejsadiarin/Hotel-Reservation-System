@@ -5,13 +5,26 @@ import View.DisplayManager;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+/**
+ * The HotelReservationSystem class manages the operations related to hotel reservations.
+ * This allows creating hotels, viewing hotel details, managing hotel properties, and simulating bookings.
+ */
 public class HotelReservationSystem {
   private ArrayList<Hotel> hotels;
-  
+
+  /**
+   * Constructs a new HotelReservationSystem with an empty list of hotels.
+   */
   public HotelReservationSystem() {
     this.hotels = new ArrayList<>();
   }
   
+  /**
+   * Creates a new hotel with the specified name and number of rooms.
+   *
+   * @param hotelName the name of the new hotel
+   * @param numOfRooms the number of rooms in the new hotel
+   */
   public void createHotel(String hotelName, int numOfRooms) {
     for (Hotel hotel : hotels) {
       if (hotel.getName().equals(hotelName)) {
@@ -22,6 +35,9 @@ public class HotelReservationSystem {
     hotels.add(new Hotel(hotelName, numOfRooms));
   }
 
+  /**
+   * Displays the list of all hotels.
+   */
   public void viewAllHotels() {
     if (this.hotels.isEmpty()) {
       System.out.printf("No hotels found.\n");
@@ -30,7 +46,12 @@ public class HotelReservationSystem {
       DisplayManager.displayAllHotels(this.hotels);
     }
   }
-  
+
+  /**
+   * Displays detailed information about a specific hotel.
+   *
+   * @param hotelName the name of the hotel to view
+   */
   public void viewSpecificHotel(String hotelName) {
     Scanner scanner = new Scanner(System.in);
     if (this.hotels.isEmpty()) {
@@ -98,7 +119,12 @@ public class HotelReservationSystem {
     else
       System.out.printf("\nInvalid choice.\n");
   }
-  
+
+  /**
+   * Manages the properties of a specific hotel, allowing changes to its details, rooms, and reservations.
+   *
+   * @param hotelName the name of the hotel to manage
+   */
   public void manageHotel(String hotelName) {
     Scanner scanner = new Scanner(System.in);
 
@@ -193,6 +219,14 @@ public class HotelReservationSystem {
     }
   }
 
+  /**
+   * Simulates the booking of a room in a specified hotel for a guest within a date range.
+   *
+   * @param hotelName the name of the hotel
+   * @param guestName the name of the guest
+   * @param checkInDate the check-in date
+   * @param checkOutDate the check-out date
+   */
   public void simulateBooking(String hotelName, String guestName, int checkInDate, int checkOutDate) {
     Hotel chosenHotel = findHotelByName(hotelName);
     
@@ -215,6 +249,12 @@ public class HotelReservationSystem {
       System.out.printf("Hotel '%s' not found.\n", hotelName);
   }
 
+  /**
+   * Finds a hotel by its name.
+   *
+   * @param hotelName the name of the hotel to find
+   * @return the Hotel object if found, otherwise null
+   */
   public Hotel findHotelByName(String hotelName) {
     for (Hotel hotel : hotels) {
       if (hotel.getName().equals(hotelName)) 
@@ -222,7 +262,12 @@ public class HotelReservationSystem {
     }
     return null;
   }
-  
+
+  /**
+   * Gets the list of all hotels.
+   *
+   * @return the list of hotels
+   */
   public ArrayList<Hotel> getHotels() {
     return this.hotels;
   }

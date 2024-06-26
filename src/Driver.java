@@ -2,7 +2,18 @@ import View.DisplayManager;
 
 import java.util.Scanner;
 
+/**
+ * The Driver class is the entry point of the hotel management application.
+ * It contains the main method that initializes the program and handles user interactions.
+ */
 public class Driver {
+
+  /**
+   * The main method initializes the program and handles user interactions.
+   * It provides a menu for users to create and manage hotels, rooms, and reservations.
+   *
+   * @param args command-line arguments (not used)
+   */
   public static void main(String[] args) {
     HotelReservationSystem hotelReservationSystem = new HotelReservationSystem();
     Scanner scanner = new Scanner(System.in);
