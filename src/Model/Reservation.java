@@ -10,6 +10,7 @@ public class Reservation {
   private int checkOutDate;
   private Room room;
   private double costPerNight;
+  private boolean isDiscounted;
 
   /**
    * Constructs a new Reservation with the specified guest name, room, check-in date, and check-out date.
@@ -68,8 +69,9 @@ public class Reservation {
    *
    * @return the total price of the reservation
    */
-  public double getTotalPrice() {
+  public double getTotalPrice(String discountCode) {
     int diff = checkOutDate - checkInDate;
+    // TODO: call calculateDiscount here - check first if isDiscounted == false, if true then no discount for this reservation
     
     return diff * getCostPerNight() + getCostPerNight();
   }
@@ -81,5 +83,21 @@ public class Reservation {
    */
   public double getCostPerNight() {
     return costPerNight;
+  }
+
+  /**
+   * Calculates the discount given a discount code
+   *
+   * @return the discount price that is subtracted from the original total price
+   */
+  public double calculateDiscount(String discountCode, double rawTotalPrice, int diff) {
+    if (discountCode.equals("I_WORK_HERE")) {
+      return rawTotalPrice * 0.10;
+    }
+    else if (discountCode.equals("STAY_4_GET_1")) {
+      if (diff >= 5) {
+        
+      }
+    }
   }
 }

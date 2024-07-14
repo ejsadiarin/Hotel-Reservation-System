@@ -11,6 +11,7 @@ public class Room {
   private double pricePerNight;
   private boolean[] availability;
   private ArrayList<Reservation> reservations;
+  private String roomType;
 
   /**
    * Constructs a new Room with the specified name and price per night.
@@ -18,7 +19,7 @@ public class Room {
    * @param name the name of the room
    * @param pricePerNight the price per night for the room
    */
-  public Room(String name, double pricePerNight) {
+  public Room(String name, double pricePerNight, String roomType) {
     this.name = name;
     this.pricePerNight = pricePerNight;
     this.availability = new boolean[31];
@@ -27,6 +28,7 @@ public class Room {
     for (int i = 0; i < 31; i++) {
       this.availability[i] = true;
     }
+    this.roomType = roomType;
   }
 
   /**
@@ -54,6 +56,23 @@ public class Room {
    */
   public void setPricePerNight(double price) {
     this.pricePerNight = price;
+  }
+  
+  public String getRoomType() {
+    return this.roomType;
+  }
+  
+  public void setRoomType(String newRoomType) {
+    if (newRoomType.equals("Deluxe")) {
+      this.roomType = "Deluxe";
+      this.pricePerNight = getPricePerNight() * 0.20 + getPricePerNight();
+    }
+    else if (newRoomType.equals("Executive")) {
+      this.roomType = "Deluxe";
+      this.pricePerNight = getPricePerNight() * 0.20 + getPricePerNight();
+    }
+    else
+      this.roomType = "Standard"; // default
   }
 
   /**

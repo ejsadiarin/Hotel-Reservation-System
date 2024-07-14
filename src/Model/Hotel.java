@@ -65,7 +65,7 @@ public class Hotel {
     int roomNumber = 1;
     while (roomNumber <= numOfRooms) {
       String roomName = "Room-" + roomNumber;
-      rooms.add(new Room(roomName, this.basePrice));
+      rooms.add(new Room(roomName, this.basePrice, "Standard"));
       roomNumber++;
     }
   }
@@ -87,7 +87,7 @@ public class Hotel {
   /**
    * Adds a new room to the hotel, utilizing an automated naming generation based on the current number of rooms.
    */
-  public void addRoom() {
+  public void addRoom(String roomType) {
     // automated unique naming of room names until numOfRooms
     String roomName = "Room-" + (getNumOfRooms() + 1);
     for (Room room : rooms) {
@@ -100,7 +100,7 @@ public class Hotel {
       System.out.printf("Limit reached (%d). Cannot add more rooms.\n", getNumOfRooms());
       return;
     }
-    rooms.add(new Room(roomName, this.basePrice));
+    rooms.add(new Room(roomName, this.basePrice, roomType));
   }
 
   /**
