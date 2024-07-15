@@ -8,3 +8,23 @@
 # Discount Codes
 - getTotalPrice will first calculate for the RAW TOTAL PRICE
   - then calls calculateDiscount
+  - e
+
+
+# GUI
+- One frame
+- check the DisplayManager for the Views/GUIs to create
+- have pictures for design
+  - Panels:
+    - Main Menu (Starting) 
+      - has createHotel, viewHotels, manageHotel, simulate Booking buttons
+      - Show hotels created here
+    - Hotel Management Menu (Managing Hotels) 
+      - manage hotel UI with buttons
+    - View Guest Info
+      - Viewing Guest's reservations
+    - Viewing Rooms
+      - View availability dates for rooms
+      - View current reservations for the specific room
+    - Viewing Rooms
+      - View availability dates for rooms

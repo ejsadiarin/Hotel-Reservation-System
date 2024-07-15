@@ -9,9 +9,9 @@ import java.util.ArrayList;
 public class Room {
   private String name;
   private double pricePerNight;
-  private boolean[] availability;
   private ArrayList<Reservation> reservations;
   private String roomType;
+  private ArrayList<AvailabilityDate> availabilityDates;
 
   /**
    * Constructs a new Room with the specified name and price per night.
@@ -22,13 +22,13 @@ public class Room {
   public Room(String name, double pricePerNight, String roomType) {
     this.name = name;
     this.pricePerNight = pricePerNight;
-    this.availability = new boolean[31];
     this.reservations = new ArrayList<>();
     // Initialize all days to available
+    this.availabilityDates = new ArrayList<>();
     for (int i = 0; i < 31; i++) {
-      this.availability[i] = true;
+      this.availabilityDates.add(new AvailabilityDate(pricePerNight));
     }
-    this.roomType = roomType;
+    setRoomType(roomType);
   }
 
   /**
@@ -46,7 +46,7 @@ public class Room {
    * @return the price per night
    */
   public double getPricePerNight() {
-    return pricePerNight;
+    return this.pricePerNight;
   }
 
   /**
@@ -56,6 +56,9 @@ public class Room {
    */
   public void setPricePerNight(double price) {
     this.pricePerNight = price;
+    for (AvailabilityDate date : availabilityDates) {
+      date.setBasePrice(price);
+    }
   }
   
   public String getRoomType() {
@@ -65,14 +68,16 @@ public class Room {
   public void setRoomType(String newRoomType) {
     if (newRoomType.equals("Deluxe")) {
       this.roomType = "Deluxe";
-      this.pricePerNight = getPricePerNight() * 0.20 + getPricePerNight();
+      setPricePerNight(getPricePerNight() * 0.20 + getPricePerNight());
     }
     else if (newRoomType.equals("Executive")) {
-      this.roomType = "Deluxe";
-      this.pricePerNight = getPricePerNight() * 0.20 + getPricePerNight();
+      this.roomType = "Executive";
+      setPricePerNight(getPricePerNight() * 0.35 + getPricePerNight());
     }
-    else
+    else {
       this.roomType = "Standard"; // default
+      this.pricePerNight = getPricePerNight();
+    }
   }
 
   /**
@@ -85,10 +90,10 @@ public class Room {
   public boolean isAvailable(int checkIn, int checkOut) {
     // handle overnight reservations
     if (checkIn == checkOut)
-      return availability[checkIn - 1];
+      return availabilityDates.get(checkIn - 1).isAvailable(); // return availability[checkIn - 1];
     
     for (int i = checkIn - 1; i < checkOut; i++) {
-      if (!availability[i])
+      if (!availabilityDates.get(i).isAvailable()) // if (!availability[i])
         return false;
     }
     return true;
@@ -160,10 +165,10 @@ public class Room {
     if (isAvailable(checkInDate, checkOutDate)) {
       // handle overnight reservations
       if (checkInDate == checkOutDate)
-        availability[checkInDate - 1] = false;
+        availabilityDates.get(checkInDate - 1).setAvailable(false); // availability[checkInDate - 1] = false;
       else {
         for (int i = checkInDate - 1; i < checkOutDate; i++)
-          availability[i] = false;
+          availabilityDates.get(i).setAvailable(false); // availability[i] = false;
       }
       return true;
     }
@@ -178,7 +183,7 @@ public class Room {
    */
   public void cancelReserveDates(int checkInDate, int checkOutDate) {
     for (int i = checkInDate - 1; i < checkOutDate; i++) {
-      availability[i] = true;
+      availabilityDates.get(i).setAvailable(true); // availability[i] = true;
     }
   }
 
@@ -194,5 +199,5 @@ public class Room {
     }
     return totalEarnings;
   }
-  
+
 }
