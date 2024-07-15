@@ -220,5 +220,6 @@ public class Room {
       if (!getAvailabilityDates().get(i).isAvailable())
         return i;
     }
+    return 0;
   }
 }

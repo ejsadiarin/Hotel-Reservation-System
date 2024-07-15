@@ -161,7 +161,7 @@ public class HotelReservationSystem {
               System.out.printf("%s already exists. Going back...\n", newHotelName);
             break;
           case 2: // add room(s)
-            chosenHotel.addRoom(); // TODO: ask for input for roomType in View GUI
+            chosenHotel.addRoom("Standard"); // TODO: ask for input for roomType in View GUI
             System.out.printf("Successfully added a new room to %s!\n", chosenHotel.getName());
             break;
           case 3: // remove room(s)
