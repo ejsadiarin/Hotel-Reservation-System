@@ -1,8 +1,6 @@
 package Model;
 
 public class AvailabilityDate {
-  private int dateRange1;
-  private int dateRange2;
   private boolean available;
   private double basePrice;
   private double modifiedPrice;

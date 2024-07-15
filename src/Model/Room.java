@@ -18,6 +18,7 @@ public class Room {
    *
    * @param name the name of the room
    * @param pricePerNight the price per night for the room
+   * @param roomType the type of the room (e.g., Deluxe, Executive, Standard)
    */
   public Room(String name, double pricePerNight, String roomType) {
     this.name = name;
@@ -200,4 +201,24 @@ public class Room {
     return totalEarnings;
   }
 
+  public ArrayList<AvailabilityDate> getAvailabilityDates() {
+    return this.availabilityDates;
+  }
+  
+  public ArrayList<AvailabilityDate> getReservedDates() {
+    ArrayList<AvailabilityDate> reservedDates = new ArrayList<>();
+    for (AvailabilityDate date : getAvailabilityDates()) {
+      if (!date.isAvailable())
+        reservedDates.add(date);
+    }
+    
+    return reservedDates;
+  }
+  
+  public int getIndexOfFirstReservedDate() {
+    for (int i = 0; i < getAvailabilityDates().size(); i++) {
+      if (!getAvailabilityDates().get(i).isAvailable())
+        return i;
+    }
+  }
 }

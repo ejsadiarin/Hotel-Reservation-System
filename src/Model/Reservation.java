@@ -83,12 +83,19 @@ public class Reservation {
    * @return the total price of the reservation
    */
   public double getTotalPrice() {
-    int diff = checkOutDate - checkInDate;
+    // TODO: check if stay (number of days of stay) is accurate 1-2 = 1 day stay
+    int stay = checkOutDate - checkInDate;
+    if (stay < 1)
+      stay = 1;
+    
+    double rawTotalPrice = stay * getCostPerNight();
+    
     if (isDiscounted) {
       // TODO: call calculateDiscount here - check first if isDiscounted == false, if true then no discount for this reservation
+      // TODO: how tf do i get discountCode from view to here
     }
     
-    return diff * getCostPerNight() + getCostPerNight();
+    return rawTotalPrice; // if not discounted then just rawTotalPrice
   }
 
   /**
@@ -97,7 +104,7 @@ public class Reservation {
    * @return the cost per night
    */
   public double getCostPerNight() {
-    return this.costPerNight;
+    return this.costPerNight; // TODO: maybe change to room.getPricePerNight()
   }
   
   public String getDiscountCode() {
@@ -113,18 +120,20 @@ public class Reservation {
    *
    * @return the discount price that is subtracted from the original total price
    */
-  public double calculateDiscountedPrice(String discountCode, double rawTotalPrice, int diff) {
+  public double calculateDiscountedPrice(String discountCode, double rawTotalPrice, int stay) {
     if (discountCode.equals("I_WORK_HERE"))
-      return rawTotalPrice * 0.10 + rawTotalPrice;
+      return rawTotalPrice * 0.10 - rawTotalPrice;
     else if (discountCode.equals("STAY_4_GET_1")) {
       // then first day is free
-      if (diff >= 5)
-        return (diff - 1) * getCostPerNight() + getCostPerNight();
+      if (stay >= 5)
+        return (stay - 1) * getCostPerNight() + getCostPerNight(); // handle negative diff value (for overnight)
     }
     else if (discountCode.equals("PAYDAY")) {
-      // check index of availability
-      for (boolean availableDate : room.getAvailability()) {
-        // get index of first date = false
+      // stop when availability encountered is true
+      for (int i = room.getIndexOfFirstReservedDate(); room.getAvailabilityDates().get(i).isAvailable(); i++) {
+        // if i covers day 15 or 30 (excluding checkout: 15 or checkout: 30)
+        if ((i >= 15 && i <= 30) && (checkOutDate != 15 && checkOutDate != 30))
+          return rawTotalPrice * 0.07 - rawTotalPrice; 
       }
     }
     
