@@ -17,8 +17,8 @@ public class HRSFrame extends JFrame {
     mainPanel = new JPanel(cardLayout);
 
     // Add different views to the main panel
-//    mainPanel.add(new MainMenuPanel(this), "MainMenu");
-//    mainPanel.add(new HRSFrame(this), "HotelManagement");
+    mainPanel.add(new MainMenuPanel(this), "MainMenu");
+//    mainPanel.add(new ManageHotelPanel(this), "ManageHotel");
 
     add(mainPanel);
 
