@@ -1,9 +1,11 @@
-package Main;
+package Controller;
 
 import Model.Hotel;
 import Model.Room;
 import View.DisplayManager;
+import View.HRSApp;
 
+import javax.swing.text.View;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -11,14 +13,25 @@ import java.util.Scanner;
  * The HotelReservationSystem class manages the operations related to hotel reservations.
  * This allows creating hotels, viewing hotel details, managing hotel properties, and simulating bookings.
  */
-public class HotelReservationSystem {
+public class HRSController {
+  private HRSApp view;
   private ArrayList<Hotel> hotels;
 
   /**
-   * Constructs a new Main.HotelReservationSystem with an empty list of hotels.
+   * Constructs a new HotelReservationSystem with an empty list of hotels.
    */
-  public HotelReservationSystem() {
+  public HRSController(HRSApp view) {
     this.hotels = new ArrayList<>();
+    this.view = view;
+  }
+  
+  private void initController() {
+    view.getMainMenuPanel().getCreateHotelButton().addActionListener(e -> createHotel());
+    view.getMainMenuPanel().getManageHotelsButton().addActionListener(e -> showHotelManagementPanel());
+    view.getMainMenuPanel().getExitButton().addActionListener(e -> System.exit(0));
+
+    view.getMainMenuPanel().getViewHotelsButton().addActionListener(e -> viewHotels());
+//    view.getManageHotelPanel().getBackButton().addActionListener(e -> showMainMenuPanel());
   }
   
   /**
@@ -27,7 +40,9 @@ public class HotelReservationSystem {
    * @param hotelName the name of the new hotel
    * @param numOfRooms the number of rooms in the new hotel
    */
-  public void createHotel(String hotelName, int numOfRooms) {
+  public void createHotel() {
+    String hotelName = view.getMainMenuPanel().
+        
     for (Hotel hotel : hotels) {
       if (hotel.getName().equals(hotelName)) {
         System.out.printf("Hotel name '%s' already exists.\n", hotelName);

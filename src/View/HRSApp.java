@@ -1,14 +1,18 @@
 package View;
 
+import Controller.HRSController;
+
 import javax.swing.*;
 import java.awt.*;
 
-public class HRSFrame extends JFrame {
+public class HRSApp extends JFrame {
   private CardLayout cardLayout;
   private JPanel mainPanel;
+  private MainMenuPanel mainMenuPanel;
+  private ManageHotelPanel manageHotelPanel;
 //  private CardLayout cardLayout;
   
-  public HRSFrame() {
+  public HRSApp() {
     setTitle("Hotel Reservation System");
     setSize(800, 600);
     setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -18,7 +22,7 @@ public class HRSFrame extends JFrame {
 
     // Add different views to the main panel
     mainPanel.add(new MainMenuPanel(this), "MainMenu");
-//    mainPanel.add(new ManageHotelPanel(this), "ManageHotel");
+    mainPanel.add(new ManageHotelPanel(this), "ManageHotel");
 
     add(mainPanel);
 
@@ -30,9 +34,14 @@ public class HRSFrame extends JFrame {
     cardLayout.show(mainPanel, panelName);
   }
   
+  public MainMenuPanel getMainMenuPanel() {
+    return this.mainMenuPanel;
+  }
+  
   public static void main(String[] args) {
     SwingUtilities.invokeLater(() -> {
-      HRSFrame app = new HRSFrame();
+      HRSApp app = new HRSApp();
+      HRSController controller = new HRSController();
       app.setVisible(true);
     });
   }

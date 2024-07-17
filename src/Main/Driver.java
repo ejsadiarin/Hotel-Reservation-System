@@ -1,5 +1,6 @@
 package Main;
 
+import Controller.HRSController;
 import View.DisplayManager;
 
 import java.util.Scanner;
@@ -17,7 +18,7 @@ public class Driver {
    * @param args command-line arguments (not used)
    */
   public static void main(String[] args) {
-    HotelReservationSystem hotelReservationSystem = new HotelReservationSystem();
+    HRSController HRSController = new HRSController();
     Scanner scanner = new Scanner(System.in);
     
     while (true) {
@@ -38,47 +39,47 @@ public class Driver {
           String createHotelName = scanner.nextLine();
           System.out.printf("Enter number of rooms in the hotel: ");
           int numOfRooms = scanner.nextInt();
-          hotelReservationSystem.createHotel(createHotelName, numOfRooms);
+          HRSController.createHotel(createHotelName, numOfRooms);
           break;
         case 2: // view hotel
           System.out.printf("\nViewing hotels...\n");
-          hotelReservationSystem.viewAllHotels();
+          HRSController.viewAllHotels();
           // add option to view specific Hotel via hotelName
-          if (!hotelReservationSystem.getHotels().isEmpty()) {
+          if (!HRSController.getHotels().isEmpty()) {
             System.out.printf("\nEnter the name of the hotel you want to VIEW (Enter 0 to exit): ");
             String viewHotelName = scanner.nextLine();
             if (viewHotelName.equals("0"))
               System.out.printf("Going back...\n");
             else
-              hotelReservationSystem.viewSpecificHotel(viewHotelName);
+              HRSController.viewSpecificHotel(viewHotelName);
           }
           break;
         case 3: // manage hotel
-          if (hotelReservationSystem.getHotels().isEmpty()) {
+          if (HRSController.getHotels().isEmpty()) {
             System.out.printf("\nNo hotels present. Create a hotel first.\n");
           }
           else {
             System.out.printf("\n============Manage Hotel============\n");
-            hotelReservationSystem.viewAllHotels();
+            HRSController.viewAllHotels();
             System.out.println();
             System.out.printf("Enter the name of the hotel you want to MANAGE (Enter 0 to exit): ");
             String manageHotelName = scanner.nextLine();
             if (manageHotelName.equals("0"))
               System.out.printf("Going back...\n");
             else
-              hotelReservationSystem.manageHotel(manageHotelName);
+              HRSController.manageHotel(manageHotelName);
           }
           break;
         case 4: // simulate booking
-          if (hotelReservationSystem.getHotels().isEmpty()) {
+          if (HRSController.getHotels().isEmpty()) {
             System.out.printf("\nNo hotels present. Create a hotel first.\n");
           }
           else {
-            hotelReservationSystem.viewAllHotels();
+            HRSController.viewAllHotels();
             System.out.printf("\n==========Simulate Booking===========\n");
             System.out.printf("Enter hotel name to BOOK from: ");
             String simulateHotelName = scanner.nextLine();
-            while (hotelReservationSystem.findHotelByName(simulateHotelName) == null) {
+            while (HRSController.findHotelByName(simulateHotelName) == null) {
               System.out.printf("\nHotel '%s' not found. Please try again: ", simulateHotelName);
               simulateHotelName = scanner.nextLine();
             }
@@ -98,7 +99,7 @@ public class Driver {
             }
             // allow overnight booking
             if (simulateCheckInDate <= simulateCheckOutDate)
-              hotelReservationSystem.simulateBooking(simulateHotelName, simulateGuestName, simulateCheckInDate, simulateCheckOutDate);
+              HRSController.simulateBooking(simulateHotelName, simulateGuestName, simulateCheckInDate, simulateCheckOutDate);
             else
               System.out.printf("\nInvalid check-in and check-out dates. Please try again.\n");
           }
