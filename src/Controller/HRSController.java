@@ -62,10 +62,13 @@ public class HRSController {
         return;
       }
     }
-    if ()
-    hotels.add(new Hotel(hotelName, numOfRooms));
-    // System.out.printf("Hotel '%s' successfully created with %d rooms.\n", hotelName, numOfRooms);
-    JOptionPane.showMessageDialog(null, String.format("Hotel '%s' successfully created with %d rooms.", hotelName, numOfRooms), "Success", JOptionPane.INFORMATION_MESSAGE);
+    if (numOfRooms < 1 || numOfRooms > 50)
+      JOptionPane.showMessageDialog(null, String.format("'%d' number of rooms is not allowed (must be from 1 to 50 only).", numOfRooms), "Error", JOptionPane.ERROR_MESSAGE);
+    else {
+      hotels.add(new Hotel(hotelName, numOfRooms));
+      // System.out.printf("Hotel '%s' successfully created with %d rooms.\n", hotelName, numOfRooms);
+      JOptionPane.showMessageDialog(null, String.format("Hotel '%s' successfully created with %d rooms.", hotelName, numOfRooms), "Success", JOptionPane.INFORMATION_MESSAGE);
+    }
   }
 
   /**

@@ -1,9 +1,12 @@
 package View;
 
+import Controller.HRSController;
+
 import javax.swing.*;
 import java.awt.*;
 
 public class MainMenuPanel extends JPanel {
+  private HRSController controller;
   private JButton createHotelButton;
   private JButton viewSpecificHotelButton;
   private JButton manageHotelButton;
@@ -16,6 +19,10 @@ public class MainMenuPanel extends JPanel {
     JLabel titleLabel = new JLabel("Hotel Reservation System", SwingConstants.CENTER);
     titleLabel.setFont(new Font("Serif", Font.BOLD, 24));
     add(titleLabel);
+
+    // TODO: call viewAllHotels from controller (display hotels, if none then "No hotels created yet")
+    controller = new HRSController(app);
+
     
     // TODO: create panels for these buttons
     createHotelButton = new JButton("Create Hotel");
