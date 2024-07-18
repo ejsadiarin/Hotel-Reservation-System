@@ -22,18 +22,25 @@ public class HRSApp extends JFrame {
 
     cardLayout = new CardLayout();
     mainPanel = new JPanel(cardLayout);
+    mainMenuPanel = new MainMenuPanel(this);
+    createHotelPanel = new CreateHotelPanel(this);
+    viewSpecificHotelPanel = new ViewSpecificHotelPanel(this);
+    manageHotelPanel = new ManageHotelPanel(this);
+    simulateBookingPanel = new SimulateBookingPanel(this);
 
     // Add different views to the main panel
-    mainPanel.add(new MainMenuPanel(this), "MainMenu");
-    mainPanel.add(new CreateHotelPanel(this), "CreateHotel");
-    mainPanel.add(new ViewSpecificHotelPanel(this), "ViewSpecificHotel");
-    mainPanel.add(new ManageHotelPanel(this), "ManageHotel");
-    mainPanel.add(new SimulateBookingPanel(this), "SimulateBooking");
+    mainPanel.add(mainMenuPanel, "MainMenu");
+    mainPanel.add(createHotelPanel, "CreateHotel");
+    mainPanel.add(viewSpecificHotelPanel, "ViewSpecificHotel");
+    mainPanel.add(manageHotelPanel, "ManageHotel");
+    mainPanel.add(simulateBookingPanel, "SimulateBooking");
 
     add(mainPanel);
 
     // Show the main menu initially
     cardLayout.show(mainPanel, "MainMenu");
+
+    new HRSController(this);
   }
   
   public void switchPanel(String panelName) {

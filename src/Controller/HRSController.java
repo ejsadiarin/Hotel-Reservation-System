@@ -31,12 +31,20 @@ public class HRSController {
    * Initializes the controller that holds the action listeners for interactivity
    */
   private void initController() {
-    // Main Menu Panel
-    view.getMainMenuPanel().getCreateHotelButton().addActionListener(e -> createHotel());
-    view.getMainMenuPanel().getViewSpecificHotelButton().addActionListener(e -> viewHotels());
-    view.getMainMenuPanel().getManageHotelButton().addActionListener(e -> showHotelManagementPanel());
-    view.getMainMenuPanel().getBackButton().addActionListener(e -> showMainMenuPanel());
+    // Action Listeners
+    view.getMainMenuPanel().getCreateHotelButton().addActionListener(e -> view.switchPanel("CreateHotel"));
+    view.getMainMenuPanel().getViewSpecificHotelButton().addActionListener(e -> view.switchPanel("ViewSpecificHotel"));
+    view.getMainMenuPanel().getManageHotelButton().addActionListener(e -> view.switchPanel("ManageHotel"));
+    view.getMainMenuPanel().getSimulateBookingButton().addActionListener(e -> view.switchPanel("SimulateBooking"));
     view.getMainMenuPanel().getExitButton().addActionListener(e -> System.exit(0));
+
+    // TODO: Functionality here
+    // Main Menu Panel
+//    view.getMainMenuPanel().getCreateHotelButton().addActionListener(e -> createHotel());
+//    view.getMainMenuPanel().getViewSpecificHotelButton().addActionListener(e -> viewSpecificHotel());
+//    view.getMainMenuPanel().getManageHotelButton().addActionListener(e -> manageHotel());
+//    view.getMainMenuPanel().getBackButton().addActionListener(e -> showMainMenuPanel());
+//    view.getMainMenuPanel().getExitButton().addActionListener(e -> System.exit(0));
 
     // Create Hotel Panel
 

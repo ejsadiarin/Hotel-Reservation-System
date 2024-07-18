@@ -14,6 +14,7 @@ public class MainMenuPanel extends JPanel {
   private JButton exitButton;
   
   public MainMenuPanel(HRSApp app) {
+    setSize(800, 600);
     setLayout(new BorderLayout());
 
     JLabel titleLabel = new JLabel("Hotel Reservation System", SwingConstants.CENTER);
@@ -23,26 +24,20 @@ public class MainMenuPanel extends JPanel {
     // TODO: call viewAllHotels from controller (display hotels, if none then "No hotels created yet")
     controller = new HRSController(app);
 
-    
     // TODO: create panels for these buttons
     createHotelButton = new JButton("Create Hotel");
-    createHotelButton.addActionListener(e -> app.switchPanel("CreateHotel"));
     add(createHotelButton);
 
     viewSpecificHotelButton = new JButton("View Specific Hotel");
-    viewSpecificHotelButton.addActionListener(e -> app.switchPanel("ViewSpecificHotel"));
     add(viewSpecificHotelButton);
     
     manageHotelButton = new JButton("Manage Hotel");
-    manageHotelButton.addActionListener(e -> app.switchPanel("ManageHotel"));
     add(manageHotelButton);
     
     simulateBookingButton = new JButton("Simulate Booking");
-    simulateBookingButton.addActionListener(e -> app.switchPanel("SimulateBooking"));
     add(simulateBookingButton);
 
     exitButton = new JButton("Exit");
-    exitButton.addActionListener(e -> System.exit(0));
     add(exitButton);
   }
   
