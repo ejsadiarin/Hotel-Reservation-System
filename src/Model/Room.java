@@ -27,7 +27,7 @@ public class Room {
     // Initialize all days to available
     this.availabilityDates = new ArrayList<>();
     for (int i = 0; i < 31; i++) {
-      this.availabilityDates.add(new AvailabilityDate(pricePerNight));
+      this.availabilityDates.add(new AvailabilityDate(i + 1, pricePerNight));
     }
     setRoomType(roomType);
   }

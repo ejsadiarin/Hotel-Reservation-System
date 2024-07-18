@@ -9,7 +9,10 @@ public class HRSApp extends JFrame {
   private CardLayout cardLayout;
   private JPanel mainPanel;
   private MainMenuPanel mainMenuPanel;
+  private CreateHotelPanel createHotelPanel;
+  private ViewSpecificHotelPanel viewSpecificHotelPanel;
   private ManageHotelPanel manageHotelPanel;
+  private SimulateBookingPanel simulateBookingPanel;
 //  private CardLayout cardLayout;
   
   public HRSApp() {
@@ -22,7 +25,10 @@ public class HRSApp extends JFrame {
 
     // Add different views to the main panel
     mainPanel.add(new MainMenuPanel(this), "MainMenu");
+    mainPanel.add(new CreateHotelPanel(this), "CreateHotel");
+    mainPanel.add(new ViewSpecificHotelPanel(this), "ViewSpecificHotel");
     mainPanel.add(new ManageHotelPanel(this), "ManageHotel");
+    mainPanel.add(new SimulateBookingPanel(this), "SimulateBooking");
 
     add(mainPanel);
 
@@ -37,11 +43,18 @@ public class HRSApp extends JFrame {
   public MainMenuPanel getMainMenuPanel() {
     return this.mainMenuPanel;
   }
-  
+
+  public CreateHotelPanel getCreateHotelPanel() {
+    return this.createHotelPanel;
+  }
+
+  public ViewSpecificHotelPanel getViewSpecificHotelPanel() {
+    return this.viewSpecificHotelPanel;
+  }
+
   public static void main(String[] args) {
     SwingUtilities.invokeLater(() -> {
       HRSApp app = new HRSApp();
-      HRSController controller = new HRSController();
       app.setVisible(true);
     });
   }

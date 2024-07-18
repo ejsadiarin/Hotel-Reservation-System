@@ -5,6 +5,7 @@ import Model.Room;
 import View.DisplayManager;
 import View.HRSApp;
 
+import javax.swing.*;
 import javax.swing.text.View;
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -23,34 +24,48 @@ public class HRSController {
   public HRSController(HRSApp view) {
     this.hotels = new ArrayList<>();
     this.view = view;
+    initController();
   }
-  
+
+  /**
+   * Initializes the controller that holds the action listeners for interactivity
+   */
   private void initController() {
+    // Main Menu Panel
     view.getMainMenuPanel().getCreateHotelButton().addActionListener(e -> createHotel());
-    view.getMainMenuPanel().getManageHotelsButton().addActionListener(e -> showHotelManagementPanel());
+    view.getMainMenuPanel().getViewSpecificHotelButton().addActionListener(e -> viewHotels());
+    view.getMainMenuPanel().getManageHotelButton().addActionListener(e -> showHotelManagementPanel());
+    view.getMainMenuPanel().getBackButton().addActionListener(e -> showMainMenuPanel());
     view.getMainMenuPanel().getExitButton().addActionListener(e -> System.exit(0));
 
-    view.getMainMenuPanel().getViewHotelsButton().addActionListener(e -> viewHotels());
-//    view.getManageHotelPanel().getBackButton().addActionListener(e -> showMainMenuPanel());
+    // Create Hotel Panel
+
+    // View Specific Hotel Panel
+
+    // Manage Hotel Panel
+
+    // Simulate Booking Panel
+
   }
   
   /**
    * Creates a new hotel with the specified name and number of rooms.
-   *
-   * @param hotelName the name of the new hotel
-   * @param numOfRooms the number of rooms in the new hotel
    */
   public void createHotel() {
-    String hotelName = view.getMainMenuPanel().
-        
+    String hotelName = view.getCreateHotelPanel().getHotelName().getText();
+    int numOfRooms = Integer.parseInt(view.getCreateHotelPanel().getNumOfRooms().getText());
+
     for (Hotel hotel : hotels) {
       if (hotel.getName().equals(hotelName)) {
-        System.out.printf("Hotel name '%s' already exists.\n", hotelName);
+        // System.out.printf("Hotel name '%s' already exists.\n", hotelName);
+        JOptionPane.showMessageDialog(null, String.format("Hotel name '%s' already exists.", hotelName), "Error", JOptionPane.ERROR_MESSAGE);
         return;
       }
     }
+    if ()
     hotels.add(new Hotel(hotelName, numOfRooms));
-    System.out.printf("Hotel '%s' successfully created with %d rooms.\n", hotelName, numOfRooms);
+    // System.out.printf("Hotel '%s' successfully created with %d rooms.\n", hotelName, numOfRooms);
+    JOptionPane.showMessageDialog(null, String.format("Hotel '%s' successfully created with %d rooms.", hotelName, numOfRooms), "Success", JOptionPane.INFORMATION_MESSAGE);
   }
 
   /**

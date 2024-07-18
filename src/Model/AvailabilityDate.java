@@ -1,11 +1,13 @@
 package Model;
 
 public class AvailabilityDate {
+  private int dateNumber;
   private boolean available;
   private double basePrice;
   private double modifiedPrice;
   
-  public AvailabilityDate(double basePrice) {
+  public AvailabilityDate(int dateNumber, double basePrice) {
+    this.dateNumber = dateNumber;
     this.available = true;
     this.basePrice = basePrice;
   }

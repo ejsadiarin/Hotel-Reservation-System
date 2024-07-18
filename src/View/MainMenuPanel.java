@@ -11,7 +11,7 @@ public class MainMenuPanel extends JPanel {
   private JButton exitButton;
   
   public MainMenuPanel(HRSApp app) {
-    setLayout(new GridLayout(3, 1));
+    setLayout(new BorderLayout());
 
     JLabel titleLabel = new JLabel("Hotel Reservation System", SwingConstants.CENTER);
     titleLabel.setFont(new Font("Serif", Font.BOLD, 24));
