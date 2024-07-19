@@ -1,12 +1,10 @@
 package Controller;
 
-import Helper.MessageHelper;
+import View.MessageHelper;
 import Model.Hotel;
 import Model.Room;
 import View.DisplayManager;
-import View.MainView;
 
-import javax.swing.*;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -16,12 +14,14 @@ import java.util.Scanner;
  */
 public class HRSController {
   private ArrayList<Hotel> hotels;
+  private MessageHelper messageHelper;
 
   /**
    * Constructs a new HotelReservationSystem with an empty list of hotels.
    */
   public HRSController() {
     this.hotels = new ArrayList<>();
+    this.messageHelper = new MessageHelper();
   }
 
   /**
@@ -33,15 +33,15 @@ public class HRSController {
   public void createHotel(String hotelName, int numOfRooms) {
     for (Hotel hotel : hotels) {
       if (hotel.getName().equals(hotelName)) {
-        MessageHelper.showErrorMessage(String.format("Hotel name '%s' already exists.", hotelName));
+        messageHelper.showErrorMessage(String.format("Hotel name '%s' already exists.", hotelName));
         return;
       }
     }
     if (numOfRooms < 1 || numOfRooms > 50)
-      MessageHelper.showErrorMessage(String.format("Hotel name '%s' already exists.", hotelName));
+      messageHelper.showErrorMessage(String.format("Hotel name '%s' already exists.", hotelName));
     else {
       hotels.add(new Hotel(hotelName, numOfRooms));
-      MessageHelper.showMessage("Success", String.format("Hotel '%s' successfully created with %d rooms.", hotelName, numOfRooms));
+      messageHelper.showMessage("Success", String.format("Hotel '%s' successfully created with %d rooms.", hotelName, numOfRooms));
     }
   }
 
