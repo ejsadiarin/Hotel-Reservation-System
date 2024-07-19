@@ -1,4 +1,3 @@
-//package Main;
 //
 //import Controller.HRSController;
 //import View.DisplayManager;
@@ -112,3 +111,19 @@
 //
 //  }
 //}
+
+import Controller.HRSController;
+import View.MainView;
+
+import javax.swing.*;
+
+public class Driver {
+    public static void main(String[] args) {
+        SwingUtilities.invokeLater(() -> {
+            MainView mainView = new MainView();
+            HRSController controller = new HRSController(mainView);
+            mainView.setVisible(true);
+        });
+    }
+
+}

@@ -4,47 +4,52 @@ import Controller.HRSController;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class CreateHotelPanel extends JPanel {
-  private HRSApp app;
-  private JTextField hotelName;
-  private JTextField numOfRooms;
   private HRSController controller;
 
-  public CreateHotelPanel(HRSApp app) {
-    this.app = app;
-    this.controller = new HRSController(app);
+  public CreateHotelPanel() {
+    this.controller = new HRSController();
     setLayout(new BorderLayout());
     
     JPanel formPanel = new JPanel(new GridLayout(2, 2));
-    JLabel hotelNameLabel = new JLabel("Hotel Name");
-    hotelNameLabel.setHorizontalAlignment(SwingConstants.CENTER);
-    formPanel.add(hotelNameLabel);
-    hotelName = new JTextField();
-    formPanel.add(hotelName);
-
-    JLabel numOfRoomsLabel = new JLabel("Number of Rooms");
-    numOfRoomsLabel.setHorizontalAlignment(SwingConstants.CENTER);
-    formPanel.add(numOfRoomsLabel);
-    numOfRooms = new JTextField();
-    formPanel.add(numOfRooms);
-
     add(formPanel, BorderLayout.CENTER);
 
-    JPanel buttonPanel = new JPanel();
-    JButton createButton = new JButton("Create");
-    createButton.addActionListener(e -> controller.createHotel()); // Replace with actual create hotel logic
-    buttonPanel.add(createButton);
-    add(buttonPanel, BorderLayout.SOUTH);
+    createHotelComponent(formPanel);
   }
 
-  // return the hotel name input from this view panel
-  public JTextField getHotelName() {
-    return this.hotelName;
+  public void createHotelComponent(JPanel formPanel) {
+    formPanel.setLayout(null);
+
+    JLabel hotelNameLabel = new JLabel("Hotel Name:");
+    hotelNameLabel.setBounds(10, 20, 80, 25);
+    formPanel.add(hotelNameLabel);
+
+    JTextField hotelNameField = new JTextField(20);
+    hotelNameField.setBounds(100, 20, 165, 25);
+    formPanel.add(hotelNameField);
+
+    JLabel numOfRoomsLabel = new JLabel("Number of Rooms:");
+    numOfRoomsLabel.setBounds(10, 50, 80, 25);
+    formPanel.add(numOfRoomsLabel);
+
+    JTextField numOfRoomsField = new JTextField(20);
+    numOfRoomsField.setBounds(100, 50, 165, 25);
+    formPanel.add(numOfRoomsField);
+
+    JButton createHotelButton = new JButton("Create Hotel");
+    createHotelButton.setBounds(10, 80, 150, 25);
+    formPanel.add(createHotelButton);
+
+    createHotelButton.addActionListener(new ActionListener() {
+      @Override
+      public void actionPerformed(ActionEvent e) {
+        String hotelName = hotelNameField.getText();
+        int numOfRooms = Integer.parseInt(numOfRoomsField.getText());
+        controller.createHotel(hotelName, numOfRooms);
+      }
+    });
   }
-  
-  public JTextField getNumOfRooms() {
-    return this.numOfRooms;
-  }
-  
 }

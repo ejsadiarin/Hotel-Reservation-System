@@ -6,7 +6,7 @@ import javax.swing.*;
 import java.awt.*;
 
 public class ManageHotelPanel extends JPanel {
-  private HRSApp app;
+  private HRSController controller;
   private JButton changeNameOfHotelButton;
   private JButton addRoomButton;
   private JButton removeRoomButton;
@@ -22,8 +22,9 @@ public class ManageHotelPanel extends JPanel {
 //    System.out.printf("5 - Remove a reservation\n");
 //    System.out.printf("6 - Remove hotel\n");
 //    System.out.printf("0 - Go back to previous menu\n");
-  public ManageHotelPanel(HRSApp app) {
-    this.app = app;
+  public ManageHotelPanel() {
+    this.controller = new HRSController();
+
     setLayout(new BorderLayout());
 
     JPanel buttonPanel = new JPanel();
@@ -47,7 +48,7 @@ public class ManageHotelPanel extends JPanel {
     // TODO: maybe show specific (chosen) hotel details on BorderLayout.NORTH ?
     add(buttonPanel, BorderLayout.SOUTH);
 
-    this.backButton.addActionListener(e -> app.switchPanel("MainMenu"));
+//    this.backButton.addActionListener(e -> app.switchPanel("MainMenu"));
     
     // TODO: use TextLayout to get input here
 //    changeNameOfHotelButton.addActionListener(e -> {

@@ -1,12 +1,12 @@
 package Controller;
 
+import Helper.MessageHelper;
 import Model.Hotel;
 import Model.Room;
 import View.DisplayManager;
-import View.HRSApp;
+import View.MainView;
 
 import javax.swing.*;
-import javax.swing.text.View;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -15,67 +15,33 @@ import java.util.Scanner;
  * This allows creating hotels, viewing hotel details, managing hotel properties, and simulating bookings.
  */
 public class HRSController {
-  private HRSApp view;
   private ArrayList<Hotel> hotels;
 
   /**
    * Constructs a new HotelReservationSystem with an empty list of hotels.
    */
-  public HRSController(HRSApp view) {
+  public HRSController() {
     this.hotels = new ArrayList<>();
-    this.view = view;
-    initController();
   }
 
-  /**
-   * Initializes the controller that holds the action listeners for interactivity
-   */
-  private void initController() {
-    // Action Listeners
-    view.getMainMenuPanel().getCreateHotelButton().addActionListener(e -> view.switchPanel("CreateHotel"));
-    view.getMainMenuPanel().getViewSpecificHotelButton().addActionListener(e -> view.switchPanel("ViewSpecificHotel"));
-    view.getMainMenuPanel().getManageHotelButton().addActionListener(e -> view.switchPanel("ManageHotel"));
-    view.getMainMenuPanel().getSimulateBookingButton().addActionListener(e -> view.switchPanel("SimulateBooking"));
-    view.getMainMenuPanel().getExitButton().addActionListener(e -> System.exit(0));
-
-    // TODO: Functionality here
-    // Main Menu Panel
-//    view.getMainMenuPanel().getCreateHotelButton().addActionListener(e -> createHotel());
-//    view.getMainMenuPanel().getViewSpecificHotelButton().addActionListener(e -> viewSpecificHotel());
-//    view.getMainMenuPanel().getManageHotelButton().addActionListener(e -> manageHotel());
-//    view.getMainMenuPanel().getBackButton().addActionListener(e -> showMainMenuPanel());
-//    view.getMainMenuPanel().getExitButton().addActionListener(e -> System.exit(0));
-
-    // Create Hotel Panel
-
-    // View Specific Hotel Panel
-
-    // Manage Hotel Panel
-
-    // Simulate Booking Panel
-
-  }
-  
   /**
    * Creates a new hotel with the specified name and number of rooms.
+   *
+   * @param hotelName is the of the hotel to be created
+   * @param numOfRooms is number of rooms of the newly created hotel (minimum is 1, maximum is 50)
    */
-  public void createHotel() {
-    String hotelName = view.getCreateHotelPanel().getHotelName().getText();
-    int numOfRooms = Integer.parseInt(view.getCreateHotelPanel().getNumOfRooms().getText());
-
+  public void createHotel(String hotelName, int numOfRooms) {
     for (Hotel hotel : hotels) {
       if (hotel.getName().equals(hotelName)) {
-        // System.out.printf("Hotel name '%s' already exists.\n", hotelName);
-        JOptionPane.showMessageDialog(null, String.format("Hotel name '%s' already exists.", hotelName), "Error", JOptionPane.ERROR_MESSAGE);
+        MessageHelper.showErrorMessage(String.format("Hotel name '%s' already exists.", hotelName));
         return;
       }
     }
     if (numOfRooms < 1 || numOfRooms > 50)
-      JOptionPane.showMessageDialog(null, String.format("'%d' number of rooms is not allowed (must be from 1 to 50 only).", numOfRooms), "Error", JOptionPane.ERROR_MESSAGE);
+      MessageHelper.showErrorMessage(String.format("Hotel name '%s' already exists.", hotelName));
     else {
       hotels.add(new Hotel(hotelName, numOfRooms));
-      // System.out.printf("Hotel '%s' successfully created with %d rooms.\n", hotelName, numOfRooms);
-      JOptionPane.showMessageDialog(null, String.format("Hotel '%s' successfully created with %d rooms.", hotelName, numOfRooms), "Success", JOptionPane.INFORMATION_MESSAGE);
+      MessageHelper.showMessage("Success", String.format("Hotel '%s' successfully created with %d rooms.", hotelName, numOfRooms));
     }
   }
 
@@ -83,11 +49,12 @@ public class HRSController {
    * Displays the list of all hotels.
    */
   public void viewAllHotels() {
+    // TODO: refactor, return the list of all hotels (as String[]? or something that the view can render)
     if (this.hotels.isEmpty()) {
       System.out.printf("No hotels found.\n");
     }
     else {
-      DisplayManager.displayAllHotels(this.hotels);
+      DisplayManager.displayAllHotels(this.hotels); // remove
     }
   }
 
