@@ -56,10 +56,6 @@ public class HRSController {
     // TODO: Clear text field in CreateHotelPanel view
   }
   
-    public void refreshHotelListView() {
-        view.refreshHotelList(viewAllHotels());
-    }
-
   /**
    * Displays the list of all hotels.
    */

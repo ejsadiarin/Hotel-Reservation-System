@@ -110,7 +110,9 @@ public class CreateHotelPanel extends javax.swing.JPanel {
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // Go back to MainView here
-        view.showMainView();
+//        view.showMainView();
+        view.setVisible(true);
+        CreateHotelPanel.this.dispose();
     }//GEN-LAST:event_jButton3ActionPerformed
 
 

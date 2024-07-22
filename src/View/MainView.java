@@ -1,36 +1,25 @@
 package View;
 
+import Controller.HRSController;
+
 import javax.swing.*;
 import java.awt.*;
 
 public class MainView extends javax.swing.JFrame {
-  private CreateHotelPanel createHotelPanel;
+  private HRSController controller;
+  private CreateHotelFrame createHotelFrame;
   private JList<String> hotelList;
-  private JPanel mainPanel;
+  private DefaultListModel<String> hotelListModel;
 
     /**
      * Creates new form MainView
      */
-    public MainView() {
+    public MainView(HRSController controller) {
+      this.controller = controller;
         initComponents();
         hotelList = new JList<>();
         jScrollPane1.setViewportView(hotelList);
-      mainPanel = new JPanel();
-      mainPanel.setLayout(new BorderLayout());
-      mainPanel.add(jLabel1, BorderLayout.NORTH);
-      mainPanel.add(jScrollPane1, BorderLayout.CENTER);
-
-      JPanel buttonPanel = new JPanel();
-      buttonPanel.setLayout(new GridLayout(2, 2));
-      buttonPanel.add(jButton1);
-      buttonPanel.add(jButton3);
-      buttonPanel.add(jButton2);
-      buttonPanel.add(jButton4);
-      mainPanel.add(buttonPanel, BorderLayout.SOUTH);
-
-      this.setContentPane(mainPanel);
     }
-
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -134,12 +123,17 @@ public class MainView extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
-        // show CreateHotelPanel view
-              createHotelPanel = new CreateHotelPanel(this);
-      this.setContentPane(createHotelPanel);
-      this.invalidate();
-      this.validate();
+      // TODO add your handling code here:
+      // show CreateHotelPanel view
+      createHotelFrame = new CreateHotelFrame(this, con);
+      
+      createHotelFrame.setVisible(true);
+      this.setVisible(false);
+      
+      // or:
+//      this.setContentPane(createHotelFrame);
+//      this.invalidate();
+//      this.validate();
     }//GEN-LAST:event_jButton1ActionPerformed
     
     public void refreshHotelList(DefaultListModel<String> hotelListModel) {
@@ -147,8 +141,8 @@ public class MainView extends javax.swing.JFrame {
     }
 
     public void showMainView() {
-//      this.setContentPane(this.getContentPane());
-      this.setContentPane(mainPanel);
+      this.setContentPane(this.getContentPane());
+//      this.setContentPane(mainPanel);
       this.invalidate();
       this.validate();
     }
@@ -183,7 +177,8 @@ public class MainView extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new MainView().setVisible(true);
+              HRSController controller = new HRSController(view);
+              new MainView(controller).setVisible(true);
             }
         });
     }
