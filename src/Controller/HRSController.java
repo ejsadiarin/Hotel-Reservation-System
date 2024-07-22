@@ -3,92 +3,72 @@ package Controller;
 import Model.Hotel;
 import Model.Room;
 import View.DisplayManager;
-import View.HRSApp;
+import View.MainView;
 
 import javax.swing.*;
-import javax.swing.text.View;
+
+import Helper.MessageHelper;
+
 import java.util.ArrayList;
 import java.util.Scanner;
 
 /**
- * The HotelReservationSystem class manages the operations related to hotel reservations.
- * This allows creating hotels, viewing hotel details, managing hotel properties, and simulating bookings.
+ * The HotelReservationSystem class manages the operations related to hotel
+ * reservations.
+ * This allows creating hotels, viewing hotel details, managing hotel
+ * properties, and simulating bookings.
  */
 public class HRSController {
-  private HRSApp view;
+  private MainView view;
   private ArrayList<Hotel> hotels;
 
   /**
    * Constructs a new HotelReservationSystem with an empty list of hotels.
    */
-  public HRSController(HRSApp view) {
+  public HRSController(MainView view) {
     this.hotels = new ArrayList<>();
     this.view = view;
-    initController();
   }
 
-  /**
-   * Initializes the controller that holds the action listeners for interactivity
-   */
-  private void initController() {
-    // Action Listeners
-    view.getMainMenuPanel().getCreateHotelButton().addActionListener(e -> view.switchPanel("CreateHotel"));
-    view.getMainMenuPanel().getViewSpecificHotelButton().addActionListener(e -> view.switchPanel("ViewSpecificHotel"));
-    view.getMainMenuPanel().getManageHotelButton().addActionListener(e -> view.switchPanel("ManageHotel"));
-    view.getMainMenuPanel().getSimulateBookingButton().addActionListener(e -> view.switchPanel("SimulateBooking"));
-    view.getMainMenuPanel().getExitButton().addActionListener(e -> System.exit(0));
-
-    // TODO: Functionality here
-    // Main Menu Panel
-//    view.getMainMenuPanel().getCreateHotelButton().addActionListener(e -> createHotel());
-//    view.getMainMenuPanel().getViewSpecificHotelButton().addActionListener(e -> viewSpecificHotel());
-//    view.getMainMenuPanel().getManageHotelButton().addActionListener(e -> manageHotel());
-//    view.getMainMenuPanel().getBackButton().addActionListener(e -> showMainMenuPanel());
-//    view.getMainMenuPanel().getExitButton().addActionListener(e -> System.exit(0));
-
-    // Create Hotel Panel
-
-    // View Specific Hotel Panel
-
-    // Manage Hotel Panel
-
-    // Simulate Booking Panel
-
+  public void showMainView() {
+    this.view.setVisible(true);
   }
-  
+
   /**
    * Creates a new hotel with the specified name and number of rooms.
    */
   public void createHotel() {
-    String hotelName = view.getCreateHotelPanel().getHotelName().getText();
-    int numOfRooms = Integer.parseInt(view.getCreateHotelPanel().getNumOfRooms().getText());
+    String hotelName = this.view.getCreateHotelPanel().getHotelName().getText();
+    int numOfRooms = Integer.parseInt(this.view.getCreateHotelPanel().getNumOfRooms().getText());
 
     for (Hotel hotel : hotels) {
       if (hotel.getName().equals(hotelName)) {
-        // System.out.printf("Hotel name '%s' already exists.\n", hotelName);
-        JOptionPane.showMessageDialog(null, String.format("Hotel name '%s' already exists.", hotelName), "Error", JOptionPane.ERROR_MESSAGE);
+        MessageHelper.showErrorMessage(String.format("Hotel name '%s' already exists.", hotelName));
         return;
       }
     }
-    if (numOfRooms < 1 || numOfRooms > 50)
-      JOptionPane.showMessageDialog(null, String.format("'%d' number of rooms is not allowed (must be from 1 to 50 only).", numOfRooms), "Error", JOptionPane.ERROR_MESSAGE);
+    if (numOfRooms < 1 || numOfRooms > 50) 
+      MessageHelper.showErrorMessage(String.format("'%d' number of rooms is not allowed (must be from 1 to 50 only).", numOfRooms));
     else {
       hotels.add(new Hotel(hotelName, numOfRooms));
-      // System.out.printf("Hotel '%s' successfully created with %d rooms.\n", hotelName, numOfRooms);
-      JOptionPane.showMessageDialog(null, String.format("Hotel '%s' successfully created with %d rooms.", hotelName, numOfRooms), "Success", JOptionPane.INFORMATION_MESSAGE);
+      MessageHelper.showSuccessMessage(String.format("Hotel '%s' successfully created with %d rooms.", hotelName, numOfRooms));
+//      view.switchPanel("MainMenuPane");
     }
+    
+    // TODO: Clear text field in CreateHotelPanel view
   }
 
   /**
    * Displays the list of all hotels.
    */
-  public void viewAllHotels() {
-    if (this.hotels.isEmpty()) {
-      System.out.printf("No hotels found.\n");
+  public DefaultListModel<String> viewAllHotels() {
+    DefaultListModel<String> hotelListModel = new DefaultListModel<>();
+
+    for (Hotel hotel : this.getHotels()) {
+      hotelListModel.addElement(hotel.getName());
     }
-    else {
-      DisplayManager.displayAllHotels(this.hotels);
-    }
+
+    return hotelListModel;
   }
 
   /**
@@ -119,8 +99,7 @@ public class HRSController {
     if (choice.equals("0")) {
       System.out.printf("\nGoing back...\n");
       return;
-    } 
-    else if (choice.equals("1")) {
+    } else if (choice.equals("1")) {
       System.out.printf("\n===========LOW-LEVEL INFORMATION==============\n");
       // maybe display ALL reservation first here with details
       DisplayManager.displayAllRoomsInHotel(hotel);
@@ -137,15 +116,12 @@ public class HRSController {
         if (subChoice.equals("0")) {
           System.out.printf("\nGoing back...\n");
           return;
-        }
-        else if (subChoice.equals("1")) {
+        } else if (subChoice.equals("1")) {
           DisplayManager.displayReservationInfoByRoom(hotel, selectedRoom);
-        }
-        else
+        } else
           System.out.printf("\nInvalid choice.\n");
       }
-    }
-    else if (choice.equals("2")) {
+    } else if (choice.equals("2")) {
       System.out.printf("\nSelect a date to view available and booked rooms\n");
       System.out.printf("Enter check-in date: ");
       int checkInDate = scanner.nextInt();
@@ -154,18 +130,17 @@ public class HRSController {
       int checkOutDate = scanner.nextInt();
       scanner.nextLine();
       DisplayManager.displayRoomsOnDate(hotel, checkInDate, checkOutDate);
-    }
-    else if (choice.equals("3")) {
+    } else if (choice.equals("3")) {
       System.out.printf("\nEnter a guest name to view their reservations in detail: ");
       String guestName = scanner.nextLine();
       DisplayManager.displayReservationsByGuestName(hotel, guestName);
-    }
-    else
+    } else
       System.out.printf("\nInvalid choice.\n");
   }
 
   /**
-   * Manages the properties of a specific hotel, allowing changes to its details, rooms, and reservations.
+   * Manages the properties of a specific hotel, allowing changes to its details,
+   * rooms, and reservations.
    *
    * @param hotelName the name of the hotel to manage
    */
@@ -176,19 +151,18 @@ public class HRSController {
 
     if (chosenHotel == null) {
       System.out.printf("Hotel name '%s' not found. Exiting...\n", hotelName);
-    }
-    else {
+    } else {
       while (true) {
         DisplayManager.displayManageHotelUI();
 
         System.out.printf("Choose your action (Enter 0 to exit): ");
         int choice = scanner.nextInt();
-        scanner.nextLine();        
-          
+        scanner.nextLine();
+
         switch (choice) {
-          case 0: // go back to previous          
+          case 0: // go back to previous
             System.out.printf("Exiting...\n");
-            return;          
+            return;
           case 1:// change name of hotel (name must still be unique)
             System.out.printf("Set new name: ");
             // System.out.printf("Set new name (Enter 0 to exit): ");
@@ -197,8 +171,7 @@ public class HRSController {
               chosenHotel.setName(newHotelName);
               System.out.printf("Successfully changed name to %s!\n", newHotelName);
               return;
-            }
-            else
+            } else
               System.out.printf("%s already exists. Going back...\n", newHotelName);
             break;
           case 2: // add room(s)
@@ -213,9 +186,9 @@ public class HRSController {
             if (roomToRemove != null && roomToRemove.getReservations().isEmpty()) {
               chosenHotel.removeRoom(removeRoomName);
               System.out.printf("Successfully removed Room %s from hotel %s!\n", removeRoomName, chosenHotel.getName());
-            }
-            else
-              System.out.printf("Cannot remove rooms since there are some reservations existing or room doesn't exist at all.\n");
+            } else
+              System.out.printf(
+                  "Cannot remove rooms since there are some reservations existing or room doesn't exist at all.\n");
             break;
           case 4: // update base price of rooms
             if (chosenHotel.areEmptyReservations()) {
@@ -227,8 +200,7 @@ public class HRSController {
               }
               chosenHotel.setBasePrice(newBasePrice);
               System.out.printf("Base price updated to %.2f for hotel '%s'.\n", newBasePrice, chosenHotel.getName());
-            }
-            else
+            } else
               System.out.printf("There are some reservations in rooms. Cannot update new base price.\n");
             break;
           case 5: // remove reservation
@@ -236,14 +208,13 @@ public class HRSController {
             System.out.printf("Enter room to remove a reservation from: ");
             String roomName = scanner.nextLine();
             Room room = chosenHotel.getRoom(roomName);
-            
+
             if (room != null && !room.getReservations().isEmpty()) {
               DisplayManager.displayReservationInfoByRoom(chosenHotel, room);
               System.out.printf("Enter guest name to remove reservation: ");
               String guestName = scanner.nextLine();
               room.removeReservation(guestName);
-            }
-            else
+            } else
               System.out.printf("Room '%s' not found.\n", roomName);
             break;
           case 6: // remove hotel
@@ -251,8 +222,7 @@ public class HRSController {
               hotels.remove(chosenHotel);
               System.out.printf("Successfully removed hotel '%s'!\n", chosenHotel.getName());
               return;
-            }
-            else
+            } else
               System.out.printf("Cannot remove hotel since there are some reservations left.\n");
             break;
           default:
@@ -263,22 +233,25 @@ public class HRSController {
   }
 
   /**
-   * Simulates the booking of a room in a specified hotel for a guest within a date range.
+   * Simulates the booking of a room in a specified hotel for a guest within a
+   * date range.
    *
-   * @param hotelName the name of the hotel
-   * @param guestName the name of the guest
-   * @param checkInDate the check-in date
+   * @param hotelName    the name of the hotel
+   * @param guestName    the name of the guest
+   * @param checkInDate  the check-in date
    * @param checkOutDate the check-out date
    */
   public void simulateBooking(String hotelName, String guestName, int checkInDate, int checkOutDate) {
     Hotel chosenHotel = findHotelByName(hotelName);
-    
+
     if (chosenHotel != null) {
       ArrayList<Room> availableRooms = chosenHotel.getAvailableRoomsOnDate(checkInDate, checkOutDate);
       if (availableRooms.isEmpty())
-        System.out.printf("No rooms available from day %d to day %d in hotel '%s'.\n", checkInDate, checkOutDate, hotelName);
+        System.out.printf("No rooms available from day %d to day %d in hotel '%s'.\n", checkInDate, checkOutDate,
+            hotelName);
       else {
-        System.out.printf("Available rooms from day %d to day %d in hotel '%s':\n", checkInDate, checkOutDate, hotelName);
+        System.out.printf("Available rooms from day %d to day %d in hotel '%s':\n", checkInDate, checkOutDate,
+            hotelName);
         for (Room room : availableRooms)
           System.out.printf("%s\n", room.getName());
 
@@ -287,8 +260,7 @@ public class HRSController {
         roomToBook.addReservation(guestName, checkInDate, checkOutDate);
         System.out.printf("Booking successful for room '%s'.\n", roomToBook.getName());
       }
-    }
-    else
+    } else
       System.out.printf("Hotel '%s' not found.\n", hotelName);
   }
 
@@ -300,7 +272,7 @@ public class HRSController {
    */
   public Hotel findHotelByName(String hotelName) {
     for (Hotel hotel : hotels) {
-      if (hotel.getName().equals(hotelName)) 
+      if (hotel.getName().equals(hotelName))
         return hotel;
     }
     return null;

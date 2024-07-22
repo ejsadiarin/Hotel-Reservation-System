@@ -6,14 +6,14 @@ import javax.swing.*;
 import java.awt.*;
 
 public class CreateHotelPanel extends JPanel {
-  private HRSApp app;
+  private MainView view;
   private JTextField hotelName;
   private JTextField numOfRooms;
   private HRSController controller;
 
-  public CreateHotelPanel(HRSApp app) {
-    this.app = app;
-    this.controller = new HRSController(app);
+  public CreateHotelPanel(MainView view) {
+    this.view = view;
+    this.controller = new HRSController(view);
     setLayout(new BorderLayout());
     
     JPanel formPanel = new JPanel(new GridLayout(2, 2));
@@ -29,13 +29,21 @@ public class CreateHotelPanel extends JPanel {
     numOfRooms = new JTextField();
     formPanel.add(numOfRooms);
 
-    add(formPanel, BorderLayout.CENTER);
+    this.add(formPanel, BorderLayout.CENTER);
 
     JPanel buttonPanel = new JPanel();
     JButton createButton = new JButton("Create");
     createButton.addActionListener(e -> controller.createHotel()); // Replace with actual create hotel logic
     buttonPanel.add(createButton);
-    add(buttonPanel, BorderLayout.SOUTH);
+    
+    JButton backButton = new JButton("Back");
+    backButton.addActionListener(e -> {
+//      view.switchPanel("MainMenuPane");
+      new MainMenuPanel(view).setVisible(true);
+    });
+    buttonPanel.add(backButton);
+
+    this.add(buttonPanel, BorderLayout.SOUTH);
   }
 
   // return the hotel name input from this view panel

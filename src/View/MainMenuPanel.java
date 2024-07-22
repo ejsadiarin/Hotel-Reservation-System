@@ -1,9 +1,11 @@
 package View;
 
-import Controller.HRSController;
-
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import Controller.HRSController;
 
 public class MainMenuPanel extends JPanel {
   private HRSController controller;
@@ -12,35 +14,64 @@ public class MainMenuPanel extends JPanel {
   private JButton manageHotelButton;
   private JButton simulateBookingButton;
   private JButton exitButton;
-  
-  public MainMenuPanel(HRSApp app) {
+  private DefaultListModel<String> hotelNames;
+  private JList<String> hotelList; 
+
+  public MainMenuPanel(MainView view) {
+    this.controller = new HRSController(view);
     setSize(800, 600);
-    setLayout(new BorderLayout());
+    setLayout(null);
 
-    JLabel titleLabel = new JLabel("Hotel Reservation System", SwingConstants.CENTER);
+    JLabel titleLabel = new JLabel("Hotel Reservation System");
     titleLabel.setFont(new Font("Serif", Font.BOLD, 24));
-    add(titleLabel);
+    titleLabel.setBounds(300, 50, 200, 50);
+    this.add(titleLabel);
 
-    // TODO: call viewAllHotels from controller (display hotels, if none then "No hotels created yet")
-    controller = new HRSController(app);
+    hotelNames = controller.viewAllHotels();
+    hotelList = new JList<>(hotelNames);
+//    if (hotelNames.isEmpty()) {
+//      hotelList.setListData(new String[] { "No hotels found" });
+//    }
+    
+    JScrollPane scrollPane = new JScrollPane(hotelList);
+    scrollPane.setBounds(50, 150, 200, 300);
+    this.add(scrollPane);
+    
+    // Set bounds for the buttons
+    int buttonWidth = 200;
+    int buttonHeight = 50;
+    int buttonStartX = (800 - buttonWidth) / 2; // Center the buttons horizontally
+    int buttonStartY = 150; // Start the buttons at y=150
+    int buttonSpacing = 10; // 10 pixels spacing between buttons
 
-    // TODO: create panels for these buttons
     createHotelButton = new JButton("Create Hotel");
-    add(createHotelButton);
+    createHotelButton.setBounds(buttonStartX, buttonStartY, buttonWidth, buttonHeight);
+    this.add(createHotelButton);
+    createHotelButton.addActionListener(new ActionListener() {
+      @Override
+      public void actionPerformed(ActionEvent e) {
+//        app.switchPanel("CreateHotelPane");
+        new CreateHotelPanel(view).setVisible(true);
+      }
+    });
 
     viewSpecificHotelButton = new JButton("View Specific Hotel");
-    add(viewSpecificHotelButton);
-    
+    viewSpecificHotelButton.setBounds(buttonStartX, buttonStartY + buttonHeight + buttonSpacing, buttonWidth, buttonHeight);
+    this.add(viewSpecificHotelButton);
+
     manageHotelButton = new JButton("Manage Hotel");
-    add(manageHotelButton);
-    
+    manageHotelButton.setBounds(buttonStartX, buttonStartY + 2 * (buttonHeight + buttonSpacing), buttonWidth, buttonHeight);
+    this.add(manageHotelButton);
+
     simulateBookingButton = new JButton("Simulate Booking");
-    add(simulateBookingButton);
+    simulateBookingButton.setBounds(buttonStartX, buttonStartY + 3 * (buttonHeight + buttonSpacing), buttonWidth, buttonHeight);
+    this.add(simulateBookingButton);
 
     exitButton = new JButton("Exit");
-    add(exitButton);
+    exitButton.setBounds(buttonStartX, buttonStartY + 4 * (buttonHeight + buttonSpacing), buttonWidth, buttonHeight);
+    this.add(exitButton);
   }
-  
+
   public JButton getCreateHotelButton() {
     return this.createHotelButton;
   }
@@ -60,4 +91,5 @@ public class MainMenuPanel extends JPanel {
   public JButton getExitButton() {
     return this.exitButton;
   }
+
 }

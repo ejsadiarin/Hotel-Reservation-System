@@ -1,11 +1,10 @@
 package View;
 
 import javax.swing.*;
-import java.awt.*;
 
 public class ViewSpecificHotelPanel extends JPanel {
-    private HRSApp app;
-    public ViewSpecificHotelPanel(HRSApp app) {
+    private MainView app;
+    public ViewSpecificHotelPanel(MainView app) {
         this.app = app;
     }
 }

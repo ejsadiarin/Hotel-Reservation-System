@@ -1,12 +1,10 @@
 package View;
 
-import Controller.HRSController;
-
 import javax.swing.*;
 import java.awt.*;
 
 public class ManageHotelPanel extends JPanel {
-  private HRSApp app;
+  private MainView app;
   private JButton changeNameOfHotelButton;
   private JButton addRoomButton;
   private JButton removeRoomButton;
@@ -22,7 +20,7 @@ public class ManageHotelPanel extends JPanel {
 //    System.out.printf("5 - Remove a reservation\n");
 //    System.out.printf("6 - Remove hotel\n");
 //    System.out.printf("0 - Go back to previous menu\n");
-  public ManageHotelPanel(HRSApp app) {
+  public ManageHotelPanel(MainView app) {
     this.app = app;
     setLayout(new BorderLayout());
 
