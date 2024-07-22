@@ -66,74 +66,75 @@ public class HRSController {
     return hotelNames;
   }
 
-   /**
-   * Displays detailed information about a specific hotel.
-   *
-   * @param hotelName the name of the hotel to view
-   */
-   public void viewSpecificHotel(String hotelName) {
-   if (this.hotels.isEmpty()) {
-     MessageHelper.showErrorMessage("No hotels found! Create a hotel first to proceed.");
-     return;
-   }
-
-   Hotel hotel = findHotelByName(hotelName);
-   if (hotel == null) {
-     MessageHelper.showErrorMessage(String.format("Hotel name '%s' not found.\n", hotelName));
-     return;
-   }
-
-   DisplayManager.displayHotelGeneralInfo(hotel);
-   System.out.printf("\n0 - Go back to main menu");
-   System.out.printf("\n1 - View all room details");
-   System.out.printf("\n2 - View available rooms by provided check-in and
-   check-out dates");
-   System.out.printf("\n3 - View reservation details by provided guest name");
-   System.out.printf("\nChoose your action: ");
-   String choice = scanner.nextLine();
-   if (choice.equals("0")) {
-   System.out.printf("\nGoing back...\n");
-   return;
-   } else if (choice.equals("1")) {
-   System.out.printf("\n===========LOW-LEVEL INFORMATION==============\n");
-   // maybe display ALL reservation first here with details
-   DisplayManager.displayAllRoomsInHotel(hotel);
-   System.out.printf("\nSelect a room to view in detail: ");
-   String roomName = scanner.nextLine();
-   DisplayManager.displaySpecificRoomInfo(hotel, roomName);
-
-   Room selectedRoom = hotel.getRoom(roomName);
-   if (selectedRoom != null) {
-   System.out.printf("\n0 - Go back to main menu");
-   System.out.printf("\n1 - View reservation details in the selected room '%s'",
-   roomName);
-   System.out.printf("\nChoose your action: ");
-   String subChoice = scanner.nextLine();
-   if (subChoice.equals("0")) {
-   System.out.printf("\nGoing back...\n");
-   return;
-   } else if (subChoice.equals("1")) {
-   DisplayManager.displayReservationInfoByRoom(hotel, selectedRoom);
-   } else
-   System.out.printf("\nInvalid choice.\n");
-   }
-   } else if (choice.equals("2")) {
-   System.out.printf("\nSelect a date to view available and booked rooms\n");
-   System.out.printf("Enter check-in date: ");
-   int checkInDate = scanner.nextInt();
-   scanner.nextLine();
-   System.out.printf("Enter check-out date: ");
-   int checkOutDate = scanner.nextInt();
-   scanner.nextLine();
-   DisplayManager.displayRoomsOnDate(hotel, checkInDate, checkOutDate);
-   } else if (choice.equals("3")) {
-   System.out.printf("\nEnter a guest name to view their reservations in detail:
-   ");
-   String guestName = scanner.nextLine();
-   DisplayManager.displayReservationsByGuestName(hotel, guestName);
-   } else
-   System.out.printf("\nInvalid choice.\n");
-   }
+//   /**
+//   * Displays detailed information about a specific hotel.
+//   *
+//   * @param hotelName the name of the hotel to view
+//   */
+//   public void viewSpecificHotel(String hotelName) {
+//   if (this.hotels.isEmpty()) {
+//     MessageHelper.showErrorMessage("No hotels found! Create a hotel first to proceed.");
+//     return;
+//   }
+//
+//   Hotel hotel = findHotelByName(hotelName);
+//   if (hotel == null) {
+//     MessageHelper.showErrorMessage(String.format("Hotel name '%s' not found.\n", hotelName));
+//     return;
+//   }
+//
+//   DisplayManager.displayHotelGeneralInfo(hotel);
+//   System.out.printf("\n0 - Go back to main menu");
+//   System.out.printf("\n1 - View all room details");
+//   System.out.printf("\n2 - View available rooms by provided check-in and
+//   check-out dates");
+//   System.out.printf("\n3 - View reservation details by provided guest name");
+//   System.out.printf("\nChoose your action: ");
+//   String choice = scanner.nextLine();
+//   if (choice.equals("0")) {
+//     System.out.printf("\nGoing back...\n");
+//     return;
+//   } else if (choice.equals("1")) {
+//   System.out.printf("\n===========LOW-LEVEL INFORMATION==============\n");
+//   // maybe display ALL reservation first here with details
+//   DisplayManager.displayAllRoomsInHotel(hotel);
+//   System.out.printf("\nSelect a room to view in detail: ");
+//   String roomName = scanner.nextLine();
+//   DisplayManager.displaySpecificRoomInfo(hotel, roomName);
+//
+//   Room selectedRoom = hotel.getRoom(roomName);
+//   if (selectedRoom != null) {
+//     System.out.printf("\n0 - Go back to main menu");
+//     System.out.printf("\n1 - View reservation details in the selected room '%s'",
+//     roomName);
+//     System.out.printf("\nChoose your action: ");
+//     String subChoice = scanner.nextLine();
+//     
+//     if (subChoice.equals("0")) {
+//       System.out.printf("\nGoing back...\n");
+//       return;
+//     } else if (subChoice.equals("1")) {
+//       DisplayManager.displayReservationInfoByRoom(hotel, selectedRoom);
+//     } else
+//       System.out.printf("\nInvalid choice.\n");
+//   }
+//   } else if (choice.equals("2")) {
+//   System.out.printf("\nSelect a date to view available and booked rooms\n");
+//   System.out.printf("Enter check-in date: ");
+//   int checkInDate = scanner.nextInt();
+//   scanner.nextLine();
+//   System.out.printf("Enter check-out date: ");
+//   int checkOutDate = scanner.nextInt();
+//   scanner.nextLine();
+//   DisplayManager.displayRoomsOnDate(hotel, checkInDate, checkOutDate);
+//   } else if (choice.equals("3")) {
+//   System.out.printf("\nEnter a guest name to view their reservations in detail:
+//   ");
+//   String guestName = scanner.nextLine();
+//   DisplayManager.displayReservationsByGuestName(hotel, guestName);
+//   } else
+//   System.out.printf("\nInvalid choice.\n");
+//   }
 
   // /**
   // * Manages the properties of a specific hotel, allowing changes to its
