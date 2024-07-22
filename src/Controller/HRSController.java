@@ -8,6 +8,7 @@ import javax.swing.*;
 import Helper.MessageHelper;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * The HotelReservationSystem class manages the operations related to hotel
@@ -64,6 +65,28 @@ public class HRSController {
     }
 
     return hotelNames;
+  }
+  
+  public HashMap<> getHotelGeneralInfo() {
+    
+  }
+  
+  public HashMap<> getRoomsOnDate() {
+
+  }
+  
+  /*
+  * @return room name, room type, price per night, booked reservations, and available dates
+  * */
+  public getRoomSpecificInfo() {
+  }
+  
+  public HashMap<> getRoomReservationInfo() {
+
+  }
+  
+  public HashMap<> getReservationByGuestName() {
+
   }
 
 //   /**
@@ -273,7 +296,7 @@ public class HRSController {
   // roomToBook.getName());
   // }
   // } else
-  // System.out.printf("Hotel '%s' not found.\n", hotelName);
+  // System.out.printf("Hotel '%s' not found.\n", hotelName);:
   // }
 
   /**
