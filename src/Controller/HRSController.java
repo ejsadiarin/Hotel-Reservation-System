@@ -52,7 +52,7 @@ public class HRSController {
     else {
       hotels.add(new Hotel(hotelName, numOfRooms));
       MessageHelper.showSuccessMessage(String.format("Hotel '%s' successfully created with %d rooms.", hotelName, numOfRooms));
-//      view.switchPanel("MainMenuPane");
+      view.switchPanel("MainMenuPane");
     }
     
     // TODO: Clear text field in CreateHotelPanel view
@@ -61,11 +61,11 @@ public class HRSController {
   /**
    * Displays the list of all hotels.
    */
-  public DefaultListModel<String> viewAllHotels() {
-    DefaultListModel<String> hotelListModel = new DefaultListModel<>();
+  public ListModel<String> viewAllHotels() {
+    ListModel<String> hotelListModel = new ListModel<String>() {};
 
     for (Hotel hotel : this.getHotels()) {
-      hotelListModel.addElement(hotel.getName());
+      hotelListModel.add(hotel.getName());
     }
 
     return hotelListModel;

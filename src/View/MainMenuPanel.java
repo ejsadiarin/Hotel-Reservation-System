@@ -4,6 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 import Controller.HRSController;
 
@@ -14,7 +15,7 @@ public class MainMenuPanel extends JPanel {
   private JButton manageHotelButton;
   private JButton simulateBookingButton;
   private JButton exitButton;
-  private DefaultListModel<String> hotelNames;
+  private ArrayList<String> hotelNames;
   private JList<String> hotelList; 
 
   public MainMenuPanel(MainView view) {
@@ -28,10 +29,11 @@ public class MainMenuPanel extends JPanel {
     this.add(titleLabel);
 
     hotelNames = controller.viewAllHotels();
-    hotelList = new JList<>(hotelNames);
-//    if (hotelNames.isEmpty()) {
-//      hotelList.setListData(new String[] { "No hotels found" });
-//    }
+    hotelList = new JList<>((ListModel<String>) hotelNames);
+    hotelList.setVisibleRowCount(5);
+    // if (hotelNames.isEmpty()) {
+    //   hotelList.setListData(new String[] { "No hotels found" });
+    // }
     
     JScrollPane scrollPane = new JScrollPane(hotelList);
     scrollPane.setBounds(50, 150, 200, 300);
@@ -50,8 +52,7 @@ public class MainMenuPanel extends JPanel {
     createHotelButton.addActionListener(new ActionListener() {
       @Override
       public void actionPerformed(ActionEvent e) {
-//        app.switchPanel("CreateHotelPane");
-        new CreateHotelPanel(view).setVisible(true);
+        view.switchPanel("CreateHotelPane");
       }
     });
 

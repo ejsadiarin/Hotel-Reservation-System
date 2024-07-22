@@ -38,8 +38,7 @@ public class CreateHotelPanel extends JPanel {
     
     JButton backButton = new JButton("Back");
     backButton.addActionListener(e -> {
-//      view.switchPanel("MainMenuPane");
-      new MainMenuPanel(view).setVisible(true);
+      view.switchPanel("MainMenuPane");
     });
     buttonPanel.add(backButton);
 
