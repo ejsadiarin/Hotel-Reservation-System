@@ -67,8 +67,18 @@ public class HRSController {
     return hotelNames;
   }
   
-  public HashMap<> getHotelGeneralInfo() {
+  public HashMap<String, String> getHotelGeneralInfo(String hotelName) {
+    HashMap<String, String> info = new HashMap<>();
+    Hotel selectedHotel = findHotelByName(hotelName);
     
+    if (selectedHotel != null) {
+      info.put("Hotel Name", selectedHotel.getName());
+      info.put("Base Price Per Room", String.valueOf(selectedHotel.getBasePrice()));
+      info.put("Estimated Earnings", String.valueOf(selectedHotel.getEstimatedEarnings()));
+      info.put("Number of Rooms", String.valueOf(selectedHotel.getNumOfRooms()));
+    }
+
+    return info;
   }
   
   public HashMap<> getRoomsOnDate() {
@@ -78,7 +88,7 @@ public class HRSController {
   /*
   * @return room name, room type, price per night, booked reservations, and available dates
   * */
-  public getRoomSpecificInfo() {
+  public Object[][] getRoomSpecificInfo() {
   }
   
   public HashMap<> getRoomReservationInfo() {

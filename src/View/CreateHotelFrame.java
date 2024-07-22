@@ -1,17 +1,9 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package View;
 
 import javax.swing.*;
 
 import Controller.HRSController;
 
-/**
- *
- * @author exquisite
- */
 public class CreateHotelFrame extends javax.swing.JFrame {
   private HRSController controller;
   private MainView view;
