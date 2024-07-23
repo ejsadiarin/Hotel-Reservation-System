@@ -1,11 +1,9 @@
 package Controller;
 
 import Model.Hotel;
-import View.MainView;
-
-import javax.swing.*;
 
 import Helper.MessageHelper;
+import Model.Room;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -95,15 +93,40 @@ public class HRSController {
 //  }
   
   /*
-  * @return room name, room type, price per night, booked reservations, and available dates
+  * 
+  * @return room name, room type, price per night, and number of reservations
   * */
-//  public Object[][] getRoomSpecificInfo() {
+  public ArrayList<HashMap<String, String>> getAllRoomInfoOnHotel(String hotelName) {
+    ArrayList<HashMap<String, String>> arrayOfRoomInfo = new ArrayList<>();
+    
+    Hotel selectedHotel = findHotelByName(hotelName);
+    if (selectedHotel == null) {
+      MessageHelper.showErrorMessage("Hotel not found!");
+    }
+    else {
+      for (Room room : selectedHotel.getRooms()) {
+        HashMap<String, String> specificRoomInfo = new HashMap<>();
+        specificRoomInfo.put("Room Name", room.getName());
+        specificRoomInfo.put("Room Type", room.getRoomType());
+        specificRoomInfo.put("Price Per Night", String.valueOf(room.getPricePerNight()));
+        specificRoomInfo.put("Number of Reservations", String.valueOf(room.getReservations().size()));
+        arrayOfRoomInfo.add(specificRoomInfo);
+      }
+    }
+    
+    return arrayOfRoomInfo;
+  }
+  
+  /*
+   * @return room name, room type, price per night, and number of reservations
+   * */
+//  public HashMap<String, String> getRoomAvailabilityDates() {
 //  }
   
 //  public HashMap<> getRoomReservationInfo() {
 //
 //  }
-//  
+
 //  public HashMap<> getReservationByGuestName() {
 //
 //  }

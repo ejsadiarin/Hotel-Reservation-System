@@ -158,25 +158,28 @@ public class MainView extends javax.swing.JFrame {
 
   private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jButton3ActionPerformed
     // TODO add your handling code here:
+    /******* View Specific Hotel *******/
     // ask for input (pop up)
     // check if input hotel exists, if not then popup error
     String selectedHotel = InputHelper.askInputString("What hotel you want to see in detail?");
     if (controller.checkIfHotelExists(selectedHotel) == null) {
-      MessageHelper.showErrorMessage("Hotel does not exist. Please try again!");
+      MessageHelper.showErrorMessage("Hotel does not exist!");
+      return;
     }
-    else {
-      viewSpecificHotelFrame = new ViewSpecificHotelFrame(MainView.this, controller, selectedHotel);
-      viewSpecificHotelFrame.setVisible(true);
-      MainView.this.setVisible(false);
-    }
+
+    viewSpecificHotelFrame = new ViewSpecificHotelFrame(MainView.this, controller, selectedHotel);
+    viewSpecificHotelFrame.setVisible(true);
+    MainView.this.setVisible(false);
   }// GEN-LAST:event_jButton3ActionPerformed
 
   private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jButton2ActionPerformed
     // TODO add your handling code here:
+    /******* Manage Hotel *******/
   }// GEN-LAST:event_jButton2ActionPerformed
 
   private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jButton1ActionPerformed
     // TODO add your handling code here:
+    /******* Create Hotel *******/
     // show CreateHotelFrame view
     createHotelFrame = new CreateHotelFrame(MainView.this, controller);
     createHotelFrame.setVisible(true);
@@ -191,8 +194,7 @@ public class MainView extends javax.swing.JFrame {
     hotelListModel.clear();
     if (controller.getHotelNames().isEmpty()) {
       hotelListModel.addElement("No hotels found.");
-    } 
-    else {
+    } else {
       for (String hotelName : controller.getHotelNames()) {
         hotelListModel.addElement(hotelName);
       }
