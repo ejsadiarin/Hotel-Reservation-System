@@ -136,7 +136,6 @@ public class HRSController {
     Hotel selectedHotel = findHotelByName(hotelName);
     Room selectedRoom = selectedHotel.getRoom(roomName);
     
-    
   }
   
 //  public HashMap<> getRoomReservationInfo() {

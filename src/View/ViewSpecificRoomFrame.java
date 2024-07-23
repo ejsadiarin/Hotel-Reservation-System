@@ -4,17 +4,24 @@
  */
 package View;
 
+import Controller.HRSController;
+
 /**
  *
  * @author exquisite
  */
 public class ViewSpecificRoomFrame extends javax.swing.JFrame {
+    private HRSController controller;
+    private int roomId;
 
     /**
      * Creates new form ViewSpecificRoomFrame
      */
-    public ViewSpecificRoomFrame() {
+    public ViewSpecificRoomFrame(HRSController controller, int roomId) {
+        this.controller = controller;
+        this.roomId = roomId;
         initComponents();
+        fetchData();
     }
 
     /**
@@ -110,6 +117,11 @@ public class ViewSpecificRoomFrame extends javax.swing.JFrame {
 
         jButton2.setFont(new java.awt.Font("Clarity City", 0, 14)); // NOI18N
         jButton2.setText("Back");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -193,6 +205,14 @@ public class ViewSpecificRoomFrame extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton2ActionPerformed
+    
+    public void fetchData() {
+        jLabel1.setText();
+    }
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
