@@ -62,7 +62,7 @@ public class ViewSpecificHotelFrame extends javax.swing.JFrame {
 
         jInternalFrame1.setVisible(true);
 
-        jLabel1.setFont(new java.awt.Font("sansserif", 0, 24)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Clarity City", 0, 24)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jLabel1.setText("Dwin Hotels");
 
@@ -82,19 +82,19 @@ public class ViewSpecificHotelFrame extends javax.swing.JFrame {
                 .addGap(0, 24, Short.MAX_VALUE))
         );
 
-        jLabel2.setFont(new java.awt.Font("sansserif", 1, 15)); // NOI18N
+        jLabel2.setFont(new java.awt.Font("Clarity City", 1, 15)); // NOI18N
         jLabel2.setText("Hotel Name:");
 
         jSeparator1.setBackground(new java.awt.Color(153, 255, 153));
         jSeparator1.setForeground(new java.awt.Color(153, 255, 153));
 
-        jLabel3.setFont(new java.awt.Font("sansserif", 1, 15)); // NOI18N
+        jLabel3.setFont(new java.awt.Font("Clarity City", 1, 15)); // NOI18N
         jLabel3.setText("Base Price Per Room:");
 
         jSeparator2.setBackground(new java.awt.Color(153, 255, 153));
         jSeparator2.setForeground(new java.awt.Color(153, 255, 153));
 
-        jLabel4.setFont(new java.awt.Font("sansserif", 1, 15)); // NOI18N
+        jLabel4.setFont(new java.awt.Font("Clarity City", 1, 15)); // NOI18N
         jLabel4.setText("Estimated Earnings:");
 
         jSeparator3.setBackground(new java.awt.Color(153, 255, 153));
@@ -103,11 +103,11 @@ public class ViewSpecificHotelFrame extends javax.swing.JFrame {
         jSeparator4.setBackground(new java.awt.Color(153, 255, 153));
         jSeparator4.setForeground(new java.awt.Color(153, 255, 153));
 
-        jLabel5.setFont(new java.awt.Font("sansserif", 1, 15)); // NOI18N
+        jLabel5.setFont(new java.awt.Font("Clarity City", 1, 15)); // NOI18N
         jLabel5.setText("Number of Rooms:");
 
         jTable1.setBackground(new java.awt.Color(153, 255, 153));
-        jTable1.setFont(new java.awt.Font("sansserif", 3, 15)); // NOI18N
+        jTable1.setFont(new java.awt.Font("Clarity City", 3, 15)); // NOI18N
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
@@ -134,18 +134,19 @@ public class ViewSpecificHotelFrame extends javax.swing.JFrame {
 
         jLabel6.setText("icon here");
 
-        jLabel7.setFont(new java.awt.Font("sansserif", 2, 14)); // NOI18N
+        jLabel7.setFont(new java.awt.Font("Clarity City", 2, 14)); // NOI18N
         jLabel7.setText("jLabel7");
 
-        jLabel8.setFont(new java.awt.Font("sansserif", 2, 14)); // NOI18N
+        jLabel8.setFont(new java.awt.Font("Clarity City", 2, 14)); // NOI18N
         jLabel8.setText("jLabel8");
 
-        jLabel9.setFont(new java.awt.Font("sansserif", 2, 14)); // NOI18N
+        jLabel9.setFont(new java.awt.Font("Clarity City", 2, 14)); // NOI18N
         jLabel9.setText("jLabel9");
 
-        jLabel10.setFont(new java.awt.Font("sansserif", 2, 14)); // NOI18N
+        jLabel10.setFont(new java.awt.Font("Clarity City", 2, 14)); // NOI18N
         jLabel10.setText("jLabel10");
 
+        jButton1.setFont(new java.awt.Font("Clarity City", 0, 13)); // NOI18N
         jButton1.setText("Back");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -153,9 +154,10 @@ public class ViewSpecificHotelFrame extends javax.swing.JFrame {
             }
         });
 
-        jLabel11.setFont(new java.awt.Font("sansserif", 1, 18)); // NOI18N
+        jLabel11.setFont(new java.awt.Font("Clarity City", 1, 18)); // NOI18N
         jLabel11.setText("Rooms:");
 
+        jButton2.setFont(new java.awt.Font("Clarity City", 0, 13)); // NOI18N
         jButton2.setText("View a Room");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -241,7 +243,7 @@ public class ViewSpecificHotelFrame extends javax.swing.JFrame {
                             .addComponent(jLabel9))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 3, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 12, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 37, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel11)
                     .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
