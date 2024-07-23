@@ -81,23 +81,32 @@ public class HRSController {
     return info;
   }
   
-  public HashMap<> getRoomsOnDate() {
-
+  public String checkIfHotelExists(String hotelName) {
+    Hotel hotel = findHotelByName(hotelName);
+    if (hotel != null) {
+      return hotel.getName();
+    }
+    
+    return null;
   }
+  
+//  public HashMap<> getRoomsOnDate() {
+//
+//  }
   
   /*
   * @return room name, room type, price per night, booked reservations, and available dates
   * */
-  public Object[][] getRoomSpecificInfo() {
-  }
+//  public Object[][] getRoomSpecificInfo() {
+//  }
   
-  public HashMap<> getRoomReservationInfo() {
-
-  }
-  
-  public HashMap<> getReservationByGuestName() {
-
-  }
+//  public HashMap<> getRoomReservationInfo() {
+//
+//  }
+//  
+//  public HashMap<> getReservationByGuestName() {
+//
+//  }
 
 //   /**
 //   * Displays detailed information about a specific hotel.

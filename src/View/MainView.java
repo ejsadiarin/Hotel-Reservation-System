@@ -1,12 +1,15 @@
 package View;
 
 import Controller.HRSController;
+import Helper.InputHelper;
+import Helper.MessageHelper;
 
 import javax.swing.*;
 
 public class MainView extends javax.swing.JFrame {
   private HRSController controller;
   private CreateHotelFrame createHotelFrame;
+  private ViewSpecificHotelFrame viewSpecificHotelFrame;
   private DefaultListModel<String> hotelListModel;
 
   /**
@@ -155,6 +158,17 @@ public class MainView extends javax.swing.JFrame {
 
   private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jButton3ActionPerformed
     // TODO add your handling code here:
+    // ask for input (pop up)
+    // check if input hotel exists, if not then popup error
+    String selectedHotel = InputHelper.askInputString("What hotel you want to see in detail?");
+    if (controller.checkIfHotelExists(selectedHotel) == null) {
+      MessageHelper.showErrorMessage("Hotel does not exist. Please try again!");
+    }
+    else {
+      viewSpecificHotelFrame = new ViewSpecificHotelFrame(MainView.this, controller, selectedHotel);
+      viewSpecificHotelFrame.setVisible(true);
+      MainView.this.setVisible(false);
+    }
   }// GEN-LAST:event_jButton3ActionPerformed
 
   private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jButton2ActionPerformed
@@ -163,7 +177,7 @@ public class MainView extends javax.swing.JFrame {
 
   private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jButton1ActionPerformed
     // TODO add your handling code here:
-    // show CreateHotelPanel view
+    // show CreateHotelFrame view
     createHotelFrame = new CreateHotelFrame(MainView.this, controller);
     createHotelFrame.setVisible(true);
     MainView.this.setVisible(false);
