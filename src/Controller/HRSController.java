@@ -1,5 +1,6 @@
 package Controller;
 
+import Model.AvailabilityDate;
 import Model.Hotel;
 
 import Helper.MessageHelper;
@@ -105,11 +106,8 @@ public class HRSController {
     }
     else {
       for (Room room : selectedHotel.getRooms()) {
-        HashMap<String, String> specificRoomInfo = new HashMap<>();
-        specificRoomInfo.put("Room Name", room.getName());
-        specificRoomInfo.put("Room Type", room.getRoomType());
-        specificRoomInfo.put("Price Per Night", String.valueOf(room.getPricePerNight()));
-        specificRoomInfo.put("Number of Reservations", String.valueOf(room.getReservations().size()));
+        HashMap<String, String> specificRoomInfo;
+        specificRoomInfo = getSpecificRoomInfo(hotelName, room.getName());
         arrayOfRoomInfo.add(specificRoomInfo);
       }
     }
@@ -117,11 +115,29 @@ public class HRSController {
     return arrayOfRoomInfo;
   }
   
+  public HashMap<String, String> getSpecificRoomInfo(String hotelName, String roomName) {
+    HashMap<String, String> specificRoomInfo = new HashMap<>();
+    Hotel selectedHotel = findHotelByName(hotelName);
+    Room selectedRoom = selectedHotel.getRoom(roomName);
+    if (selectedRoom != null) {
+      specificRoomInfo.put("Room Name", selectedRoom.getName());
+      specificRoomInfo.put("Room Type", selectedRoom.getRoomType());
+      specificRoomInfo.put("Price Per Night", String.valueOf(selectedRoom.getPricePerNight()));
+      specificRoomInfo.put("Number of Reservations", String.valueOf(selectedRoom.getReservations().size()));
+    }
+    
+    return specificRoomInfo;
+  }
+  
   /*
-   * @return room name, room type, price per night, and number of reservations
+   * @return 
    * */
-//  public HashMap<String, String> getRoomAvailabilityDates() {
-//  }
+  public ArrayList<String> getRoomAvailabilityDates(String hotelName, String roomName) {
+    Hotel selectedHotel = findHotelByName(hotelName);
+    Room selectedRoom = selectedHotel.getRoom(roomName);
+    
+    
+  }
   
 //  public HashMap<> getRoomReservationInfo() {
 //

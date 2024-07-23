@@ -2,7 +2,6 @@ package View;
 
 import Controller.HRSController;
 
-import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -23,7 +22,7 @@ public class ViewSpecificHotelFrame extends javax.swing.JFrame {
     this.controller = controller;
     this.selectedHotelName = selectedHotelName;
     initComponents();
-    initializeData();
+    fetchData();
   }
 
   /**
@@ -33,176 +32,173 @@ public class ViewSpecificHotelFrame extends javax.swing.JFrame {
    */
   @SuppressWarnings("unchecked")
   // <editor-fold defaultstate="collapsed" desc="Generated
-  // Code">//GEN-BEGIN:initComponents
-  private void initComponents() {
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
+    private void initComponents() {
 
-    jInternalFrame1 = new javax.swing.JInternalFrame();
-    jLabel1 = new javax.swing.JLabel();
-    jLabel2 = new javax.swing.JLabel();
-    jSeparator1 = new javax.swing.JSeparator();
-    jLabel3 = new javax.swing.JLabel();
-    jSeparator2 = new javax.swing.JSeparator();
-    jLabel4 = new javax.swing.JLabel();
-    jSeparator3 = new javax.swing.JSeparator();
-    jSeparator4 = new javax.swing.JSeparator();
-    jLabel5 = new javax.swing.JLabel();
-    jScrollPane1 = new javax.swing.JScrollPane();
-    jTable1 = new javax.swing.JTable();
-    jLabel6 = new javax.swing.JLabel();
-    jLabel7 = new javax.swing.JLabel();
-    jLabel8 = new javax.swing.JLabel();
-    jLabel9 = new javax.swing.JLabel();
-    jLabel10 = new javax.swing.JLabel();
-    jButton1 = new javax.swing.JButton();
+        jInternalFrame1 = new javax.swing.JInternalFrame();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jSeparator1 = new javax.swing.JSeparator();
+        jLabel3 = new javax.swing.JLabel();
+        jSeparator2 = new javax.swing.JSeparator();
+        jLabel4 = new javax.swing.JLabel();
+        jSeparator3 = new javax.swing.JSeparator();
+        jSeparator4 = new javax.swing.JSeparator();
+        jLabel5 = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTable1 = new javax.swing.JTable();
+        jLabel6 = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
+        jLabel9 = new javax.swing.JLabel();
+        jLabel10 = new javax.swing.JLabel();
+        jButton1 = new javax.swing.JButton();
 
-    setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setBackground(new java.awt.Color(102, 0, 102));
+        setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
-    jInternalFrame1.setVisible(true);
+        jInternalFrame1.setVisible(true);
 
-    jLabel1.setFont(new java.awt.Font("sansserif", 0, 24)); // NOI18N
-    jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-    jLabel1.setText("Dwin Hotels");
+        jLabel1.setFont(new java.awt.Font("sansserif", 0, 24)); // NOI18N
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        jLabel1.setText("Dwin Hotels");
 
-    javax.swing.GroupLayout jInternalFrame1Layout = new javax.swing.GroupLayout(jInternalFrame1.getContentPane());
-    jInternalFrame1.getContentPane().setLayout(jInternalFrame1Layout);
-    jInternalFrame1Layout.setHorizontalGroup(
-        jInternalFrame1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        javax.swing.GroupLayout jInternalFrame1Layout = new javax.swing.GroupLayout(jInternalFrame1.getContentPane());
+        jInternalFrame1.getContentPane().setLayout(jInternalFrame1Layout);
+        jInternalFrame1Layout.setHorizontalGroup(
+            jInternalFrame1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jInternalFrame1Layout.createSequentialGroup()
                 .addGap(61, 61, 61)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 146,
-                    javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)));
-    jInternalFrame1Layout.setVerticalGroup(
-        jInternalFrame1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jInternalFrame1Layout.setVerticalGroup(
+            jInternalFrame1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jInternalFrame1Layout.createSequentialGroup()
                 .addComponent(jLabel1)
-                .addGap(0, 24, Short.MAX_VALUE)));
+                .addGap(0, 24, Short.MAX_VALUE))
+        );
 
-    jLabel2.setFont(new java.awt.Font("sansserif", 1, 15)); // NOI18N
-    jLabel2.setText("Hotel Name:");
+        jLabel2.setFont(new java.awt.Font("sansserif", 1, 15)); // NOI18N
+        jLabel2.setText("Hotel Name:");
 
-    jSeparator1.setBackground(new java.awt.Color(153, 255, 153));
-    jSeparator1.setForeground(new java.awt.Color(153, 255, 153));
+        jSeparator1.setBackground(new java.awt.Color(153, 255, 153));
+        jSeparator1.setForeground(new java.awt.Color(153, 255, 153));
 
-    jLabel3.setFont(new java.awt.Font("sansserif", 1, 15)); // NOI18N
-    jLabel3.setText("Base Price Per Room:");
+        jLabel3.setFont(new java.awt.Font("sansserif", 1, 15)); // NOI18N
+        jLabel3.setText("Base Price Per Room:");
 
-    jSeparator2.setBackground(new java.awt.Color(153, 255, 153));
-    jSeparator2.setForeground(new java.awt.Color(153, 255, 153));
+        jSeparator2.setBackground(new java.awt.Color(153, 255, 153));
+        jSeparator2.setForeground(new java.awt.Color(153, 255, 153));
 
-    jLabel4.setFont(new java.awt.Font("sansserif", 1, 15)); // NOI18N
-    jLabel4.setText("Estimated Earnings:");
+        jLabel4.setFont(new java.awt.Font("sansserif", 1, 15)); // NOI18N
+        jLabel4.setText("Estimated Earnings:");
 
-    jSeparator3.setBackground(new java.awt.Color(153, 255, 153));
-    jSeparator3.setForeground(new java.awt.Color(153, 255, 153));
+        jSeparator3.setBackground(new java.awt.Color(153, 255, 153));
+        jSeparator3.setForeground(new java.awt.Color(153, 255, 153));
 
-    jSeparator4.setBackground(new java.awt.Color(153, 255, 153));
-    jSeparator4.setForeground(new java.awt.Color(153, 255, 153));
+        jSeparator4.setBackground(new java.awt.Color(153, 255, 153));
+        jSeparator4.setForeground(new java.awt.Color(153, 255, 153));
 
-    jLabel5.setFont(new java.awt.Font("sansserif", 1, 15)); // NOI18N
-    jLabel5.setText("Number of Rooms:");
+        jLabel5.setFont(new java.awt.Font("sansserif", 1, 15)); // NOI18N
+        jLabel5.setText("Number of Rooms:");
 
-    jTable1.setModel(new javax.swing.table.DefaultTableModel(
-        new Object[][] {
-            { null, null, null, null },
-            { null, null, null, null },
-            { null, null, null, null },
-            { null, null, null, null }
-        },
-        new String[] {
-            "Room Name", "Room Type", "Price Per Night", "Booked Reservations"
-        }) {
-      boolean[] canEdit = new boolean[] {
-          false, false, false, false
-      };
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Room Name", "Room Type", "Price Per Night", "Booked Reservations"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false
+            };
 
-      public boolean isCellEditable(int rowIndex, int columnIndex) {
-        return canEdit[columnIndex];
-      }
-    });
-    jTable1.getTableHeader().setReorderingAllowed(false);
-    jScrollPane1.setViewportView(jTable1);
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jTable1.getTableHeader().setReorderingAllowed(false);
+        jScrollPane1.setViewportView(jTable1);
 
-    jLabel6.setText("icon here");
+        jLabel6.setText("icon here");
 
-    jLabel7.setFont(new java.awt.Font("sansserif", 2, 14)); // NOI18N
-    jLabel7.setText("jLabel7");
+        jLabel7.setFont(new java.awt.Font("sansserif", 2, 14)); // NOI18N
+        jLabel7.setText("jLabel7");
 
-    jLabel8.setFont(new java.awt.Font("sansserif", 2, 14)); // NOI18N
-    jLabel8.setText("jLabel8");
+        jLabel8.setFont(new java.awt.Font("sansserif", 2, 14)); // NOI18N
+        jLabel8.setText("jLabel8");
 
-    jLabel9.setFont(new java.awt.Font("sansserif", 2, 14)); // NOI18N
-    jLabel9.setText("jLabel9");
+        jLabel9.setFont(new java.awt.Font("sansserif", 2, 14)); // NOI18N
+        jLabel9.setText("jLabel9");
 
-    jLabel10.setFont(new java.awt.Font("sansserif", 2, 14)); // NOI18N
-    jLabel10.setText("jLabel10");
+        jLabel10.setFont(new java.awt.Font("sansserif", 2, 14)); // NOI18N
+        jLabel10.setText("jLabel10");
 
-    jButton1.setText("Back");
-    jButton1.addActionListener(new java.awt.event.ActionListener() {
-      public void actionPerformed(java.awt.event.ActionEvent evt) {
-        jButton1ActionPerformed(evt);
-      }
-    });
+        jButton1.setText("Back");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
-    javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-    getContentPane().setLayout(layout);
-    layout.setHorizontalGroup(
-        layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jInternalFrame1)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(42, 42, 42)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 788,
-                            javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(30, 30, 30)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 788, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
                         .addComponent(jLabel6)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED,
-                            javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel2)
                                 .addGap(18, 18, 18)
                                 .addComponent(jLabel7))
-                            .addComponent(jSeparator1, javax.swing.GroupLayout.DEFAULT_SIZE, 311, Short.MAX_VALUE)
-                            .addComponent(jSeparator2)
+                            .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 311, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 311, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel3)
                                 .addGap(18, 18, 18)
                                 .addComponent(jLabel9)))
                         .addGap(45, 45, 45)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addGroup(layout.createSequentialGroup()
-                                    .addComponent(jLabel5)
-                                    .addGap(18, 18, 18)
-                                    .addComponent(jLabel10))
-                                .addComponent(jSeparator3, javax.swing.GroupLayout.DEFAULT_SIZE, 331, Short.MAX_VALUE)
-                                .addComponent(jSeparator4))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel5)
+                                .addGap(18, 18, 18)
+                                .addComponent(jLabel10))
+                            .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, 331, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jSeparator4, javax.swing.GroupLayout.PREFERRED_SIZE, 331, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel4)
                                 .addGap(18, 18, 18)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jLabel8)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED,
-                                            javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                    .addComponent(jLabel8)
                                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                        .addGap(0, 160, Short.MAX_VALUE)
+                                        .addGap(160, 160, 160)
                                         .addComponent(jButton1)))))))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)));
-    layout.setVerticalGroup(
-        layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jInternalFrame1, javax.swing.GroupLayout.PREFERRED_SIZE,
-                    javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jInternalFrame1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(19, 19, 19)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 46,
-                                javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel2)
                             .addComponent(jLabel7)
                             .addComponent(jLabel8)))
@@ -211,34 +207,27 @@ public class ViewSpecificHotelFrame extends javax.swing.JFrame {
                         .addComponent(jButton1)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING,
-                        layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 23,
-                                javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel6))
-                    .addComponent(jSeparator3, javax.swing.GroupLayout.Alignment.TRAILING,
-                        javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel6))
+                    .addComponent(jSeparator3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 46,
-                        javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 46,
-                        javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel9)
                     .addComponent(jLabel10))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 23,
-                        javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jSeparator4, javax.swing.GroupLayout.PREFERRED_SIZE, 23,
-                        javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jSeparator4, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 242,
-                    javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 20, Short.MAX_VALUE)));
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 242, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 20, Short.MAX_VALUE))
+        );
 
-    pack();
-  }// </editor-fold>//GEN-END:initComponents
+        pack();
+    }// </editor-fold>//GEN-END:initComponents
 
   private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jButton1ActionPerformed
     // TODO add your handling code here:
@@ -247,7 +236,7 @@ public class ViewSpecificHotelFrame extends javax.swing.JFrame {
     ViewSpecificHotelFrame.this.dispose();
   }// GEN-LAST:event_jButton1ActionPerformed
 
-  public void initializeData() {
+  public void fetchData() {
         hotelGeneralInfo = controller.getHotelGeneralInfo(selectedHotelName); // hotel name param will come from MainView
         jLabel7.setText(hotelGeneralInfo.get("Hotel Name"));
         jLabel8.setText(hotelGeneralInfo.get("Estimated Earnings"));
@@ -269,24 +258,24 @@ public class ViewSpecificHotelFrame extends javax.swing.JFrame {
   /**
    * @param args the command line arguments
    */
-  // Variables declaration - do not modify//GEN-BEGIN:variables
-  private javax.swing.JButton jButton1;
-  private javax.swing.JInternalFrame jInternalFrame1;
-  private javax.swing.JLabel jLabel1;
-  private javax.swing.JLabel jLabel10;
-  private javax.swing.JLabel jLabel2;
-  private javax.swing.JLabel jLabel3;
-  private javax.swing.JLabel jLabel4;
-  private javax.swing.JLabel jLabel5;
-  private javax.swing.JLabel jLabel6;
-  private javax.swing.JLabel jLabel7;
-  private javax.swing.JLabel jLabel8;
-  private javax.swing.JLabel jLabel9;
-  private javax.swing.JScrollPane jScrollPane1;
-  private javax.swing.JSeparator jSeparator1;
-  private javax.swing.JSeparator jSeparator2;
-  private javax.swing.JSeparator jSeparator3;
-  private javax.swing.JSeparator jSeparator4;
-  private javax.swing.JTable jTable1;
-  // End of variables declaration//GEN-END:variables
+    // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButton1;
+    private javax.swing.JInternalFrame jInternalFrame1;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JSeparator jSeparator2;
+    private javax.swing.JSeparator jSeparator3;
+    private javax.swing.JSeparator jSeparator4;
+    private javax.swing.JTable jTable1;
+    // End of variables declaration//GEN-END:variables
 }

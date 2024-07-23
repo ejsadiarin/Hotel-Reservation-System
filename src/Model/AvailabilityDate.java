@@ -11,7 +11,11 @@ public class AvailabilityDate {
     this.available = true;
     this.basePrice = basePrice;
   }
-  
+
+  public int getDateNumber() {
+    return this.dateNumber;
+  }
+
   public boolean isAvailable() {
     return this.available;
   }
@@ -36,7 +40,5 @@ public class AvailabilityDate {
     if (modifier >= 0.5 && modifier <= 1.5) {
       this.modifiedPrice = this.basePrice * modifier;
     }
-    else
-      throw new IllegalArgumentException("Modifier must be between 0.5 and 1.5");
   }
 }
