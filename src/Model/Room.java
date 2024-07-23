@@ -110,14 +110,14 @@ public class Room {
   }
 
   /**
-   * Gets the reservation for the specified guest name.
+   * Gets the reservation for the specified Id.
    *
-   * @param guestName the name of the guest
+   * @param Id the ID of the reservation
    * @return the reservation for the specified guest name, or null if not found
    */
-  public Reservation getReservation(String guestName) {
+  public Reservation getReservation(int Id) {
     for (Reservation reservation : reservations) {
-      if (reservation.getGuestName().equals(guestName))
+      if (reservation.getId() == Id)
         return reservation;
     }
     return null;
@@ -132,7 +132,7 @@ public class Room {
    */
   public void addReservation(String guestName, int checkInDate, int checkOutDate) {
     if (reserveDates(checkInDate, checkOutDate)) {
-      reservations.add(new Reservation(guestName, this, checkInDate, checkOutDate));
+      reservations.add(new Reservation(reservations.size() + 1,guestName, this, checkInDate, checkOutDate));
       System.out.printf("Reservation for '%s' added to room '%s' from day %d to day %d.\n", guestName, name, checkInDate, checkOutDate);
     } else {
       System.out.printf("Room '%s' is not available from day %d to day %d.\n", name, checkInDate, checkOutDate);
@@ -140,19 +140,20 @@ public class Room {
   }
 
   /**
-   * Removes the reservation for the specified guest name.
+   * Removes the reservation of the specified Id.
    *
-   * @param guestName the name of the guest
+   * @param Id the ID of the reservation
    */
-  public void removeReservation(String guestName) {
-    Reservation reservation = getReservation(guestName);
+  public void removeReservation(int Id) {
+    Reservation reservation = getReservation(Id);
     if (reservation != null) {
       reservation.getRoom().cancelReserveDates(reservation.getCheckInDate(), reservation.getCheckOutDate());
       reservations.remove(reservation);
-      System.out.printf("Reservation for '%s' removed from room '%s'.\n", guestName, reservation.getRoom().getName());
+      // TODO: refactor this, should not have printf in Model (do this notifs in controller or view)
+      System.out.printf("Reservation for '%s' removed from room '%s'.\n", reservation.getGuestName(), reservation.getRoom().getName());
     }
     else
-      System.out.printf("Reservation for '%s' not found. Exiting...\n", guestName);
+      System.out.printf("Reservation for '%s' not found. Exiting...\n", reservation.getGuestName());
   }
 
   /**

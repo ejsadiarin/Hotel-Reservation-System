@@ -5,6 +5,7 @@ package Model;
  * guest name, check-in and check-out dates, the reserved room, and the cost per night.
  */
 public class Reservation {
+  private int Id;
   private String guestName;
   private int checkInDate;
   private int checkOutDate;
@@ -21,7 +22,8 @@ public class Reservation {
    * @param checkInDate the check-in date for the reservation
    * @param checkOutDate the check-out date for the reservation
    */
-  public Reservation(String guestName, Room room, int checkInDate, int checkOutDate) {
+  public Reservation(int Id, String guestName, Room room, int checkInDate, int checkOutDate) {
+    this.Id = Id;
     this.guestName = guestName;
     this.room = room;
     this.checkInDate = checkInDate;
@@ -39,6 +41,15 @@ public class Reservation {
     this.costPerNight = room.getPricePerNight();
     this.isDiscounted = true;
     setDiscountCode(discountCode);
+  }
+
+  /**
+   * Gets the ID of the reservation
+   *
+   * @return the ID of the reservation
+   */
+  public int getId() {
+    return Id;
   }
 
   /**
