@@ -1,6 +1,8 @@
 package View;
 
 import Controller.HRSController;
+import Helper.InputHelper;
+import Helper.MessageHelper;
 
 import javax.swing.table.DefaultTableModel;
 import java.util.ArrayList;
@@ -9,6 +11,7 @@ import java.util.HashMap;
 public class ViewSpecificHotelFrame extends javax.swing.JFrame {
   private MainView view;
   private HRSController controller;
+  private ViewSpecificRoomFrame viewSpecificRoomFrame;
   private HashMap<String, String> hotelGeneralInfo;
   private String selectedHotelName;
   private ArrayList<HashMap<String, String>> arrayOfRoomInfo;
@@ -159,6 +162,11 @@ public class ViewSpecificHotelFrame extends javax.swing.JFrame {
 
         jButton2.setFont(new java.awt.Font("Clarity City", 0, 13)); // NOI18N
         jButton2.setText("View a Room");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -254,6 +262,20 @@ public class ViewSpecificHotelFrame extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+      // TODO add your handling code here:
+      // View a Room
+      String selectedRoomName = InputHelper.askInputString("Enter the name of the Room to View");
+      if (controller.checkIfRoomExists(selectedRoomName, selectedHotelName) == null) {
+        MessageHelper.showErrorMessage("Room does not exist!");
+        return;
+      }
+      
+      viewSpecificRoomFrame = new ViewSpecificRoomFrame(view, controller, selectedHotelName, selectedRoomName);
+      viewSpecificRoomFrame.setVisible(true);
+      ViewSpecificHotelFrame.this.setVisible(false);
+    }//GEN-LAST:event_jButton2ActionPerformed
 
   private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jButton1ActionPerformed
     // TODO add your handling code here:

@@ -5,21 +5,40 @@
 package View;
 
 import Controller.HRSController;
+import Helper.InputHelper;
+import Helper.MessageHelper;
+
+import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
+import java.nio.file.attribute.AttributeView;
+import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  *
  * @author exquisite
  */
 public class ViewSpecificRoomFrame extends javax.swing.JFrame {
+    private MainView view;
     private HRSController controller;
-    private int roomId;
+    private ViewSpecificHotelFrame viewSpecificHotelFrame;
+    private HashMap<String, String> roomInfo;
+    private String selectedHotelName;
+    private String selectedRoomName;
+    private DefaultListModel<String> bookedDatesModel;
+    private DefaultListModel<String> availbleDatesModel;
+    private DefaultTableModel tableData;
 
     /**
      * Creates new form ViewSpecificRoomFrame
      */
-    public ViewSpecificRoomFrame(HRSController controller, int roomId) {
+    public ViewSpecificRoomFrame(MainView view, HRSController controller, String selectedHotelName, String selectedRoomName) {
+        this.view = view;
         this.controller = controller;
-        this.roomId = roomId;
+        this.selectedHotelName = selectedHotelName;
+        this.selectedRoomName = selectedRoomName;
+        bookedDatesModel = new DefaultListModel<>();
+        availbleDatesModel = new DefaultListModel<>();
         initComponents();
         fetchData();
     }
@@ -39,7 +58,9 @@ public class ViewSpecificRoomFrame extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
+        jList1 = new javax.swing.JList<>();
         jScrollPane3 = new javax.swing.JScrollPane();
+        jList2 = new javax.swing.JList<>();
         jLabel6 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
         jScrollPane4 = new javax.swing.JScrollPane();
@@ -48,6 +69,8 @@ public class ViewSpecificRoomFrame extends javax.swing.JFrame {
         jLabel8 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
         jButton2 = new javax.swing.JButton();
+        jLabel10 = new javax.swing.JLabel();
+        jLabel11 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -65,6 +88,20 @@ public class ViewSpecificRoomFrame extends javax.swing.JFrame {
 
         jLabel5.setFont(new java.awt.Font("Clarity City", 1, 14)); // NOI18N
         jLabel5.setText("Available Dates");
+
+        jList1.setModel(new javax.swing.AbstractListModel<String>() {
+            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
+            public int getSize() { return strings.length; }
+            public String getElementAt(int i) { return strings[i]; }
+        });
+        jScrollPane2.setViewportView(jList1);
+
+        jList2.setModel(new javax.swing.AbstractListModel<String>() {
+            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
+            public int getSize() { return strings.length; }
+            public String getElementAt(int i) { return strings[i]; }
+        });
+        jScrollPane3.setViewportView(jList2);
 
         jLabel6.setFont(new java.awt.Font("Clarity City", 1, 14)); // NOI18N
         jLabel6.setText("Reservations:");
@@ -123,6 +160,11 @@ public class ViewSpecificRoomFrame extends javax.swing.JFrame {
             }
         });
 
+        jLabel10.setFont(new java.awt.Font("Clarity City", 1, 14)); // NOI18N
+        jLabel10.setText("Price Per Night:");
+
+        jLabel11.setText("jLabel11");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -145,7 +187,11 @@ public class ViewSpecificRoomFrame extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel4)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jLabel9))
+                        .addComponent(jLabel9)
+                        .addGap(27, 27, 27)
+                        .addComponent(jLabel10)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jLabel11))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel7)
                         .addGap(18, 18, 18)
@@ -182,7 +228,9 @@ public class ViewSpecificRoomFrame extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel5)
                             .addComponent(jLabel4)
-                            .addComponent(jLabel9))
+                            .addComponent(jLabel9)
+                            .addComponent(jLabel10)
+                            .addComponent(jLabel11))
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(layout.createSequentialGroup()
@@ -196,7 +244,7 @@ public class ViewSpecificRoomFrame extends javax.swing.JFrame {
                         .addComponent(jLabel3)
                         .addGap(18, 18, 18)
                         .addComponent(jScrollPane2)))
-                .addContainerGap(61, Short.MAX_VALUE))
+                .addContainerGap(36, Short.MAX_VALUE))
         );
 
         pack();
@@ -204,21 +252,69 @@ public class ViewSpecificRoomFrame extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
+        // View a Reservation
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
+        // Back button
+        viewSpecificHotelFrame = new ViewSpecificHotelFrame(view, controller, selectedHotelName);
+        viewSpecificHotelFrame.setVisible(true);
+        ViewSpecificRoomFrame.this.dispose();
     }//GEN-LAST:event_jButton2ActionPerformed
     
+    
     public void fetchData() {
-        jLabel1.setText();
+        roomInfo = controller.getSpecificRoomInfo(selectedHotelName, selectedRoomName);
+        jLabel1.setText(roomInfo.get("Room Name")); // room name
+        jLabel2.setText(roomInfo.get("Room Type")); // room type
+        jLabel8.setText(selectedHotelName); // hotel name
+        jLabel9.setText(roomInfo.get("Number of Reservations")); // number of reservations (booked)
+        jLabel11.setText(roomInfo.get("Price Per Night")); // price per night
+        refreshDatesList();
+        tableData = (DefaultTableModel) jTable1.getModel(); // reservations (in selected room) in a table
+        for (HashMap<String, String> reservationInfo : controller.getAllReservationInfoOnRoom(selectedHotelName, selectedRoomName)) {
+            Object[] row = new Object[] {
+                reservationInfo.get("Id"),
+                reservationInfo.get("Guest Name"),
+                reservationInfo.get("Check In Date"),
+                reservationInfo.get("Check Out Date"),
+                reservationInfo.get("Total Price"),
+            };
+            tableData.addRow(row);
+        }
     }
-
+    
+    public void refreshDatesList() {
+        // booked dates
+        jList1.setModel(bookedDatesModel);
+        jScrollPane2.setViewportView(jList1);
+        bookedDatesModel.clear();
+        if (controller.getRoomBookedDates(selectedHotelName, selectedRoomName).isEmpty()) {
+            bookedDatesModel.addElement("None...");
+        } else {
+            for (String date : controller.getRoomBookedDates(selectedHotelName, selectedRoomName))
+                bookedDatesModel.addElement(date);
+        }
+        
+        // available dates
+        jList2.setModel(availbleDatesModel);
+        jScrollPane3.setViewportView(jList2);
+        availbleDatesModel.clear();
+        if (controller.getRoomAvailableDates(selectedHotelName, selectedRoomName).isEmpty()) {
+            availbleDatesModel.addElement("None...");
+        } else {
+            for (String date : controller.getRoomAvailableDates(selectedHotelName, selectedRoomName))
+                availbleDatesModel.addElement(date);
+        }
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -227,6 +323,8 @@ public class ViewSpecificRoomFrame extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
+    private javax.swing.JList<String> jList1;
+    private javax.swing.JList<String> jList2;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;

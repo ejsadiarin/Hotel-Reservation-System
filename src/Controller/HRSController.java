@@ -4,6 +4,7 @@ import Model.AvailabilityDate;
 import Model.Hotel;
 
 import Helper.MessageHelper;
+import Model.Reservation;
 import Model.Room;
 
 import java.util.ArrayList;
@@ -80,6 +81,10 @@ public class HRSController {
     return info;
   }
   
+  /**
+   * @param hotelName is the name of the hotel to be checked
+   * @return name of the hotel, otherwise null. 
+   */
   public String checkIfHotelExists(String hotelName) {
     Hotel hotel = findHotelByName(hotelName);
     if (hotel != null) {
@@ -89,6 +94,18 @@ public class HRSController {
     return null;
   }
   
+  public String checkIfRoomExists(String roomName, String hotelName) {
+    if (checkIfHotelExists(hotelName) != null) {
+      Hotel selectedHotel = findHotelByName(hotelName);
+      Room selectedRoom = selectedHotel.getRoom(roomName);
+      if (selectedRoom != null) {
+        return selectedRoom.getName();
+      }
+    }
+    return null;
+  }
+
+
 //  public HashMap<> getRoomsOnDate() {
 //
 //  }
@@ -98,49 +115,107 @@ public class HRSController {
   * @return room name, room type, price per night, and number of reservations
   * */
   public ArrayList<HashMap<String, String>> getAllRoomInfoOnHotel(String hotelName) {
-    ArrayList<HashMap<String, String>> arrayOfRoomInfo = new ArrayList<>();
-    
-    Hotel selectedHotel = findHotelByName(hotelName);
-    if (selectedHotel == null) {
-      MessageHelper.showErrorMessage("Hotel not found!");
-    }
-    else {
+    if (checkIfHotelExists(hotelName) != null) {
+      ArrayList<HashMap<String, String>> listOfRoomInfo = new ArrayList<>();
+      Hotel selectedHotel = findHotelByName(hotelName);
+      
       for (Room room : selectedHotel.getRooms()) {
-        HashMap<String, String> specificRoomInfo;
-        specificRoomInfo = getSpecificRoomInfo(hotelName, room.getName());
-        arrayOfRoomInfo.add(specificRoomInfo);
+        HashMap<String, String> specificRoomInfo = getSpecificRoomInfo(hotelName, room.getName());
+        listOfRoomInfo.add(specificRoomInfo);
+      }
+      return listOfRoomInfo;
+    }
+    
+    return null;
+  }
+  
+  public ArrayList<HashMap<String, String>> getAllReservationInfoOnRoom(String hotelName, String roomName) {
+    if (checkIfHotelExists(hotelName) != null && checkIfRoomExists(roomName, hotelName) != null) {
+      ArrayList<HashMap<String, String>> listOfReservationInfo = new ArrayList<>();
+      Hotel selectedHotel = findHotelByName(hotelName);
+      Room selectedRoom = selectedHotel.getRoom(roomName);
+      
+      if (selectedRoom != null) {
+        for (Reservation reservation : selectedRoom.getReservations()) {
+          HashMap<String, String> specificReservationInfo = getSpecificReservationInfo(hotelName, roomName, reservation.getId());
+          listOfReservationInfo.add(specificReservationInfo);
+        }
+        return listOfReservationInfo;
       }
     }
-    
-    return arrayOfRoomInfo;
+    return null;
   }
   
   public HashMap<String, String> getSpecificRoomInfo(String hotelName, String roomName) {
-    HashMap<String, String> specificRoomInfo = new HashMap<>();
-    Hotel selectedHotel = findHotelByName(hotelName);
-    Room selectedRoom = selectedHotel.getRoom(roomName);
-    if (selectedRoom != null) {
-      specificRoomInfo.put("Room Name", selectedRoom.getName());
-      specificRoomInfo.put("Room Type", selectedRoom.getRoomType());
-      specificRoomInfo.put("Price Per Night", String.valueOf(selectedRoom.getPricePerNight()));
-      specificRoomInfo.put("Number of Reservations", String.valueOf(selectedRoom.getReservations().size()));
+    if (checkIfHotelExists(hotelName) != null && checkIfRoomExists(roomName, hotelName) != null) {
+      HashMap<String, String> specificRoomInfo = new HashMap<>();
+      Hotel selectedHotel = findHotelByName(hotelName);
+      Room selectedRoom = selectedHotel.getRoom(roomName);
+      if (selectedRoom != null) {
+        specificRoomInfo.put("Room Name", selectedRoom.getName());
+        specificRoomInfo.put("Room Type", selectedRoom.getRoomType());
+        specificRoomInfo.put("Price Per Night", String.valueOf(selectedRoom.getPricePerNight()));
+        specificRoomInfo.put("Number of Reservations", String.valueOf(selectedRoom.getReservations().size()));
+      }
+      return specificRoomInfo;
     }
     
-    return specificRoomInfo;
+    return null;
+  }
+  
+  public HashMap<String, String> getSpecificReservationInfo(String hotelName, String roomName, int id) {
+    if (checkIfHotelExists(hotelName) != null && checkIfRoomExists(roomName, hotelName) != null) {
+      HashMap<String, String> specificReservationInfo = new HashMap<>();
+      Hotel selectedHotel = findHotelByName(hotelName);
+      Room selectedRoom = selectedHotel.getRoom(roomName);
+      Reservation selectedReservation = selectedRoom.getReservation(id);
+      if (selectedReservation != null) {
+        specificReservationInfo.put("Id", String.valueOf(selectedReservation.getId()));
+        specificReservationInfo.put("Guest Name", selectedReservation.getGuestName());
+        specificReservationInfo.put("Check In Date", String.valueOf(selectedReservation.getCheckInDate()));
+        specificReservationInfo.put("Check Out Date", String.valueOf(selectedReservation.getCheckOutDate()));
+        specificReservationInfo.put("Total Price", String.valueOf(selectedReservation.getTotalPrice()));
+      }
+      return specificReservationInfo;
+    }
+    
+    return null;
   }
   
   /*
    * @return 
    * */
-  public ArrayList<String> getRoomAvailabilityDates(String hotelName, String roomName) {
-    Hotel selectedHotel = findHotelByName(hotelName);
-    Room selectedRoom = selectedHotel.getRoom(roomName);
-    
+  public ArrayList<String> getRoomBookedDates(String hotelName, String roomName) {
+    if (checkIfHotelExists(hotelName) != null && checkIfRoomExists(roomName, hotelName) != null) {
+      ArrayList<String> bookedDates = new ArrayList<>();
+      Hotel selectedHotel = findHotelByName(hotelName);
+      Room selectedRoom = selectedHotel.getRoom(roomName);
+
+      if (selectedRoom != null) {
+        for (AvailabilityDate date : selectedRoom.getReservedDates()) {
+          bookedDates.add(String.valueOf(date.getDateNumber()));
+        }
+        return bookedDates;
+      }
+    }
+    return null;
   }
   
-//  public HashMap<> getRoomReservationInfo() {
-//
-//  }
+  public ArrayList<String> getRoomAvailableDates(String hotelName, String roomName) {
+    if (checkIfHotelExists(hotelName) != null && checkIfRoomExists(roomName, hotelName) != null) {
+      ArrayList<String> availableDates = new ArrayList<>();
+      Hotel selectedHotel = findHotelByName(hotelName);
+      Room selectedRoom = selectedHotel.getRoom(roomName);
+      if (selectedRoom != null) {
+        for (AvailabilityDate date : selectedRoom.getAvailabilityDates()) {
+          if (date.isAvailable())
+            availableDates.add(String.valueOf(date.getDateNumber()));
+        }
+        return availableDates;
+      }
+    }
+    return null;
+  }
 
 //  public HashMap<> getReservationByGuestName() {
 //

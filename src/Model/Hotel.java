@@ -83,7 +83,7 @@ public class Hotel {
     }
     return null;
   }
-
+  
   /**
    * Adds a new room to the hotel, utilizing an automated naming generation based on the current number of rooms.
    */
