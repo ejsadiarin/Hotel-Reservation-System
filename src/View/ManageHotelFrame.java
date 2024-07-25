@@ -4,17 +4,29 @@
  */
 package View;
 
+import Controller.HRSController;
+
+import java.util.HashMap;
+
 /**
  *
  * @author exquisite
  */
 public class ManageHotelFrame extends javax.swing.JFrame {
+    private MainView view;
+    private HRSController controller;
+    private HashMap<String, String> hotelInfo;
+    private String hotelToManage;
 
     /**
      * Creates new form ManageHotelFrame
      */
-    public ManageHotelFrame() {
+    public ManageHotelFrame(MainView view, HRSController controller, String hotelToManage) {
+        this.view = view;
+        this.controller = controller;
+        this.hotelToManage = hotelToManage;
         initComponents();
+        fetchData();
     }
 
     /**
@@ -80,7 +92,7 @@ public class ManageHotelFrame extends javax.swing.JFrame {
         jLabel3.setText("Base Price Per Room:");
 
         jLabel4.setFont(new java.awt.Font("Clarity City", 1, 14)); // NOI18N
-        jLabel4.setText("Number of Reservations:");
+        jLabel4.setText("Overall Reservations");
 
         jLabel5.setFont(new java.awt.Font("Clarity City", 1, 14)); // NOI18N
         jLabel5.setText("Number of Rooms:");
@@ -198,6 +210,14 @@ public class ManageHotelFrame extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+    
+    public void fetchData() {
+        hotelInfo = controller.getHotelGeneralInfo(hotelToManage);
+        jLabel6.setText(hotelInfo.get("Hotel Name")); // hotel name
+        jLabel7.setText(hotelInfo.get("Base Price Per Room")); // base price per room
+        jLabel8.setText(hotelInfo.get("Overall Reservations")); // overall reservations
+        jLabel9.setText(hotelInfo.get("Number of Rooms")); // number of rooms
+    }
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

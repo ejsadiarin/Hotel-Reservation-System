@@ -7,7 +7,6 @@ import Helper.MessageHelper;
 import Model.Reservation;
 import Model.Room;
 
-import javax.naming.spi.ResolveResult;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -71,12 +70,17 @@ public class HRSController {
   public HashMap<String, String> getHotelGeneralInfo(String hotelName) {
     HashMap<String, String> info = new HashMap<>();
     Hotel selectedHotel = findHotelByName(hotelName);
+    int overallReservations = 0;
     
     if (selectedHotel != null) {
       info.put("Hotel Name", selectedHotel.getName());
       info.put("Base Price Per Room", String.valueOf(selectedHotel.getBasePrice()));
       info.put("Estimated Earnings", String.valueOf(selectedHotel.getEstimatedEarnings()));
       info.put("Number of Rooms", String.valueOf(selectedHotel.getNumOfRooms()));
+      for (Room room : selectedHotel.getRooms()) {
+        overallReservations += room.getReservations().size();
+      }
+      info.put("Overall Reservations", String.valueOf(overallReservations));
     }
 
     return info;
@@ -251,10 +255,6 @@ public class HRSController {
     
     return null;
   }
-
-//  public HashMap<> getReservationByGuestName() {
-//
-//  }
 
 //   /**
 //   * Displays detailed information about a specific hotel.
