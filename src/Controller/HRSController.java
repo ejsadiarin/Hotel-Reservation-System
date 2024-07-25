@@ -7,6 +7,7 @@ import Helper.MessageHelper;
 import Model.Reservation;
 import Model.Room;
 
+import javax.naming.spi.ResolveResult;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -100,6 +101,18 @@ public class HRSController {
       Room selectedRoom = selectedHotel.getRoom(roomName);
       if (selectedRoom != null) {
         return selectedRoom.getName();
+      }
+    }
+    return null;
+  }
+  
+  public String checkIfReservationExists(String hotelName, String roomName, String reservationId) {
+    if (checkIfHotelExists(hotelName) != null && checkIfRoomExists(roomName, hotelName) != null) {
+      Hotel selectedHotel = findHotelByName(hotelName);
+      Room selectedRoom = selectedHotel.getRoom(roomName);
+      Reservation selectedReservation = selectedRoom.getReservation(Integer.parseInt(reservationId));
+      if (selectedReservation != null) {
+        return String.valueOf(selectedReservation.getId());
       }
     }
     return null;
@@ -214,6 +227,28 @@ public class HRSController {
         return availableDates;
       }
     }
+    return null;
+  }
+  
+  public ArrayList<String> getPriceBreakdownOnReservation(String hotelName, String roomName, String reservationId) {
+    if (checkIfReservationExists(hotelName, roomName, reservationId) != null) {
+      ArrayList<String> listOfPriceBreakdown = new ArrayList<>();
+      Hotel selectedHotel = findHotelByName(hotelName);
+      Room selectedRoom = selectedHotel.getRoom(roomName);
+      Reservation selectedReservation = selectedRoom.getReservation(Integer.parseInt(reservationId));
+      if (selectedReservation != null) {
+        for (int i = selectedReservation.getCheckInDate() - 1; i < selectedReservation.getCheckOutDate(); i++) {
+          if (selectedReservation.getCheckInDate() == selectedReservation.getCheckOutDate()) { // handle overnight case
+            listOfPriceBreakdown.add(String.format("Overnight Stay %d: %.2f", i+1, selectedReservation.getRoom().getPriceOnDate(i+1)));
+            break;
+          } 
+          // if not overnight then list it
+          listOfPriceBreakdown.add(String.format("Day %d-%d: %.2f", i+1, i+2, selectedReservation.getRoom().getPriceOnDate(i+1)));
+        }
+        return listOfPriceBreakdown;
+      }
+    }
+    
     return null;
   }
 

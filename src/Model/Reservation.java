@@ -141,7 +141,7 @@ public class Reservation {
     }
     else if (discountCode.equals("PAYDAY")) {
       // stop when availability encountered is true
-      for (int i = room.getIndexOfFirstReservedDate(); room.getAvailabilityDates().get(i).isAvailable(); i++) {
+      for (int i = room.getIndexOfReservedDate(checkInDate); i <= room.getIndexOfReservedDate(checkOutDate); i++) {
         // if i covers day 15 or 30 (excluding checkout: 15 or checkout: 30)
         if ((i >= 15 && i <= 30) && (checkOutDate != 15 && checkOutDate != 30))
           return rawTotalPrice * 0.07 - rawTotalPrice; 

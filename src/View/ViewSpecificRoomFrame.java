@@ -10,8 +10,6 @@ import Helper.MessageHelper;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
-import java.nio.file.attribute.AttributeView;
-import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
@@ -22,6 +20,7 @@ public class ViewSpecificRoomFrame extends javax.swing.JFrame {
     private MainView view;
     private HRSController controller;
     private ViewSpecificHotelFrame viewSpecificHotelFrame;
+    private ViewSpecificReservationFrame viewSpecificReservationFrame;
     private HashMap<String, String> roomInfo;
     private String selectedHotelName;
     private String selectedRoomName;
@@ -37,8 +36,8 @@ public class ViewSpecificRoomFrame extends javax.swing.JFrame {
         this.controller = controller;
         this.selectedHotelName = selectedHotelName;
         this.selectedRoomName = selectedRoomName;
-        bookedDatesModel = new DefaultListModel<>();
-        availbleDatesModel = new DefaultListModel<>();
+        this.bookedDatesModel = new DefaultListModel<>();
+        this.availbleDatesModel = new DefaultListModel<>();
         initComponents();
         fetchData();
     }
@@ -253,6 +252,15 @@ public class ViewSpecificRoomFrame extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
         // View a Reservation
+        String selectedReservationId = InputHelper.askInputString("Enter the Id of the Reservation to view");
+        if (controller.checkIfReservationExists(selectedHotelName, selectedRoomName, selectedReservationId) == null) {
+            MessageHelper.showErrorMessage("Reservation does not exist!");
+            return;
+        }
+        
+        viewSpecificReservationFrame = new ViewSpecificReservationFrame(view, controller, selectedHotelName, selectedRoomName, roomInfo.get("Room Type"), selectedReservationId);
+        viewSpecificReservationFrame.setVisible(true);
+        ViewSpecificRoomFrame.this.setVisible(false);
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed

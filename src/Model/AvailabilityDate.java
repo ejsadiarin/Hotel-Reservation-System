@@ -10,6 +10,7 @@ public class AvailabilityDate {
     this.dateNumber = dateNumber;
     this.available = true;
     this.basePrice = basePrice;
+    this.modifiedPrice = basePrice; // by default this is equal to basePrice
   }
 
   public int getDateNumber() {
@@ -38,7 +39,7 @@ public class AvailabilityDate {
   
   public void setModifiedPrice(double modifier) {
     if (modifier >= 0.5 && modifier <= 1.5) {
-      this.modifiedPrice = this.basePrice * modifier;
+      this.modifiedPrice = getBasePrice() * modifier;
     }
   }
 }

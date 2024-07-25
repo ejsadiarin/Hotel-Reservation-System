@@ -30,6 +30,8 @@ public class Room {
       this.availabilityDates.add(new AvailabilityDate(i + 1, pricePerNight));
     }
     setRoomType(roomType);
+    addReservation("Dwin", 1, 2);
+    addReservation("Overnight", 10, 10);
   }
 
   /**
@@ -216,11 +218,27 @@ public class Room {
     return reservedDates;
   }
   
-  public int getIndexOfFirstReservedDate() {
-    for (int i = 0; i < getAvailabilityDates().size(); i++) {
+  public int getIndexOfReservedDate(int date) {
+    for (int i = date - 1; i < getAvailabilityDates().size(); i++) {
       if (!getAvailabilityDates().get(i).isAvailable())
         return i;
     }
     return 0;
+  }
+  
+  /**
+   * @param selectedDate is the starting date (not the index) to view the price of
+   * @return the price on the given date
+   * */
+  public double getPriceOnDate(int selectedDate) {
+    double priceResult = 0;
+    for (AvailabilityDate date : getAvailabilityDates()) {
+      if (selectedDate == date.getDateNumber()) {
+        priceResult = date.getModifiedPrice();
+        break;
+      }
+    }
+    
+    return priceResult;
   }
 }
