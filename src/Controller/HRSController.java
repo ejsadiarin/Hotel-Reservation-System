@@ -362,9 +362,31 @@ public class HRSController {
       MessageHelper.showErrorMessage("There are some reservations left! Cannot update base price.");
   }
   
-//  public void removeReservation(String hotelName, String roomName, int reservationId) {
-//    Hotel 
-//  }
+  /**
+   * Removes a reservation in the specified room given the reservation ID.
+   * 
+   * @param hotelName is the name of the hotel that the room belongs to
+   * @param roomName is the name of the room that the reservation belongs to
+   * @param reservationId is the ID of the reservation to be removed
+   * @return true if successful, otherwise false
+   * */
+  public boolean removeReservation(String hotelName, String roomName, int reservationId) {
+    Hotel selectedHotel = findHotelByName(hotelName);
+    Room selectedRoom = selectedHotel.getRoom(roomName);
+    Reservation selectedReservation = selectedRoom.getReservation(reservationId);
+    if (!selectedRoom.getReservations().isEmpty() && selectedReservation != null) {
+      int confirmation = InputHelper.askConfirmation(String.format("REMOVING Reservation with ID '%d': Are you sure?", selectedReservation.getId()));
+      if (confirmation == 1) {
+        MessageHelper.showCancelMessage();
+        return false;
+      }
+      selectedRoom.removeReservation(reservationId);
+      MessageHelper.showSuccessMessage(String.format("Reservation with ID '%d' is successfully removed!", selectedReservation.getId()));
+      return true;
+    }
+    
+    return false;
+  }
   
   /**
    * @param hotelName is the name of the hotel to be removed

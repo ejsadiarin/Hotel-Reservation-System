@@ -5,6 +5,8 @@
 package View;
 
 import Controller.HRSController;
+import Helper.InputHelper;
+import Helper.MessageHelper;
 import View.Component.TableData;
 
 import javax.swing.table.DefaultTableModel;
@@ -17,6 +19,7 @@ import java.util.HashMap;
 public class ManageRoomFrame extends javax.swing.JFrame {
     private MainView view;
     private HRSController controller;
+    private ManageHotelFrame manageHotelFrame;
     private String hotelName;
     private String roomName;
     private HashMap<String, String> roomInfo;
@@ -238,16 +241,30 @@ public class ManageRoomFrame extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
         /* Back to ManageHotelFrame */
+        manageHotelFrame = new ManageHotelFrame(view, controller, hotelName);
+        manageHotelFrame.setVisible(true);
+        ManageRoomFrame.this.dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
         /* Remove a reservation */
+        String selectedReservationId = InputHelper.askInputString("Enter the ID of the Reservation to remove");
+        if (controller.checkIfReservationExists(hotelName, roomName, selectedReservationId) == null) {
+            MessageHelper.showErrorMessage("Reservation does not exist!");
+            return;
+        }
+        
+        boolean isRemoved = controller.removeReservation(hotelName, roomName, Integer.parseInt(selectedReservationId));
+        if (isRemoved) {
+            rehydrateFrame(view, controller, hotelName, roomName);
+        }
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
         /* Modify price on date */
+        rehydrateFrame(view, controller, hotelName, roomName);
     }//GEN-LAST:event_jButton3ActionPerformed
     
     public void fetchData() {
@@ -259,8 +276,10 @@ public class ManageRoomFrame extends javax.swing.JFrame {
     }
     
     
-    public void rehydrateFrame() {
-        
+    public void rehydrateFrame(MainView view, HRSController controller, String hotelName, String roomName) {
+        ManageRoomFrame newManageRoomFrame = new ManageRoomFrame(view, controller, hotelName, roomName);
+        newManageRoomFrame.setVisible(true);
+        ManageRoomFrame.this.dispose();
     }
 
     
