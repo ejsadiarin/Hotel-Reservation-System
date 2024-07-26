@@ -263,16 +263,22 @@ public class HRSController {
     return null;
   }
   
-  public void changeHotelName(String hotelToChange, String newName) {
-    if (checkIfHotelExists(hotelToChange) != null) {
+  /**
+   * @return true if successful, otherwise false
+   * */
+  public boolean changeHotelName(String hotelToChange, String newName) {
+    if (checkIfHotelExists(newName) != null) {
       MessageHelper.showErrorMessage(String.format("Hotel name %s already exists!", newName));
-      return;
+      return false;
     }
     Hotel selectedHotel = findHotelByName(hotelToChange);
     if (selectedHotel != null) {
       selectedHotel.setName(newName);
       MessageHelper.showSuccessMessage(String.format("Hotel name successfully changed to %s!", newName));
+      return true;
     }
+    
+    return false;
   }
   
   public void addRoom(String hotelName, String roomType) {
@@ -298,7 +304,7 @@ public class HRSController {
     if (selectedRoom != null && selectedRoom.getReservations().isEmpty()) {
       // ask for confirmation
       int confirmation = InputHelper.askConfirmation(String.format("Confirm removing %s?", roomToRemove));
-      if (confirmation == 2) {// 0 is OK, 2 is CANCEL
+      if (confirmation == 1) { // 0 is yes, 1 is no
         MessageHelper.showCancelMessage();
         return;
       }
@@ -319,11 +325,33 @@ public class HRSController {
       selectedHotel.setBasePrice(newBasePrice);
       MessageHelper.showSuccessMessage(String.format("Base price updated to %.2f for hotel '%s'.", newBasePrice, selectedHotel.getName()));
     }
+    else 
+      MessageHelper.showErrorMessage("There are some reservations left! Cannot update base price.");
   }
   
 //  public void removeReservation(String hotelName, String roomName, int reservationId) {
 //    Hotel 
 //  }
+  
+  /**
+   * @param hotelName is the name of the hotel to be removed
+   * @return true if hotelName is successfully removed, otherwise false
+   * */
+  public boolean removeHotel(String hotelName) {
+    Hotel selectedHotel = findHotelByName(hotelName);
+    if (selectedHotel != null && selectedHotel.areEmptyReservations()) {
+      int confirmation = InputHelper.askConfirmation(String.format("REMOVING Hotel '%s': Are you sure?", selectedHotel.getName()));
+      if (confirmation == 1) {
+        MessageHelper.showCancelMessage();
+        return false;
+      }
+      hotels.remove(selectedHotel);
+      MessageHelper.showSuccessMessage(String.format("Hotel '%s' successfully removed!", selectedHotel.getName()));
+      return true;
+    }
+    
+    return false;
+  }
 
 
   // /**

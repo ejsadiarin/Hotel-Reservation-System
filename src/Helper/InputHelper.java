@@ -7,8 +7,11 @@ public class InputHelper {
     return JOptionPane.showInputDialog(null, message, "Question", JOptionPane.QUESTION_MESSAGE);
   }
   
+  /**
+   * @return 0 if user selected YES, otherwise 1 if NO
+   * */
   public static int askConfirmation(String message) {
-    return JOptionPane.showConfirmDialog(null, message, "Confirm", JOptionPane.OK_CANCEL_OPTION);
+    return JOptionPane.showConfirmDialog(null, message, "Confirm", JOptionPane.YES_NO_OPTION);
   }
 }
 

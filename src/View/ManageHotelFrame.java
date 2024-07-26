@@ -21,6 +21,7 @@ public class ManageHotelFrame extends javax.swing.JFrame {
     private HashMap<String, String> hotelInfo;
     private String hotelToManage;
     private DefaultTableModel tableData;
+    private ManageRoomFrame manageRoomFrame;
 
     /**
      * Creates new form ManageHotelFrame
@@ -29,9 +30,10 @@ public class ManageHotelFrame extends javax.swing.JFrame {
         this.view = view;
         this.controller = controller;
         this.hotelToManage = hotelToManage;
-        this.roomInfoModel = new DefaultTableModel();
+        this.tableData = new DefaultTableModel();
         initComponents();
         fetchData();
+        refreshTableData();
     }
 
     /**
@@ -319,8 +321,9 @@ public class ManageHotelFrame extends javax.swing.JFrame {
         // TODO add your handling code here:
         /* Change name of hotel */
         String newName = InputHelper.askInputString("New Name");
-        controller.changeHotelName(hotelToManage, newName);
-        jLabel6.setText(newName);
+        boolean isHotelNameChanged = controller.changeHotelName(hotelToManage, newName);
+        if (isHotelNameChanged)
+            rehydrateFrame(view, controller, newName);
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
@@ -328,7 +331,7 @@ public class ManageHotelFrame extends javax.swing.JFrame {
         /* Add a room */
         String roomType = InputHelper.askInputString("Choose the Room Type (Standard, Deluxe, Executive)");
         controller.addRoom(hotelToManage, roomType);
-        refreshTableData();
+        rehydrateFrame(view, controller, hotelToManage);
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
@@ -336,7 +339,7 @@ public class ManageHotelFrame extends javax.swing.JFrame {
         /* Remove a room */
         String roomToRemove = InputHelper.askInputString("Enter the Room Name to REMOVE");
         controller.removeRoom(hotelToManage, roomToRemove);
-        refreshTableData();
+        rehydrateFrame(view, controller, hotelToManage);
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
@@ -344,22 +347,42 @@ public class ManageHotelFrame extends javax.swing.JFrame {
         /* Update base price per room */
         String newBasePrice = InputHelper.askInputString("Enter new base price");
         controller.updateBasePrice(hotelToManage, Double.parseDouble(newBasePrice));
-        refreshTableData();
+        rehydrateFrame(view, controller, hotelToManage);
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
         // TODO add your handling code here:
         /* Remove hotel */
+        boolean isRemoved = controller.removeHotel(hotelToManage);
+        if (isRemoved) {
+            view.refreshHotelList();
+            view.setVisible(true);
+            ManageHotelFrame.this.dispose();
+        }
+        else
+            MessageHelper.showErrorMessage("Cannot remove rooms since there are some reservations existing or room doesn't exist at all.");
     }//GEN-LAST:event_jButton6ActionPerformed
 
     private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
         // TODO add your handling code here:
         /* Manage a room*/
+        String selectedRoomName = InputHelper.askInputString("Enter the name of the Room to View");
+        if (controller.checkIfRoomExists(selectedRoomName, hotelToManage) == null) {
+            MessageHelper.showErrorMessage("Room does not exist!");
+            return;
+        }
+        
+        manageRoomFrame = new ManageRoomFrame(view, controller, selectedRoomName);
+        manageRoomFrame.setVisible(true);
+        ManageHotelFrame.this.dispose();
     }//GEN-LAST:event_jButton7ActionPerformed
 
     private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
         // TODO add your handling code here:
         /* Back to main menu */
+        view.setVisible(true);
+        view.refreshHotelList();
+        ManageHotelFrame.this.dispose();
     }//GEN-LAST:event_jButton8ActionPerformed
     
     public void fetchData() {
@@ -368,10 +391,10 @@ public class ManageHotelFrame extends javax.swing.JFrame {
         jLabel7.setText(hotelInfo.get("Base Price Per Room")); // base price per room
         jLabel8.setText(hotelInfo.get("Overall Reservations")); // overall reservations
         jLabel9.setText(hotelInfo.get("Number of Rooms")); // number of rooms
-        refreshTableData();
     }
     
     public void refreshTableData() {
+        // have something like tableData.clear()
         tableData = (DefaultTableModel) jTable1.getModel(); // room info
         for (HashMap<String, String> roomInfo : controller.getAllRoomInfoOnHotel(hotelToManage)) {
             Object[] row = new Object[] {
@@ -383,6 +406,12 @@ public class ManageHotelFrame extends javax.swing.JFrame {
             };
             tableData.addRow(row);
         }
+    }
+    
+    public void rehydrateFrame(MainView view, HRSController controller, String hotelToManage) {
+        ManageHotelFrame newManageHotelFrame = new ManageHotelFrame(view, controller, hotelToManage);
+        newManageHotelFrame.setVisible(true);
+        ManageHotelFrame.this.dispose();
     }
 
 
