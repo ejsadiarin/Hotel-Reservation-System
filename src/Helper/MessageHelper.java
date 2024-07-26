@@ -9,4 +9,7 @@ public class MessageHelper {
   public static void showErrorMessage(String message) {
     JOptionPane.showMessageDialog(null, message, "Error", JOptionPane.ERROR_MESSAGE);
   }
+  public static void showCancelMessage() {
+    JOptionPane.showMessageDialog(null, "Action cancelled!", "Cancelled", JOptionPane.INFORMATION_MESSAGE);
+  }
 }

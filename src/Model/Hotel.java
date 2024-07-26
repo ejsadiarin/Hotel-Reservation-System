@@ -86,21 +86,24 @@ public class Hotel {
   
   /**
    * Adds a new room to the hotel, utilizing an automated naming generation based on the current number of rooms.
+   * 
+   * @return true if room is successfully added, otherwise false
    */
-  public void addRoom(String roomType) {
+  public boolean addRoom(String roomType) {
     // automated unique naming of room names until numOfRooms
     String roomName = "Room-" + (getNumOfRooms() + 1);
     for (Room room : rooms) {
       if (room.getName().equals(roomName)) {
         System.out.printf("Room name already exists.\n");
-        return;
+        return false;
       }
     }
     if (getNumOfRooms() > getMaxRooms()) {
       System.out.printf("Limit reached (%d). Cannot add more rooms.\n", getNumOfRooms());
-      return;
+      return false;
     }
     rooms.add(new Room(roomName, this.basePrice, roomType));
+    return true;
   }
 
   /**

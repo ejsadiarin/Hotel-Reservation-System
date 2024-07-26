@@ -1,5 +1,6 @@
 package Controller;
 
+import Helper.InputHelper;
 import Model.AvailabilityDate;
 import Model.Hotel;
 
@@ -168,11 +169,17 @@ public class HRSController {
       HashMap<String, String> specificRoomInfo = new HashMap<>();
       Hotel selectedHotel = findHotelByName(hotelName);
       Room selectedRoom = selectedHotel.getRoom(roomName);
+      double estimatedEarnings = 0.0;
+      
       if (selectedRoom != null) {
         specificRoomInfo.put("Room Name", selectedRoom.getName());
         specificRoomInfo.put("Room Type", selectedRoom.getRoomType());
         specificRoomInfo.put("Price Per Night", String.valueOf(selectedRoom.getPricePerNight()));
         specificRoomInfo.put("Number of Reservations", String.valueOf(selectedRoom.getReservations().size()));
+        for (Reservation reservation : selectedRoom.getReservations()) {
+          estimatedEarnings += reservation.getTotalPrice();
+        }
+        specificRoomInfo.put("Estimated Earnings", String.valueOf(estimatedEarnings));
       }
       return specificRoomInfo;
     }
@@ -255,76 +262,69 @@ public class HRSController {
     
     return null;
   }
+  
+  public void changeHotelName(String hotelToChange, String newName) {
+    if (checkIfHotelExists(hotelToChange) != null) {
+      MessageHelper.showErrorMessage(String.format("Hotel name %s already exists!", newName));
+      return;
+    }
+    Hotel selectedHotel = findHotelByName(hotelToChange);
+    if (selectedHotel != null) {
+      selectedHotel.setName(newName);
+      MessageHelper.showSuccessMessage(String.format("Hotel name successfully changed to %s!", newName));
+    }
+  }
+  
+  public void addRoom(String hotelName, String roomType) {
+    if (!(roomType.equals("Standard") || roomType.equals("Deluxe") || roomType.equals("Executive"))) {
+      MessageHelper.showErrorMessage("Invalid room type!");
+      return;
+    }
+    Hotel selectedHotel = findHotelByName(hotelName);
+    if (selectedHotel != null) {
+      boolean isSuccessfullyAdded = selectedHotel.addRoom(roomType);
+      if (isSuccessfullyAdded)
+        MessageHelper.showSuccessMessage("Successfully added a new room!");
+      else // only check for max room limit, since there is no way that room names can be equal (or there is?) thanks to automated room name creation (or maybe some cosmic ray will flip the bits and change its value)
+        MessageHelper.showErrorMessage(String.format("Limit reached (%d). Cannot add more rooms.", selectedHotel.getNumOfRooms()));
+    }
+  }
+  
+  public void removeRoom(String hotelName, String roomToRemove) {
+    Hotel selectedHotel = findHotelByName(hotelName);
+    Room selectedRoom = selectedHotel.getRoom(roomToRemove);
+    
+    // ensure that there is no reservations in the room first before removing it
+    if (selectedRoom != null && selectedRoom.getReservations().isEmpty()) {
+      // ask for confirmation
+      int confirmation = InputHelper.askConfirmation(String.format("Confirm removing %s?", roomToRemove));
+      if (confirmation == 2) {// 0 is OK, 2 is CANCEL
+        MessageHelper.showCancelMessage();
+        return;
+      }
+      selectedHotel.removeRoom(roomToRemove);
+      MessageHelper.showSuccessMessage(String.format("Successfully removed Room %s from hotel %s!\n", roomToRemove, hotelName));
+    }
+    else
+      MessageHelper.showErrorMessage("Cannot remove rooms since there are some reservations existing or room doesn't exist at all.");
+  }
+  
+  public void updateBasePrice(String hotelName, double newBasePrice) {
+    Hotel selectedHotel = findHotelByName(hotelName);
+    if (selectedHotel.areEmptyReservations()) {
+      if (newBasePrice < 100.0) {
+        MessageHelper.showErrorMessage("Base price must be at least 100.0!");
+        return;
+      }
+      selectedHotel.setBasePrice(newBasePrice);
+      MessageHelper.showSuccessMessage(String.format("Base price updated to %.2f for hotel '%s'.", newBasePrice, selectedHotel.getName()));
+    }
+  }
+  
+//  public void removeReservation(String hotelName, String roomName, int reservationId) {
+//    Hotel 
+//  }
 
-//   /**
-//   * Displays detailed information about a specific hotel.
-//   *
-//   * @param hotelName the name of the hotel to view
-//   */
-//   public void viewSpecificHotel(String hotelName) {
-//   if (this.hotels.isEmpty()) {
-//     MessageHelper.showErrorMessage("No hotels found! Create a hotel first to proceed.");
-//     return;
-//   }
-//
-//   Hotel hotel = findHotelByName(hotelName);
-//   if (hotel == null) {
-//     MessageHelper.showErrorMessage(String.format("Hotel name '%s' not found.\n", hotelName));
-//     return;
-//   }
-//
-//   DisplayManager.displayHotelGeneralInfo(hotel);
-//   System.out.printf("\n0 - Go back to main menu");
-//   System.out.printf("\n1 - View all room details");
-//   System.out.printf("\n2 - View available rooms by provided check-in and
-//   check-out dates");
-//   System.out.printf("\n3 - View reservation details by provided guest name");
-//   System.out.printf("\nChoose your action: ");
-//   String choice = scanner.nextLine();
-//   if (choice.equals("0")) {
-//     System.out.printf("\nGoing back...\n");
-//     return;
-//   } else if (choice.equals("1")) {
-//   System.out.printf("\n===========LOW-LEVEL INFORMATION==============\n");
-//   // maybe display ALL reservation first here with details
-//   DisplayManager.displayAllRoomsInHotel(hotel);
-//   System.out.printf("\nSelect a room to view in detail: ");
-//   String roomName = scanner.nextLine();
-//   DisplayManager.displaySpecificRoomInfo(hotel, roomName);
-//
-//   Room selectedRoom = hotel.getRoom(roomName);
-//   if (selectedRoom != null) {
-//     System.out.printf("\n0 - Go back to main menu");
-//     System.out.printf("\n1 - View reservation details in the selected room '%s'",
-//     roomName);
-//     System.out.printf("\nChoose your action: ");
-//     String subChoice = scanner.nextLine();
-//     
-//     if (subChoice.equals("0")) {
-//       System.out.printf("\nGoing back...\n");
-//       return;
-//     } else if (subChoice.equals("1")) {
-//       DisplayManager.displayReservationInfoByRoom(hotel, selectedRoom);
-//     } else
-//       System.out.printf("\nInvalid choice.\n");
-//   }
-//   } else if (choice.equals("2")) {
-//   System.out.printf("\nSelect a date to view available and booked rooms\n");
-//   System.out.printf("Enter check-in date: ");
-//   int checkInDate = scanner.nextInt();
-//   scanner.nextLine();
-//   System.out.printf("Enter check-out date: ");
-//   int checkOutDate = scanner.nextInt();
-//   scanner.nextLine();
-//   DisplayManager.displayRoomsOnDate(hotel, checkInDate, checkOutDate);
-//   } else if (choice.equals("3")) {
-//   System.out.printf("\nEnter a guest name to view their reservations in detail:
-//   ");
-//   String guestName = scanner.nextLine();
-//   DisplayManager.displayReservationsByGuestName(hotel, guestName);
-//   } else
-//   System.out.printf("\nInvalid choice.\n");
-//   }
 
   // /**
   // * Manages the properties of a specific hotel, allowing changes to its
