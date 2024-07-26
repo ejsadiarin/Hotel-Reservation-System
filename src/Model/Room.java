@@ -208,6 +208,15 @@ public class Room {
     return this.availabilityDates;
   }
   
+  public AvailabilityDate getAvailabilityDate(int dateNumber) {
+    for (AvailabilityDate date : getAvailabilityDates()) {
+      if (date.getDateNumber() == dateNumber)
+        return date;
+    }
+    
+    return null;
+  }
+  
   public ArrayList<AvailabilityDate> getReservedDates() {
     ArrayList<AvailabilityDate> reservedDates = new ArrayList<>();
     for (AvailabilityDate date : getAvailabilityDates()) {

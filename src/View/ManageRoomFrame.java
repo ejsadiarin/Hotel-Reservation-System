@@ -5,6 +5,7 @@
 package View;
 
 import Controller.HRSController;
+import View.Component.TableData;
 
 import javax.swing.table.DefaultTableModel;
 import java.util.HashMap;
@@ -16,20 +17,26 @@ import java.util.HashMap;
 public class ManageRoomFrame extends javax.swing.JFrame {
     private MainView view;
     private HRSController controller;
+    private String hotelName;
     private String roomName;
+    private HashMap<String, String> roomInfo;
     private DefaultTableModel reservationsTableData;
     private DefaultTableModel datePriceTableData;
 
     /**
      * Creates new form ManageReservationFrame
      */
-    public ManageRoomFrame(MainView view, HRSController controller, String roomName) {
+    public ManageRoomFrame(MainView view, HRSController controller, String hotelName, String roomName) {
         this.view = view;
         this.controller = controller;
+        this.hotelName = hotelName;
         this.roomName = roomName;
         this.reservationsTableData = new DefaultTableModel();
         this.datePriceTableData = new DefaultTableModel();
         initComponents();
+        fetchData();
+        TableData.reservationTableComponent(controller, jTable1, reservationsTableData, hotelName, roomName);
+        TableData.datePriceTableComponent(controller, jTable3, datePriceTableData, hotelName, roomName);
     }
 
     /**
@@ -56,6 +63,8 @@ public class ManageRoomFrame extends javax.swing.JFrame {
         jTable3 = new javax.swing.JTable();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
+        jLabel9 = new javax.swing.JLabel();
 
         jTable2.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -154,6 +163,12 @@ public class ManageRoomFrame extends javax.swing.JFrame {
         jLabel6.setFont(new java.awt.Font("Clarity City", 1, 18)); // NOI18N
         jLabel6.setText("Date Prices");
 
+        jLabel7.setFont(new java.awt.Font("Clarity City", 1, 14)); // NOI18N
+        jLabel7.setText("Number of Reservations (Booked):");
+
+        jLabel9.setFont(new java.awt.Font("Clarity City", 0, 13)); // NOI18N
+        jLabel9.setText("jLabel9");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -169,7 +184,11 @@ public class ManageRoomFrame extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel4)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel5))
+                        .addComponent(jLabel5)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel7)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jLabel9))
                     .addComponent(jLabel2)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(jLabel3)
@@ -194,7 +213,10 @@ public class ManageRoomFrame extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
-                    .addComponent(jLabel5))
+                    .addComponent(jLabel5)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel7)
+                        .addComponent(jLabel9)))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton2)
@@ -229,18 +251,13 @@ public class ManageRoomFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton3ActionPerformed
     
     public void fetchData() {
-        jLabel1; // room name
-        jLabel2; // room type
-        jLabel5; // price per night
+        roomInfo = controller.getSpecificRoomInfo(hotelName, roomName);
+        jLabel1.setText(roomInfo.get("Room Name")); // room name
+        jLabel2.setText(roomInfo.get("Room Type")); // room type
+        jLabel5.setText(roomInfo.get("Price Per Night")); // price per night
+        jLabel9.setText(roomInfo.get("Number of Reservations")); // number of reservations (booked)
     }
     
-    public void refreshReservationTableData() {
-        
-    }
-    
-    public void refreshDatePriceTableData() {
-
-    }
     
     public void rehydrateFrame() {
         
@@ -257,6 +274,8 @@ public class ManageRoomFrame extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;

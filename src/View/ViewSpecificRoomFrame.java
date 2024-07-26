@@ -1,21 +1,14 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package View;
 
 import Controller.HRSController;
 import Helper.InputHelper;
 import Helper.MessageHelper;
+import View.Component.TableData;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.util.HashMap;
 
-/**
- *
- * @author exquisite
- */
 public class ViewSpecificRoomFrame extends javax.swing.JFrame {
     private MainView view;
     private HRSController controller;
@@ -40,6 +33,8 @@ public class ViewSpecificRoomFrame extends javax.swing.JFrame {
         this.availbleDatesModel = new DefaultListModel<>();
         initComponents();
         fetchData();
+        refreshDatesList();
+        TableData.reservationTableComponent(controller, jTable1, tableData, selectedHotelName, selectedRoomName);
     }
 
     /**
@@ -279,18 +274,6 @@ public class ViewSpecificRoomFrame extends javax.swing.JFrame {
         jLabel8.setText(selectedHotelName); // hotel name
         jLabel9.setText(roomInfo.get("Number of Reservations")); // number of reservations (booked)
         jLabel11.setText(roomInfo.get("Price Per Night")); // price per night
-        refreshDatesList();
-        tableData = (DefaultTableModel) jTable1.getModel(); // reservations (in selected room) in a table
-        for (HashMap<String, String> reservationInfo : controller.getAllReservationInfoOnRoom(selectedHotelName, selectedRoomName)) {
-            Object[] row = new Object[] {
-                reservationInfo.get("Id"),
-                reservationInfo.get("Guest Name"),
-                reservationInfo.get("Check In Date"),
-                reservationInfo.get("Check Out Date"),
-                reservationInfo.get("Total Price"),
-            };
-            tableData.addRow(row);
-        }
     }
     
     public void refreshDatesList() {
@@ -316,7 +299,7 @@ public class ViewSpecificRoomFrame extends javax.swing.JFrame {
                 availbleDatesModel.addElement(date);
         }
     }
-
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;

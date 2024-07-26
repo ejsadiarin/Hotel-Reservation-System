@@ -372,7 +372,7 @@ public class ManageHotelFrame extends javax.swing.JFrame {
             return;
         }
         
-        manageRoomFrame = new ManageRoomFrame(view, controller, selectedRoomName);
+        manageRoomFrame = new ManageRoomFrame(view, controller, hotelToManage, selectedRoomName);
         manageRoomFrame.setVisible(true);
         ManageHotelFrame.this.dispose();
     }//GEN-LAST:event_jButton7ActionPerformed

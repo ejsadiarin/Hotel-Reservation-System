@@ -147,6 +147,21 @@ public class HRSController {
     return null;
   }
   
+  public ArrayList<HashMap<String, String>> getAllDatesOnRoom(String hotelName, String roomName) {
+    if (checkIfHotelExists(hotelName) != null && checkIfRoomExists(roomName, hotelName) != null) {
+      ArrayList<HashMap<String, String>> listOfDateInfo = new ArrayList<>();
+      Hotel selectedHotel = findHotelByName(hotelName);
+      Room selectedRoom = selectedHotel.getRoom(roomName);
+      // AvailabilityDate is always created so no need for null checks
+      for (AvailabilityDate date : selectedRoom.getAvailabilityDates()) {
+        HashMap<String, String> specificDateInfo = getSpecificDateInfo(hotelName, roomName, date.getDateNumber());
+        listOfDateInfo.add(specificDateInfo);
+      }
+      return  listOfDateInfo;
+    }
+    return null;
+  }
+  
   public ArrayList<HashMap<String, String>> getAllReservationInfoOnRoom(String hotelName, String roomName) {
     if (checkIfHotelExists(hotelName) != null && checkIfRoomExists(roomName, hotelName) != null) {
       ArrayList<HashMap<String, String>> listOfReservationInfo = new ArrayList<>();
@@ -185,6 +200,24 @@ public class HRSController {
     }
     
     return null;
+  }
+  
+  public HashMap<String, String> getSpecificDateInfo(String hotelName, String roomName, int dateNumber) {
+   if (checkIfHotelExists(hotelName) != null && checkIfRoomExists(roomName, hotelName) != null) {
+     HashMap<String, String> specificDateInfo = new HashMap<>();
+     Hotel selectedHotel = findHotelByName(hotelName);
+     Room selectedRoom = selectedHotel.getRoom(roomName);
+     AvailabilityDate date = selectedRoom.getAvailabilityDate(dateNumber);
+     if (date != null) {
+       specificDateInfo.put("Date Number", String.valueOf(date.getDateNumber()));
+       specificDateInfo.put("Is Available", String.valueOf(date.isAvailable()));
+       specificDateInfo.put("Base Price", String.valueOf(date.getBasePrice()));
+       specificDateInfo.put("Modified Price", String.valueOf(date.getModifiedPrice()));
+     }
+     return specificDateInfo;
+   } 
+   
+   return null;
   }
   
   public HashMap<String, String> getSpecificReservationInfo(String hotelName, String roomName, int id) {
