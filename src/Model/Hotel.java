@@ -1,6 +1,8 @@
 package Model;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 
 /**
  * The Hotel class represents a hotel with a unique name, a collection of rooms, and various properties 
@@ -12,6 +14,8 @@ public class Hotel {
   private double basePrice;
   private final int maxRooms; // always 50
   private int numOfRooms; // actual number of rooms (initialized rooms)
+  private ArrayList<String> uniqueNamesList;
+  private ArrayList<String> usedNamesList;
 
   /**
    * Constructs a new Hotel with the specified name and number of rooms.
@@ -25,6 +29,14 @@ public class Hotel {
     this.basePrice = 1299.0;
     this.maxRooms = 50;
     this.setNumOfRooms(numOfRooms);
+    this.uniqueNamesList = new ArrayList<>(Arrays.asList(
+        "Azure", "Moonlight", "Crystal", "Emerald", "Golden", "Sapphire", "Amber", "Silver", "Ruby", "Tranquil",
+        "Serene", "Velvet", "Celestial", "Coral", "Majestic", "Whispering", "Sunlit", "Enchanted", "Harmony", "Blissful",
+        "Dreamy", "Radiant", "Garden", "Opal", "Starlight", "Mystic", "Aurora", "Paradise", "Cozy", "Enigma",
+        "Horizon", "Zenith", "Mirage", "Orchid", "Sunrise", "Lotus", "Eclipse", "Glimmer", "Serenade", "Cascade",
+        "Harmony", "Solstice", "Seraph", "Elysian", "Luminous", "Whisper", "Nirvana", "Radiance", "Essence", "Breeze"
+    ));
+    this.usedNamesList = new ArrayList<>();
     this.initializeRooms(this.numOfRooms);
   }
 
@@ -46,6 +58,25 @@ public class Hotel {
     this.name = name;
   }
 
+  public ArrayList<String> getUniqueNamesList() {
+    return this.uniqueNamesList;
+  }
+
+  public ArrayList<String> getUsedNamesList() {
+    return this.usedNamesList;
+  }
+
+  public String getUniqueName() {
+    Collections.shuffle(uniqueNamesList);
+    for (String name : getUniqueNamesList()) {
+      if (!getUsedNamesList().contains(name)) {
+        getUsedNamesList().add(name);
+        return name;
+      }
+    }
+    return "Roomu" + (getRooms().size() + 1); // fallback
+  }
+  
   /**
    * Gets the list of rooms in the hotel.
    *
@@ -64,7 +95,7 @@ public class Hotel {
     // automated unique naming of room names until numOfRooms
     int roomNumber = 1;
     while (roomNumber <= numOfRooms) {
-      String roomName = "Room-" + roomNumber;
+      String roomName = getUniqueName();
       rooms.add(new Room(roomName, this.basePrice, "Standard"));
       roomNumber++;
     }
@@ -91,13 +122,7 @@ public class Hotel {
    */
   public boolean addRoom(String roomType) {
     // automated unique naming of room names until numOfRooms
-    String roomName = "Room-" + (getNumOfRooms() + 1);
-    for (Room room : rooms) {
-      if (room.getName().equals(roomName)) {
-        System.out.printf("Room name already exists.\n");
-        return false;
-      }
-    }
+    String roomName = getUniqueName();
     if (getNumOfRooms() > getMaxRooms()) {
       System.out.printf("Limit reached (%d). Cannot add more rooms.\n", getNumOfRooms());
       return false;

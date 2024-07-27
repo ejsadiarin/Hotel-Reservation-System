@@ -210,7 +210,7 @@ public class HRSController {
      AvailabilityDate date = selectedRoom.getAvailabilityDate(dateNumber);
      if (date != null) {
        specificDateInfo.put("Date Number", String.valueOf(date.getDateNumber()));
-       specificDateInfo.put("Is Available", String.valueOf(date.isAvailable()));
+       specificDateInfo.put("Is Available", date.isAvailable() ? "Available" : "Booked");
        specificDateInfo.put("Base Price", String.valueOf(date.getBasePrice()));
        specificDateInfo.put("Modified Price", String.valueOf(date.getModifiedPrice()));
      }
@@ -407,111 +407,34 @@ public class HRSController {
     
     return false;
   }
+  
+  /**
+   * Modifies the price by a specified percentage on a given date.
+   * 
+   * @param hotelName is the name of the hotel that the room belongs to
+   * @param roomName is the name of the room that the reservation belongs to
+   * @param dateInput is the date or day that will be modified
+   * @param modifierInput is the modifier to be used
+   * @return true if modification of price on date is successful, otherwise false
+   * */
+  public boolean datePriceModifier(String hotelName, String roomName, int dateInput, int modifierInput) {
+    if (checkIfHotelExists(hotelName) != null && checkIfRoomExists(roomName, hotelName) != null) {
+      Hotel selectedHotel = findHotelByName(hotelName);
+      Room selectedRoom = selectedHotel.getRoom(roomName);
+      AvailabilityDate selectedDate = selectedRoom.getAvailabilityDate(dateInput);
+      if (selectedDate != null) {
+        double parsedModifier = (double) modifierInput / 100;
+        selectedDate.setModifiedPrice(parsedModifier);
+        MessageHelper.showSuccessMessage(String.format("Successfully modified the price by %d%% on Day '%d'!", modifierInput, dateInput));
+        return true;
+      }
+      else
+        MessageHelper.showErrorMessage(String.format("Day %d does not exist! Please try again.", dateInput));
+    }
+    return false;
+  }
 
 
-  // /**
-  // * Manages the properties of a specific hotel, allowing changes to its
-  // details,
-  // * rooms, and reservations.
-  // *
-  // * @param hotelName the name of the hotel to manage
-  // */
-  // public void manageHotel(String hotelName) {
-  // Scanner scanner = new Scanner(System.in);
-  //
-  // Hotel chosenHotel = findHotelByName(hotelName);
-  //
-  // if (chosenHotel == null) {
-  // System.out.printf("Hotel name '%s' not found. Exiting...\n", hotelName);
-  // } else {
-  // while (true) {
-  // DisplayManager.displayManageHotelUI();
-  //
-  // System.out.printf("Choose your action (Enter 0 to exit): ");
-  // int choice = scanner.nextInt();
-  // scanner.nextLine();
-  //
-  // switch (choice) {
-  // case 0: // go back to previous
-  // System.out.printf("Exiting...\n");
-  // return;
-  // case 1:// change name of hotel (name must still be unique)
-  // System.out.printf("Set new name: ");
-  // // System.out.printf("Set new name (Enter 0 to exit): ");
-  // String newHotelName = scanner.nextLine();
-  // if (findHotelByName(newHotelName) == null) {
-  // chosenHotel.setName(newHotelName);
-  // System.out.printf("Successfully changed name to %s!\n", newHotelName);
-  // return;
-  // } else
-  // System.out.printf("%s already exists. Going back...\n", newHotelName);
-  // break;
-  // case 2: // add room(s)
-  // chosenHotel.addRoom("Standard"); // TODO: ask for input for roomType in View
-  // GUI
-  // System.out.printf("Successfully added a new room to %s!\n",
-  // chosenHotel.getName());
-  // break;
-  // case 3: // remove room(s)
-  // DisplayManager.displayAllRoomsInHotel(chosenHotel);
-  // System.out.printf("Enter room name to remove: ");
-  // String removeRoomName = scanner.nextLine();
-  // Room roomToRemove = chosenHotel.getRoom(removeRoomName);
-  // if (roomToRemove != null && roomToRemove.getReservations().isEmpty()) {
-  // chosenHotel.removeRoom(removeRoomName);
-  // System.out.printf("Successfully removed Room %s from hotel %s!\n",
-  // removeRoomName, chosenHotel.getName());
-  // } else
-  // System.out.printf(
-  // "Cannot remove rooms since there are some reservations existing or room
-  // doesn't exist at all.\n");
-  // break;
-  // case 4: // update base price of rooms
-  // if (chosenHotel.areEmptyReservations()) {
-  // System.out.printf("Enter new base price for rooms: ");
-  // double newBasePrice = scanner.nextDouble();
-  // while (newBasePrice < 100.0) {
-  // System.out.printf("Base price must be at least 100.0. Please try again.\n");
-  // newBasePrice = scanner.nextDouble();
-  // }
-  // chosenHotel.setBasePrice(newBasePrice);
-  // System.out.printf("Base price updated to %.2f for hotel '%s'.\n",
-  // newBasePrice, chosenHotel.getName());
-  // } else
-  // System.out.printf("There are some reservations in rooms. Cannot update new
-  // base price.\n");
-  // break;
-  // case 5: // remove reservation
-  // DisplayManager.displayAllRoomsInHotel(chosenHotel);
-  // System.out.printf("Enter room to remove a reservation from: ");
-  // String roomName = scanner.nextLine();
-  // Room room = chosenHotel.getRoom(roomName);
-  //
-  // if (room != null && !room.getReservations().isEmpty()) {
-  // DisplayManager.displayReservationInfoByRoom(chosenHotel, room);
-  // System.out.printf("Enter guest name to remove reservation: ");
-  // String guestName = scanner.nextLine();
-  // room.removeReservation(guestName);
-  // } else
-  // System.out.printf("Room '%s' not found.\n", roomName);
-  // break;
-  // case 6: // remove hotel
-  // if (chosenHotel.areEmptyReservations()) {
-  // hotels.remove(chosenHotel);
-  // System.out.printf("Successfully removed hotel '%s'!\n",
-  // chosenHotel.getName());
-  // return;
-  // } else
-  // System.out.printf("Cannot remove hotel since there are some reservations
-  // left.\n");
-  // break;
-  // default:
-  // System.out.printf("Invalid choice. Please try again.\n");
-  // }
-  // }
-  // }
-  // }
-  //
   // /**
   // * Simulates the booking of a room in a specified hotel for a guest within a
   // * date range.

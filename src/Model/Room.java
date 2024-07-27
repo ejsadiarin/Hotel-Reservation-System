@@ -61,6 +61,10 @@ public class Room {
     this.pricePerNight = price;
     for (AvailabilityDate date : availabilityDates) {
       date.setBasePrice(price);
+      if (date.getIsModified()) // recalculate dates with modified prices
+        date.setModifiedPrice(date.getModifier());
+      else
+        date.setModifiedPrice(1.0);
     }
   }
   

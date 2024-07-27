@@ -5,12 +5,14 @@ public class AvailabilityDate {
   private boolean available;
   private double basePrice;
   private double modifiedPrice;
+  private boolean isModified;
+  private double modifier;
   
   public AvailabilityDate(int dateNumber, double basePrice) {
     this.dateNumber = dateNumber;
     this.available = true;
     this.basePrice = basePrice;
-    this.modifiedPrice = basePrice; // by default this is equal to basePrice
+    setModifiedPrice(1.0); // by default this is equal to basePrice
   }
 
   public int getDateNumber() {
@@ -37,9 +39,30 @@ public class AvailabilityDate {
     return this.modifiedPrice;
   }
   
-  public void setModifiedPrice(double modifier) {
-    if (modifier >= 0.5 && modifier <= 1.5) {
-      this.modifiedPrice = getBasePrice() * modifier;
+  public void setModifiedPrice(double newModifier) {
+    if (newModifier == 1.0) {
+      setIsModified(false);
     }
+    if (newModifier >= 0.5 && newModifier <= 1.5 && newModifier != 1.0) {
+      setIsModified(true);
+    }
+    this.modifiedPrice = getBasePrice() * newModifier;
+    setModifier(newModifier);
+  }
+
+  public boolean getIsModified() {
+    return this.isModified;
+  }
+
+  public void setIsModified(boolean modified) {
+    this.isModified = modified;
+  }
+
+  public double getModifier() {
+    return this.modifier;
+  }
+  
+  public void setModifier(double newModifier) {
+    this.modifier = newModifier;
   }
 }

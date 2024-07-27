@@ -256,15 +256,18 @@ public class ManageRoomFrame extends javax.swing.JFrame {
         }
         
         boolean isRemoved = controller.removeReservation(hotelName, roomName, Integer.parseInt(selectedReservationId));
-        if (isRemoved) {
+        if (isRemoved)
             rehydrateFrame(view, controller, hotelName, roomName);
-        }
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
         /* Modify price on date */
-        rehydrateFrame(view, controller, hotelName, roomName);
+        String dayInput = InputHelper.askInputString("What day do you want to modify?");
+        String modifierInput = InputHelper.askInputString("Modifying the price by X% (DEFAULT: 100%)");
+        boolean isModified = controller.datePriceModifier(hotelName, roomName, Integer.parseInt(dayInput), Integer.parseInt(modifierInput));
+        if (isModified)
+            rehydrateFrame(view, controller, hotelName, roomName);
     }//GEN-LAST:event_jButton3ActionPerformed
     
     public void fetchData() {

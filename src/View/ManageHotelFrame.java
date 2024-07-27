@@ -360,7 +360,7 @@ public class ManageHotelFrame extends javax.swing.JFrame {
             ManageHotelFrame.this.dispose();
         }
         else
-            MessageHelper.showErrorMessage("Cannot remove rooms since there are some reservations existing or room doesn't exist at all.");
+            MessageHelper.showErrorMessage("Cannot remove hotel since there are some existing reservations.");
     }//GEN-LAST:event_jButton6ActionPerformed
 
     private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
