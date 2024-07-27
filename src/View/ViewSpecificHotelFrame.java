@@ -115,10 +115,7 @@ public class ViewSpecificHotelFrame extends javax.swing.JFrame {
         jTable1.setFont(new java.awt.Font("Clarity City", 3, 15)); // NOI18N
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
+
             },
             new String [] {
                 "Room Name", "Room Type", "Price Per Night", "Booked Reservations", "Estimated Earnings"

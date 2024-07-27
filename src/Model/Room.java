@@ -3,8 +3,10 @@ package Model;
 import java.util.ArrayList;
 
 /**
- * The Room class represents a hotel room, including its name, price per night, availability, 
- * and reservations. It provides methods to manage reservations and check availability.
+ * The Room class represents a hotel room, including its name, price per night,
+ * availability,
+ * and reservations. It provides methods to manage reservations and check
+ * availability.
  */
 public class Room {
   private String name;
@@ -16,19 +18,20 @@ public class Room {
   /**
    * Constructs a new Room with the specified name and price per night.
    *
-   * @param name the name of the room
+   * @param name          the name of the room
    * @param pricePerNight the price per night for the room
-   * @param roomType the type of the room (e.g., Deluxe, Executive, Standard)
+   * @param roomType      the type of the room (e.g., Deluxe, Executive, Standard)
    */
   public Room(String name, double pricePerNight, String roomType) {
     this.name = name;
     this.reservations = new ArrayList<>();
-    // Initialize all days to available
     this.availabilityDates = new ArrayList<>();
+    setRoomType(roomType, pricePerNight); // room type determines the price per night
+
+    // Initialize all days to available
     for (int i = 0; i < 31; i++) {
       this.availabilityDates.add(new AvailabilityDate(i + 1, pricePerNight));
     }
-    setRoomType(roomType, pricePerNight); // room type determines the price per night
   }
 
   /**
@@ -64,45 +67,42 @@ public class Room {
         date.setModifiedPrice(1.0);
     }
   }
-  
+
   public String getRoomType() {
     return this.roomType;
   }
-  
+
   public void setRoomType(String newRoomType) {
     if (newRoomType.equals("Deluxe")) {
       this.roomType = "Deluxe";
       setPricePerNight(getPricePerNight() * 1.20);
-    }
-    else if (newRoomType.equals("Executive")) {
+    } else if (newRoomType.equals("Executive")) {
       this.roomType = "Executive";
       setPricePerNight(getPricePerNight() * 1.35);
-    }
-    else {
+    } else {
       this.roomType = "Standard"; // default
       setPricePerNight(getPricePerNight());
     }
   }
-  
+
   public void setRoomType(String newRoomType, double newPrice) {
     if (newRoomType.equals("Deluxe")) {
       this.roomType = "Deluxe";
       setPricePerNight(newPrice * 1.20);
-    }
-    else if (newRoomType.equals("Executive")) {
+    } else if (newRoomType.equals("Executive")) {
       this.roomType = "Executive";
       setPricePerNight(newPrice * 1.35);
-    }
-    else {
+    } else {
       this.roomType = "Standard"; // default
       setPricePerNight(newPrice);
     }
   }
 
   /**
-   * Checks if the room is available between the specified check-in and check-out dates.
+   * Checks if the room is available between the specified check-in and check-out
+   * dates.
    *
-   * @param checkIn the check-in date
+   * @param checkIn  the check-in date
    * @param checkOut the check-out date
    * @return true if the room is available, otherwise false
    */
@@ -110,7 +110,7 @@ public class Room {
     // handle overnight reservations
     if (checkIn == checkOut)
       return this.getAvailabilityDates().get(checkIn - 1).isAvailable(); // return availability[checkIn - 1];
-    
+
     for (int i = checkIn - 1; i < checkOut; i++) {
       if (!this.getAvailabilityDates().get(i).isAvailable()) // if (!availability[i])
         return false;
@@ -142,16 +142,17 @@ public class Room {
   }
 
   /**
-   * Adds a new reservation for the specified guest name, check-in date, and check-out date.
+   * Adds a new reservation for the specified guest name, check-in date, and
+   * check-out date.
    *
-   * @param guestName the name of the guest
-   * @param checkInDate the check-in date
+   * @param guestName    the name of the guest
+   * @param checkInDate  the check-in date
    * @param checkOutDate the check-out date
    */
   public void addReservation(String guestName, int checkInDate, int checkOutDate) {
     if (reserveDates(checkInDate, checkOutDate)) {
       reservations.add(new Reservation(reservations.size() + 1, guestName, this, checkInDate, checkOutDate));
-    } 
+    }
   }
 
   /**
@@ -164,17 +165,18 @@ public class Room {
     if (reservation != null) {
       reservation.getRoom().cancelReserveDates(reservation.getCheckInDate(), reservation.getCheckOutDate());
       reservations.remove(reservation);
-      // TODO: refactor this, should not have printf in Model (do this notifs in controller or view)
-      System.out.printf("Reservation for '%s' removed from room '%s'.\n", reservation.getGuestName(), reservation.getRoom().getName());
-    }
-    else
+      // TODO: refactor this, should not have printf in Model (do this notifs in
+      // controller or view)
+      System.out.printf("Reservation for '%s' removed from room '%s'.\n", reservation.getGuestName(),
+          reservation.getRoom().getName());
+    } else
       System.out.printf("Reservation for '%s' not found. Exiting...\n", reservation.getGuestName());
   }
 
   /**
    * Reserves the room for the specified check-in and check-out dates.
    *
-   * @param checkInDate the check-in date
+   * @param checkInDate  the check-in date
    * @param checkOutDate the check-out date
    * @return true if the reservation is successful, false otherwise
    */
@@ -195,7 +197,7 @@ public class Room {
   /**
    * Cancels the reservation for the specified check-in and check-out dates.
    *
-   * @param checkInDate the check-in date
+   * @param checkInDate  the check-in date
    * @param checkOutDate the check-out date
    */
   public void cancelReserveDates(int checkInDate, int checkOutDate) {
@@ -220,26 +222,26 @@ public class Room {
   public ArrayList<AvailabilityDate> getAvailabilityDates() {
     return this.availabilityDates;
   }
-  
+
   public AvailabilityDate getAvailabilityDate(int dateNumber) {
     for (AvailabilityDate date : getAvailabilityDates()) {
       if (date.getDateNumber() == dateNumber)
         return date;
     }
-    
+
     return null;
   }
-  
+
   public ArrayList<AvailabilityDate> getReservedDates() {
     ArrayList<AvailabilityDate> reservedDates = new ArrayList<>();
     for (AvailabilityDate date : getAvailabilityDates()) {
       if (!date.isAvailable())
         reservedDates.add(date);
     }
-    
+
     return reservedDates;
   }
-  
+
   public int getIndexOfReservedDate(int date) {
     for (int i = date - 1; i < getAvailabilityDates().size(); i++) {
       if (!getAvailabilityDates().get(i).isAvailable())
@@ -247,11 +249,11 @@ public class Room {
     }
     return 0;
   }
-  
+
   /**
    * @param selectedDate is the starting date (not the index) to view the price of
    * @return the price on the given date
-   * */
+   */
   public double getPriceOnDate(int selectedDate) {
     double priceResult = 0;
     for (AvailabilityDate date : getAvailabilityDates()) {
@@ -260,7 +262,7 @@ public class Room {
         break;
       }
     }
-    
+
     return priceResult;
   }
 }

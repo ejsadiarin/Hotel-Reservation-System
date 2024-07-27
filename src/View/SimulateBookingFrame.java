@@ -107,10 +107,7 @@ public class SimulateBookingFrame extends javax.swing.JFrame {
         jTable1.setForeground(new java.awt.Color(255, 255, 255));
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+
             },
             new String [] {
                 "Room Name", "Room Type", "Price Per Night", "Reservations"
@@ -149,10 +146,7 @@ public class SimulateBookingFrame extends javax.swing.JFrame {
         jTable2.setForeground(new java.awt.Color(255, 255, 255));
         jTable2.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+
             },
             new String [] {
                 "Room Name", "Room Type", "Price Per Night", "Reservations"
@@ -176,10 +170,7 @@ public class SimulateBookingFrame extends javax.swing.JFrame {
         jTable3.setForeground(new java.awt.Color(255, 255, 255));
         jTable3.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+
             },
             new String [] {
                 "Room Name", "Room Type", "Price Per Night", "Reservations"
