@@ -100,6 +100,7 @@ public class Reservation {
       stay = 1;
     
     double rawTotalPrice = stay * getCostPerNight();
+    // handle modified date price
     
     if (isDiscounted) {
       // TODO: call calculateDiscount here - check first if isDiscounted == false, if true then no discount for this reservation

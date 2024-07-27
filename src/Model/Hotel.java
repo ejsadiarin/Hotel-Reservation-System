@@ -172,18 +172,37 @@ public class Hotel {
   public int getMaxRooms() {
     return this.maxRooms;
   }
-
+  
   /**
    * Gets the list of available rooms within a specific date range.
    *
    * @param checkInDate the check-in date
    * @param checkOutDate the check-out date
-   * @return the list of available rooms
+   * @return the list of all available rooms on a date
    */
   public ArrayList<Room> getAvailableRoomsOnDate(int checkInDate, int checkOutDate) {
     ArrayList<Room> availableRooms = new ArrayList<>();
-    
+
     for (Room room : getRooms()) {
+      if (room.isAvailable(checkInDate, checkOutDate))
+        availableRooms.add(room);
+    }
+
+    return availableRooms;
+  }
+
+  /**
+   * Gets the list of available rooms filtered by room type within a specific date range.
+   *
+   * @param checkInDate the check-in date
+   * @param checkOutDate the check-out date
+   * @param roomType the type of room
+   * @return the list of all available rooms by room type on a date
+   */
+  public ArrayList<Room> getAvailableRoomsOnDate(int checkInDate, int checkOutDate, String roomType) {
+    ArrayList<Room> availableRooms = new ArrayList<>();
+    
+    for (Room room : getRoomsByType(roomType)) {
       if (room.isAvailable(checkInDate, checkOutDate))
         availableRooms.add(room);
     }
@@ -232,8 +251,10 @@ public class Hotel {
   public void setBasePrice(double basePrice) {
     // assumes that there are no reservations for ALL rooms
     this.basePrice = basePrice;
-    for (Room room : rooms)
-      room.setPricePerNight(basePrice);
+    for (Room room : rooms) {
+      // price per night is updated based on room type
+      room.setRoomType(room.getRoomType(), basePrice); 
+    }
   }
 
   /**

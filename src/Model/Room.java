@@ -22,16 +22,13 @@ public class Room {
    */
   public Room(String name, double pricePerNight, String roomType) {
     this.name = name;
-    this.pricePerNight = pricePerNight;
     this.reservations = new ArrayList<>();
     // Initialize all days to available
     this.availabilityDates = new ArrayList<>();
     for (int i = 0; i < 31; i++) {
       this.availabilityDates.add(new AvailabilityDate(i + 1, pricePerNight));
     }
-    setRoomType(roomType);
-    addReservation("Dwin", 1, 2);
-    addReservation("Overnight", 10, 10);
+    setRoomType(roomType, pricePerNight); // room type determines the price per night
   }
 
   /**
@@ -83,7 +80,22 @@ public class Room {
     }
     else {
       this.roomType = "Standard"; // default
-      this.pricePerNight = getPricePerNight();
+      setPricePerNight(getPricePerNight());
+    }
+  }
+  
+  public void setRoomType(String newRoomType, double newPrice) {
+    if (newRoomType.equals("Deluxe")) {
+      this.roomType = "Deluxe";
+      setPricePerNight(newPrice * 1.20);
+    }
+    else if (newRoomType.equals("Executive")) {
+      this.roomType = "Executive";
+      setPricePerNight(newPrice * 1.35);
+    }
+    else {
+      this.roomType = "Standard"; // default
+      setPricePerNight(newPrice);
     }
   }
 
@@ -97,10 +109,10 @@ public class Room {
   public boolean isAvailable(int checkIn, int checkOut) {
     // handle overnight reservations
     if (checkIn == checkOut)
-      return availabilityDates.get(checkIn - 1).isAvailable(); // return availability[checkIn - 1];
+      return this.getAvailabilityDates().get(checkIn - 1).isAvailable(); // return availability[checkIn - 1];
     
     for (int i = checkIn - 1; i < checkOut; i++) {
-      if (!availabilityDates.get(i).isAvailable()) // if (!availability[i])
+      if (!this.getAvailabilityDates().get(i).isAvailable()) // if (!availability[i])
         return false;
     }
     return true;
@@ -138,12 +150,8 @@ public class Room {
    */
   public void addReservation(String guestName, int checkInDate, int checkOutDate) {
     if (reserveDates(checkInDate, checkOutDate)) {
-      reservations.add(new Reservation(reservations.size() + 1,guestName, this, checkInDate, checkOutDate));
-//      System.out.printf("Reservation for '%s' added to room '%s' from day %d to day %d.\n", guestName, name, checkInDate, checkOutDate);
+      reservations.add(new Reservation(reservations.size() + 1, guestName, this, checkInDate, checkOutDate));
     } 
-//    else {
-//      System.out.printf("Room '%s' is not available from day %d to day %d.\n", name, checkInDate, checkOutDate);
-//    }
   }
 
   /**

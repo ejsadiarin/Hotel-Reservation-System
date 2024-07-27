@@ -305,8 +305,9 @@ public class HRSController {
             listOfPriceBreakdown.add(String.format("Overnight Stay %d: %.2f", i+1, selectedReservation.getRoom().getPriceOnDate(i+1)));
             break;
           } 
-          // if not overnight then list it
-          listOfPriceBreakdown.add(String.format("Day %d-%d: %.2f", i+1, i+2, selectedReservation.getRoom().getPriceOnDate(i+1)));
+          // if i != index of check out date, then add (prevents extra day issue)
+          if (i != (selectedReservation.getCheckOutDate() - 1))
+            listOfPriceBreakdown.add(String.format("Day %d-%d: %.2f", i+1, i+2, selectedReservation.getRoom().getPriceOnDate(i+1)));
         }
         return listOfPriceBreakdown;
       }
@@ -454,8 +455,27 @@ public class HRSController {
   }
   
   public boolean areDatesValid(int checkInDate, int checkOutDate) {
-    if (checkInDate < checkOutDate) {
+    if (checkInDate <= checkOutDate) {
       return true; // valid
+    }
+    return false;
+  }
+  
+  public boolean bookRoom(String hotelName, String guestName, String roomType, int checkInDate, int checkOutDate) {
+    if (checkIfHotelExists(hotelName) != null) {
+      Hotel selectedHotel = findHotelByName(hotelName);
+      ArrayList<Room> availableRoomsOnDate = selectedHotel.getAvailableRoomsOnDate(checkInDate, checkOutDate, roomType);
+      if (availableRoomsOnDate.isEmpty()) {
+        MessageHelper.showErrorMessage(String.format("No %s rooms available on Day %d to %d", roomType, checkInDate, checkOutDate));
+        return false;
+      }
+      Room assignedRoom = availableRoomsOnDate.getFirst();
+      assignedRoom.addReservation(guestName, checkInDate, checkOutDate);
+      if (checkInDate == checkOutDate)
+        MessageHelper.showSuccessMessage(String.format("Successfully booked a room (ROOM: '%s') for an OVERNIGHT stay on Day %d", assignedRoom.getName(), checkInDate));
+      else 
+        MessageHelper.showSuccessMessage(String.format("Successfully booked a room (ROOM: '%s') on Day %d to %d", assignedRoom.getName(), checkInDate, checkOutDate));
+      return true;
     }
     return false;
   }
