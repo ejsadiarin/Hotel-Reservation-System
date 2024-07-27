@@ -183,12 +183,22 @@ public class Hotel {
   public ArrayList<Room> getAvailableRoomsOnDate(int checkInDate, int checkOutDate) {
     ArrayList<Room> availableRooms = new ArrayList<>();
     
-    for (Room room : rooms) {
+    for (Room room : getRooms()) {
       if (room.isAvailable(checkInDate, checkOutDate))
         availableRooms.add(room);
     }
     
     return availableRooms;
+  }
+  
+  public ArrayList<Room> getRoomsByType(String roomType) {
+    ArrayList<Room> roomTypeList = new ArrayList<>();
+    for (Room room : getRooms()) {
+      if (room.getRoomType().equals(roomType))
+        roomTypeList.add(room);
+    }
+    
+    return roomTypeList;
   }
 
   /**

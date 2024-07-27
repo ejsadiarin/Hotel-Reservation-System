@@ -1,20 +1,13 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package View;
 
 import Controller.HRSController;
 import Helper.InputHelper;
 import Helper.MessageHelper;
+import View.Component.TableData;
 
 import javax.swing.table.DefaultTableModel;
 import java.util.HashMap;
 
-/**
- *
- * @author exquisite
- */
 public class ManageHotelFrame extends javax.swing.JFrame {
     private MainView view;
     private HRSController controller;
@@ -33,7 +26,7 @@ public class ManageHotelFrame extends javax.swing.JFrame {
         this.tableData = new DefaultTableModel();
         initComponents();
         fetchData();
-        refreshTableData();
+        TableData.allRoomsTableComponent(controller, jTable1, tableData, hotelToManage);
     }
 
     /**
@@ -391,21 +384,6 @@ public class ManageHotelFrame extends javax.swing.JFrame {
         jLabel7.setText(hotelInfo.get("Base Price Per Room")); // base price per room
         jLabel8.setText(hotelInfo.get("Overall Reservations")); // overall reservations
         jLabel9.setText(hotelInfo.get("Number of Rooms")); // number of rooms
-    }
-    
-    public void refreshTableData() {
-        // have something like tableData.clear()
-        tableData = (DefaultTableModel) jTable1.getModel(); // room info
-        for (HashMap<String, String> roomInfo : controller.getAllRoomInfoOnHotel(hotelToManage)) {
-            Object[] row = new Object[] {
-                roomInfo.get("Room Name"),
-                roomInfo.get("Room Type"),
-                roomInfo.get("Price Per Night"),
-                roomInfo.get("Number of Reservations"),
-                roomInfo.get("Estimated Earnings")
-            };
-            tableData.addRow(row);
-        }
     }
     
     public void rehydrateFrame(MainView view, HRSController controller, String hotelToManage) {

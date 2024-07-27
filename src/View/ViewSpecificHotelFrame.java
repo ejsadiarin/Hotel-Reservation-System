@@ -3,6 +3,7 @@ package View;
 import Controller.HRSController;
 import Helper.InputHelper;
 import Helper.MessageHelper;
+import View.Component.TableData;
 
 import javax.swing.table.DefaultTableModel;
 import java.util.ArrayList;
@@ -26,6 +27,7 @@ public class ViewSpecificHotelFrame extends javax.swing.JFrame {
     this.selectedHotelName = selectedHotelName;
     initComponents();
     fetchData();
+    TableData.allRoomsTableComponent(controller, jTable1, tableData, selectedHotelName);
   }
 
   /**
@@ -113,17 +115,17 @@ public class ViewSpecificHotelFrame extends javax.swing.JFrame {
         jTable1.setFont(new java.awt.Font("Clarity City", 3, 15)); // NOI18N
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
             },
             new String [] {
-                "Room Name", "Room Type", "Price Per Night", "Booked Reservations"
+                "Room Name", "Room Type", "Price Per Night", "Booked Reservations", "Estimated Earnings"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false
+                false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -290,17 +292,6 @@ public class ViewSpecificHotelFrame extends javax.swing.JFrame {
         jLabel8.setText(hotelGeneralInfo.get("Estimated Earnings"));
         jLabel9.setText(hotelGeneralInfo.get("Base Price Per Room"));
         jLabel10.setText(hotelGeneralInfo.get("Number of Rooms"));
-        
-        tableData = (DefaultTableModel) jTable1.getModel();
-        for (HashMap<String, String> roomInfo : controller.getAllRoomInfoOnHotel(selectedHotelName)) {
-            Object[] row = new Object[] {
-                roomInfo.get("Room Name"),
-                roomInfo.get("Room Type"),
-                roomInfo.get("Price Per Night"),
-                roomInfo.get("Number of Reservations")
-            };
-            tableData.addRow(row);
-        }
     }
 
   /**

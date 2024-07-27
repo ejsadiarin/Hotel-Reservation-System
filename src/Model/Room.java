@@ -139,10 +139,11 @@ public class Room {
   public void addReservation(String guestName, int checkInDate, int checkOutDate) {
     if (reserveDates(checkInDate, checkOutDate)) {
       reservations.add(new Reservation(reservations.size() + 1,guestName, this, checkInDate, checkOutDate));
-      System.out.printf("Reservation for '%s' added to room '%s' from day %d to day %d.\n", guestName, name, checkInDate, checkOutDate);
-    } else {
-      System.out.printf("Room '%s' is not available from day %d to day %d.\n", name, checkInDate, checkOutDate);
-    }
+//      System.out.printf("Reservation for '%s' added to room '%s' from day %d to day %d.\n", guestName, name, checkInDate, checkOutDate);
+    } 
+//    else {
+//      System.out.printf("Room '%s' is not available from day %d to day %d.\n", name, checkInDate, checkOutDate);
+//    }
   }
 
   /**

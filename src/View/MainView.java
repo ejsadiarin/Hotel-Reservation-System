@@ -11,6 +11,7 @@ public class MainView extends javax.swing.JFrame {
   private CreateHotelFrame createHotelFrame;
   private ViewSpecificHotelFrame viewSpecificHotelFrame;
   private ManageHotelFrame manageHotelFrame;
+  private SimulateBookingFrame simulateBookingFrame;
   private DefaultListModel<String> hotelListModel;
 
   /**
@@ -151,6 +152,15 @@ public class MainView extends javax.swing.JFrame {
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         // TODO add your handling code here:
         /******* Simulate Booking *******/
+      String selectedHotel = InputHelper.askInputString("What hotel you want to book in?");
+      if (controller.checkIfHotelExists(selectedHotel) == null) {
+        MessageHelper.showErrorMessage("Hotel does not exist!");
+        return;
+      }
+
+      simulateBookingFrame = new SimulateBookingFrame(MainView.this, controller, selectedHotel);
+      simulateBookingFrame.setVisible(true);
+      MainView.this.setVisible(false);
     }//GEN-LAST:event_jButton4ActionPerformed
 
   private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jButton3ActionPerformed

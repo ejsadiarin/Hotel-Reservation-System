@@ -178,6 +178,24 @@ public class HRSController {
     }
     return null;
   }
+
+  /**
+   * Gets the available rooms given a certain check-in and check-out date. 
+   */
+  public ArrayList<HashMap<String, String>> getAllRoomsAvailableOnDate(String hotelName, int checkInDate, int checkOutDate) {
+    ArrayList<HashMap<String, String>> allRoomsAvailableOnDateList = new ArrayList<>();
+    Hotel selectedHotel = findHotelByName(hotelName);
+    ArrayList<Room> availableRooms = selectedHotel.getAvailableRoomsOnDate(checkInDate, checkOutDate);
+    for (Room room : availableRooms) {
+      HashMap<String, String> availableRoomsInfo = new HashMap<>();
+      availableRoomsInfo.put("Room Name", room.getName());
+      availableRoomsInfo.put("Room Type", room.getRoomType());
+      availableRoomsInfo.put("Price Per Night", String.valueOf(room.getPricePerNight()));
+      availableRoomsInfo.put("Number of Reservations", String.valueOf(room.getReservations().size()));
+      allRoomsAvailableOnDateList.add(availableRoomsInfo);
+    }
+    return allRoomsAvailableOnDateList;
+  }
   
   public HashMap<String, String> getSpecificRoomInfo(String hotelName, String roomName) {
     if (checkIfHotelExists(hotelName) != null && checkIfRoomExists(roomName, hotelName) != null) {
@@ -238,11 +256,12 @@ public class HRSController {
     
     return null;
   }
-  
-  /*
-   * @return 
-   * */
-  public ArrayList<String> getRoomBookedDates(String hotelName, String roomName) {
+
+
+  /**
+   * @return the list of date numbers as a string of the booked dates in a room 
+   */
+  public ArrayList<String> getRoomBookedDatesList(String hotelName, String roomName) {
     if (checkIfHotelExists(hotelName) != null && checkIfRoomExists(roomName, hotelName) != null) {
       ArrayList<String> bookedDates = new ArrayList<>();
       Hotel selectedHotel = findHotelByName(hotelName);
@@ -258,7 +277,7 @@ public class HRSController {
     return null;
   }
   
-  public ArrayList<String> getRoomAvailableDates(String hotelName, String roomName) {
+  public ArrayList<String> getRoomAvailableDatesList(String hotelName, String roomName) {
     if (checkIfHotelExists(hotelName) != null && checkIfRoomExists(roomName, hotelName) != null) {
       ArrayList<String> availableDates = new ArrayList<>();
       Hotel selectedHotel = findHotelByName(hotelName);
@@ -274,7 +293,7 @@ public class HRSController {
     return null;
   }
   
-  public ArrayList<String> getPriceBreakdownOnReservation(String hotelName, String roomName, String reservationId) {
+  public ArrayList<String> getPriceBreakdownOnReservationList(String hotelName, String roomName, String reservationId) {
     if (checkIfReservationExists(hotelName, roomName, reservationId) != null) {
       ArrayList<String> listOfPriceBreakdown = new ArrayList<>();
       Hotel selectedHotel = findHotelByName(hotelName);
@@ -433,7 +452,14 @@ public class HRSController {
     }
     return false;
   }
-
+  
+  public boolean areDatesValid(int checkInDate, int checkOutDate) {
+    if (checkInDate < checkOutDate) {
+      return true; // valid
+    }
+    return false;
+  }
+  
 
   // /**
   // * Simulates the booking of a room in a specified hotel for a guest within a

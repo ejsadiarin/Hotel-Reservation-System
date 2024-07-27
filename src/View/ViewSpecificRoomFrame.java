@@ -281,10 +281,10 @@ public class ViewSpecificRoomFrame extends javax.swing.JFrame {
         jList1.setModel(bookedDatesModel);
         jScrollPane2.setViewportView(jList1);
         bookedDatesModel.clear();
-        if (controller.getRoomBookedDates(selectedHotelName, selectedRoomName).isEmpty()) {
+        if (controller.getRoomBookedDatesList(selectedHotelName, selectedRoomName).isEmpty()) {
             bookedDatesModel.addElement("None...");
         } else {
-            for (String date : controller.getRoomBookedDates(selectedHotelName, selectedRoomName))
+            for (String date : controller.getRoomBookedDatesList(selectedHotelName, selectedRoomName))
                 bookedDatesModel.addElement(date);
         }
         
@@ -292,10 +292,10 @@ public class ViewSpecificRoomFrame extends javax.swing.JFrame {
         jList2.setModel(availbleDatesModel);
         jScrollPane3.setViewportView(jList2);
         availbleDatesModel.clear();
-        if (controller.getRoomAvailableDates(selectedHotelName, selectedRoomName).isEmpty()) {
+        if (controller.getRoomAvailableDatesList(selectedHotelName, selectedRoomName).isEmpty()) {
             availbleDatesModel.addElement("None...");
         } else {
-            for (String date : controller.getRoomAvailableDates(selectedHotelName, selectedRoomName))
+            for (String date : controller.getRoomAvailableDatesList(selectedHotelName, selectedRoomName))
                 availbleDatesModel.addElement(date);
         }
     }

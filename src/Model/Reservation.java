@@ -115,7 +115,7 @@ public class Reservation {
    * @return the cost per night
    */
   public double getCostPerNight() {
-    return this.costPerNight; // TODO: maybe change to room.getPricePerNight()
+    return this.costPerNight;
   }
   
   public String getDiscountCode() {

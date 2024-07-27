@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package View;
 
 import Controller.HRSController;
@@ -9,10 +5,6 @@ import Controller.HRSController;
 import javax.swing.*;
 import java.util.HashMap;
 
-/**
- *
- * @author exquisite
- */
 public class ViewSpecificReservationFrame extends javax.swing.JFrame {
     private MainView view;
     private HRSController controller;
@@ -37,6 +29,7 @@ public class ViewSpecificReservationFrame extends javax.swing.JFrame {
         this.priceBreakdownModel = new DefaultListModel<>();
         initComponents();
         fetchData();
+        refreshList();
     }
 
     /**
@@ -245,15 +238,14 @@ public class ViewSpecificReservationFrame extends javax.swing.JFrame {
         jLabel13.setText(reservationInfo.get("Check Out Date")); // check-out date
         jLabel14.setText(reservationInfo.get("Total Price")); // total price of the reservation
         jLabel15.setText(String.format("ID: %s", reservationInfo.get("Id"))); // reservation ID
-        refreshList();
     }
     
     public void refreshList() {
         jList1.setModel(priceBreakdownModel);
         jScrollPane1.setViewportView(jList1);
         priceBreakdownModel.clear();
-        if (controller.getPriceBreakdownOnReservation(selectedHotelName, selectedRoomName, selectedReservationId) != null) {
-            for (String price : controller.getPriceBreakdownOnReservation(selectedHotelName, selectedRoomName, selectedReservationId))
+        if (controller.getPriceBreakdownOnReservationList(selectedHotelName, selectedRoomName, selectedReservationId) != null) {
+            for (String price : controller.getPriceBreakdownOnReservationList(selectedHotelName, selectedRoomName, selectedReservationId))
                 priceBreakdownModel.addElement(price);
         }
     }
