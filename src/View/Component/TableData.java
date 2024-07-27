@@ -49,10 +49,7 @@ public class TableData {
   }
   
   public static void roomsByTypeTableComponent(HRSController controller, JTable table, DefaultTableModel tableData, String selectedHotelName, String roomType) {
-    String[] columnNames = { "Room Name", "Room Type", "Price Per Night", "Booked Reservations" };
-    tableData = new DefaultTableModel(columnNames, 0);
-    table.setModel(tableData);
-    
+    tableData = (DefaultTableModel) table.getModel();
     for (HashMap<String, String> roomInfo : controller.getAllRoomInfoOnHotel(selectedHotelName)) {
       if (roomInfo.get("Room Type").equals(roomType)) {
         Object[] row = new Object[]{
@@ -67,10 +64,7 @@ public class TableData {
   }
   
   public static void availableRoomsByDateTableComponent(HRSController controller, JTable table, DefaultTableModel tableData, String selectedHotelName, int checkInDate, int checkOutDate) {
-    String[] columnNames = { "Room Name", "Room Type", "Price Per Night", "Booked Reservations" };
-    tableData = new DefaultTableModel(columnNames, 0);
-    table.setModel(tableData);
-
+    tableData = (DefaultTableModel) table.getModel();
     for (HashMap<String, String> roomInfo : controller.getAllRoomsAvailableOnDate(selectedHotelName, checkInDate, checkOutDate)) {
       Object[] row = new Object[]{
           roomInfo.get("Room Name"),
