@@ -45,10 +45,12 @@ public class HRSController {
       }
     }
     if (numOfRooms < 1 || numOfRooms > 50)
-      MessageHelper.showErrorMessage( String.format("'%d' number of rooms is not allowed (must be from 1 to 50 only).", numOfRooms));
+      MessageHelper.showErrorMessage(
+          String.format("'%d' number of rooms is not allowed (must be from 1 to 50 only).", numOfRooms));
     else {
       hotels.add(new Hotel(hotelName, numOfRooms));
-      MessageHelper .showSuccessMessage(String.format("Hotel '%s' successfully created with %d rooms.", hotelName, numOfRooms));
+      MessageHelper
+          .showSuccessMessage(String.format("Hotel '%s' successfully created with %d rooms.", hotelName, numOfRooms));
     }
 
     // TODO: Clear text field in CreateHotelPanel view
@@ -56,6 +58,7 @@ public class HRSController {
 
   /**
    * Displays the names of all hotels in a list.
+   * 
    * @return a string array list of hotel names
    */
   public ArrayList<String> getHotelNames() {
@@ -67,12 +70,12 @@ public class HRSController {
 
     return hotelNames;
   }
-  
+
   public HashMap<String, String> getHotelGeneralInfo(String hotelName) {
     HashMap<String, String> info = new HashMap<>();
     Hotel selectedHotel = findHotelByName(hotelName);
     int overallReservations = 0;
-    
+
     if (selectedHotel != null) {
       info.put("Hotel Name", selectedHotel.getName());
       info.put("Base Price Per Room", String.valueOf(selectedHotel.getBasePrice()));
@@ -86,20 +89,20 @@ public class HRSController {
 
     return info;
   }
-  
+
   /**
    * @param hotelName is the name of the hotel to be checked
-   * @return name of the hotel, otherwise null. 
+   * @return name of the hotel, otherwise null.
    */
   public String checkIfHotelExists(String hotelName) {
     Hotel hotel = findHotelByName(hotelName);
     if (hotel != null) {
       return hotel.getName();
     }
-    
+
     return null;
   }
-  
+
   public String checkIfRoomExists(String roomName, String hotelName) {
     if (checkIfHotelExists(hotelName) != null) {
       Hotel selectedHotel = findHotelByName(hotelName);
@@ -110,7 +113,7 @@ public class HRSController {
     }
     return null;
   }
-  
+
   public String checkIfReservationExists(String hotelName, String roomName, String reservationId) {
     if (checkIfHotelExists(hotelName) != null && checkIfRoomExists(roomName, hotelName) != null) {
       Hotel selectedHotel = findHotelByName(hotelName);
@@ -123,30 +126,29 @@ public class HRSController {
     return null;
   }
 
+  // public HashMap<> getRoomsOnDate() {
+  //
+  // }
 
-//  public HashMap<> getRoomsOnDate() {
-//
-//  }
-  
   /*
-  * 
-  * @return room name, room type, price per night, and number of reservations
-  * */
+   * 
+   * @return room name, room type, price per night, and number of reservations
+   */
   public ArrayList<HashMap<String, String>> getAllRoomInfoOnHotel(String hotelName) {
     if (checkIfHotelExists(hotelName) != null) {
       ArrayList<HashMap<String, String>> listOfRoomInfo = new ArrayList<>();
       Hotel selectedHotel = findHotelByName(hotelName);
-      
+
       for (Room room : selectedHotel.getRooms()) {
         HashMap<String, String> specificRoomInfo = getSpecificRoomInfo(hotelName, room.getName());
         listOfRoomInfo.add(specificRoomInfo);
       }
       return listOfRoomInfo;
     }
-    
+
     return null;
   }
-  
+
   public ArrayList<HashMap<String, String>> getAllDatesOnRoom(String hotelName, String roomName) {
     if (checkIfHotelExists(hotelName) != null && checkIfRoomExists(roomName, hotelName) != null) {
       ArrayList<HashMap<String, String>> listOfDateInfo = new ArrayList<>();
@@ -157,20 +159,21 @@ public class HRSController {
         HashMap<String, String> specificDateInfo = getSpecificDateInfo(hotelName, roomName, date.getDateNumber());
         listOfDateInfo.add(specificDateInfo);
       }
-      return  listOfDateInfo;
+      return listOfDateInfo;
     }
     return null;
   }
-  
+
   public ArrayList<HashMap<String, String>> getAllReservationInfoOnRoom(String hotelName, String roomName) {
     if (checkIfHotelExists(hotelName) != null && checkIfRoomExists(roomName, hotelName) != null) {
       ArrayList<HashMap<String, String>> listOfReservationInfo = new ArrayList<>();
       Hotel selectedHotel = findHotelByName(hotelName);
       Room selectedRoom = selectedHotel.getRoom(roomName);
-      
+
       if (selectedRoom != null) {
         for (Reservation reservation : selectedRoom.getReservations()) {
-          HashMap<String, String> specificReservationInfo = getSpecificReservationInfo(hotelName, roomName, reservation.getId());
+          HashMap<String, String> specificReservationInfo = getSpecificReservationInfo(hotelName, roomName,
+              reservation.getId());
           listOfReservationInfo.add(specificReservationInfo);
         }
         return listOfReservationInfo;
@@ -180,9 +183,10 @@ public class HRSController {
   }
 
   /**
-   * Gets the available rooms given a certain check-in and check-out date. 
+   * Gets the available rooms given a certain check-in and check-out date.
    */
-  public ArrayList<HashMap<String, String>> getAllRoomsAvailableOnDate(String hotelName, int checkInDate, int checkOutDate) {
+  public ArrayList<HashMap<String, String>> getAllRoomsAvailableOnDate(String hotelName, int checkInDate,
+      int checkOutDate) {
     ArrayList<HashMap<String, String>> allRoomsAvailableOnDateList = new ArrayList<>();
     Hotel selectedHotel = findHotelByName(hotelName);
     ArrayList<Room> availableRooms = selectedHotel.getAvailableRoomsOnDate(checkInDate, checkOutDate);
@@ -196,14 +200,14 @@ public class HRSController {
     }
     return allRoomsAvailableOnDateList;
   }
-  
+
   public HashMap<String, String> getSpecificRoomInfo(String hotelName, String roomName) {
     if (checkIfHotelExists(hotelName) != null && checkIfRoomExists(roomName, hotelName) != null) {
       HashMap<String, String> specificRoomInfo = new HashMap<>();
       Hotel selectedHotel = findHotelByName(hotelName);
       Room selectedRoom = selectedHotel.getRoom(roomName);
       double estimatedEarnings = 0.0;
-      
+
       if (selectedRoom != null) {
         specificRoomInfo.put("Room Name", selectedRoom.getName());
         specificRoomInfo.put("Room Type", selectedRoom.getRoomType());
@@ -216,28 +220,28 @@ public class HRSController {
       }
       return specificRoomInfo;
     }
-    
+
     return null;
   }
-  
+
   public HashMap<String, String> getSpecificDateInfo(String hotelName, String roomName, int dateNumber) {
-   if (checkIfHotelExists(hotelName) != null && checkIfRoomExists(roomName, hotelName) != null) {
-     HashMap<String, String> specificDateInfo = new HashMap<>();
-     Hotel selectedHotel = findHotelByName(hotelName);
-     Room selectedRoom = selectedHotel.getRoom(roomName);
-     AvailabilityDate date = selectedRoom.getAvailabilityDate(dateNumber);
-     if (date != null) {
-       specificDateInfo.put("Date Number", String.valueOf(date.getDateNumber()));
-       specificDateInfo.put("Is Available", date.isAvailable() ? "Available" : "Booked");
-       specificDateInfo.put("Base Price", String.valueOf(date.getBasePrice()));
-       specificDateInfo.put("Modified Price", String.valueOf(date.getModifiedPrice()));
-     }
-     return specificDateInfo;
-   } 
-   
-   return null;
+    if (checkIfHotelExists(hotelName) != null && checkIfRoomExists(roomName, hotelName) != null) {
+      HashMap<String, String> specificDateInfo = new HashMap<>();
+      Hotel selectedHotel = findHotelByName(hotelName);
+      Room selectedRoom = selectedHotel.getRoom(roomName);
+      AvailabilityDate date = selectedRoom.getAvailabilityDate(dateNumber);
+      if (date != null) {
+        specificDateInfo.put("Date Number", String.valueOf(date.getDateNumber()));
+        specificDateInfo.put("Is Available", date.isAvailable() ? "Available" : "Booked");
+        specificDateInfo.put("Base Price", String.valueOf(date.getBasePrice()));
+        specificDateInfo.put("Modified Price", String.valueOf(date.getModifiedPrice()));
+      }
+      return specificDateInfo;
+    }
+
+    return null;
   }
-  
+
   public HashMap<String, String> getSpecificReservationInfo(String hotelName, String roomName, int id) {
     if (checkIfHotelExists(hotelName) != null && checkIfRoomExists(roomName, hotelName) != null) {
       HashMap<String, String> specificReservationInfo = new HashMap<>();
@@ -253,13 +257,12 @@ public class HRSController {
       }
       return specificReservationInfo;
     }
-    
+
     return null;
   }
 
-
   /**
-   * @return the list of date numbers as a string of the booked dates in a room 
+   * @return the list of date numbers as a string of the booked dates in a room
    */
   public ArrayList<String> getRoomBookedDatesList(String hotelName, String roomName) {
     if (checkIfHotelExists(hotelName) != null && checkIfRoomExists(roomName, hotelName) != null) {
@@ -276,7 +279,7 @@ public class HRSController {
     }
     return null;
   }
-  
+
   public ArrayList<String> getRoomAvailableDatesList(String hotelName, String roomName) {
     if (checkIfHotelExists(hotelName) != null && checkIfRoomExists(roomName, hotelName) != null) {
       ArrayList<String> availableDates = new ArrayList<>();
@@ -292,7 +295,7 @@ public class HRSController {
     }
     return null;
   }
-  
+
   public ArrayList<String> getPriceBreakdownOnReservationList(String hotelName, String roomName, String reservationId) {
     if (checkIfReservationExists(hotelName, roomName, reservationId) != null) {
       ArrayList<String> listOfPriceBreakdown = new ArrayList<>();
@@ -302,23 +305,25 @@ public class HRSController {
       if (selectedReservation != null) {
         for (int i = selectedReservation.getCheckInDate() - 1; i < selectedReservation.getCheckOutDate(); i++) {
           if (selectedReservation.getCheckInDate() == selectedReservation.getCheckOutDate()) { // handle overnight case
-            listOfPriceBreakdown.add(String.format("Overnight Stay %d: %.2f", i+1, selectedReservation.getRoom().getPriceOnDate(i+1)));
+            listOfPriceBreakdown.add(
+                String.format("Overnight Stay %d: %.2f", i + 1, selectedReservation.getRoom().getPriceOnDate(i + 1)));
             break;
-          } 
+          }
           // if i != index of check out date, then add (prevents extra day issue)
           if (i != (selectedReservation.getCheckOutDate() - 1))
-            listOfPriceBreakdown.add(String.format("Day %d-%d: %.2f", i+1, i+2, selectedReservation.getRoom().getPriceOnDate(i+1)));
+            listOfPriceBreakdown.add(
+                String.format("Day %d-%d: %.2f", i + 1, i + 2, selectedReservation.getRoom().getPriceOnDate(i + 1)));
         }
         return listOfPriceBreakdown;
       }
     }
-    
+
     return null;
   }
-  
+
   /**
    * @return true if successful, otherwise false
-   * */
+   */
   public boolean changeHotelName(String hotelToChange, String newName) {
     if (checkIfHotelExists(newName) != null) {
       MessageHelper.showErrorMessage(String.format("Hotel name %s already exists!", newName));
@@ -330,10 +335,10 @@ public class HRSController {
       MessageHelper.showSuccessMessage(String.format("Hotel name successfully changed to %s!", newName));
       return true;
     }
-    
+
     return false;
   }
-  
+
   public void addRoom(String hotelName, String roomType) {
     if (!(roomType.equals("Standard") || roomType.equals("Deluxe") || roomType.equals("Executive"))) {
       MessageHelper.showErrorMessage("Invalid room type!");
@@ -344,15 +349,18 @@ public class HRSController {
       boolean isSuccessfullyAdded = selectedHotel.addRoom(roomType);
       if (isSuccessfullyAdded)
         MessageHelper.showSuccessMessage("Successfully added a new room!");
-      else // only check for max room limit, since there is no way that room names can be equal (or there is?) thanks to automated room name creation (or maybe some cosmic ray will flip the bits and change its value)
-        MessageHelper.showErrorMessage(String.format("Limit reached (%d). Cannot add more rooms.", selectedHotel.getNumOfRooms()));
+      else // only check for max room limit, since there is no way that room names can be
+           // equal (or there is?) thanks to automated room name creation (or maybe some
+           // cosmic ray will flip the bits and change its value)
+        MessageHelper.showErrorMessage(
+            String.format("Limit reached (%d). Cannot add more rooms.", selectedHotel.getNumOfRooms()));
     }
   }
-  
+
   public void removeRoom(String hotelName, String roomToRemove) {
     Hotel selectedHotel = findHotelByName(hotelName);
     Room selectedRoom = selectedHotel.getRoom(roomToRemove);
-    
+
     // ensure that there is no reservations in the room first before removing it
     if (selectedRoom != null && selectedRoom.getReservations().isEmpty()) {
       // ask for confirmation
@@ -362,12 +370,13 @@ public class HRSController {
         return;
       }
       selectedHotel.removeRoom(roomToRemove);
-      MessageHelper.showSuccessMessage(String.format("Successfully removed Room %s from hotel %s!\n", roomToRemove, hotelName));
-    }
-    else
-      MessageHelper.showErrorMessage("Cannot remove rooms since there are some reservations existing or room doesn't exist at all.");
+      MessageHelper
+          .showSuccessMessage(String.format("Successfully removed Room %s from hotel %s!\n", roomToRemove, hotelName));
+    } else
+      MessageHelper.showErrorMessage(
+          "Cannot remove rooms since there are some reservations existing or room doesn't exist at all.");
   }
-  
+
   public void updateBasePrice(String hotelName, double newBasePrice) {
     Hotel selectedHotel = findHotelByName(hotelName);
     if (selectedHotel.areEmptyReservations()) {
@@ -376,46 +385,49 @@ public class HRSController {
         return;
       }
       selectedHotel.setBasePrice(newBasePrice);
-      MessageHelper.showSuccessMessage(String.format("Base price updated to %.2f for hotel '%s'.", newBasePrice, selectedHotel.getName()));
-    }
-    else 
+      MessageHelper.showSuccessMessage(
+          String.format("Base price updated to %.2f for hotel '%s'.", newBasePrice, selectedHotel.getName()));
+    } else
       MessageHelper.showErrorMessage("There are some reservations left! Cannot update base price.");
   }
-  
+
   /**
    * Removes a reservation in the specified room given the reservation ID.
    * 
-   * @param hotelName is the name of the hotel that the room belongs to
-   * @param roomName is the name of the room that the reservation belongs to
+   * @param hotelName     is the name of the hotel that the room belongs to
+   * @param roomName      is the name of the room that the reservation belongs to
    * @param reservationId is the ID of the reservation to be removed
    * @return true if successful, otherwise false
-   * */
+   */
   public boolean removeReservation(String hotelName, String roomName, int reservationId) {
     Hotel selectedHotel = findHotelByName(hotelName);
     Room selectedRoom = selectedHotel.getRoom(roomName);
     Reservation selectedReservation = selectedRoom.getReservation(reservationId);
     if (!selectedRoom.getReservations().isEmpty() && selectedReservation != null) {
-      int confirmation = InputHelper.askConfirmation(String.format("REMOVING Reservation with ID '%d': Are you sure?", selectedReservation.getId()));
+      int confirmation = InputHelper.askConfirmation(
+          String.format("REMOVING Reservation with ID '%d': Are you sure?", selectedReservation.getId()));
       if (confirmation == 1) {
         MessageHelper.showCancelMessage();
         return false;
       }
       selectedRoom.removeReservation(reservationId);
-      MessageHelper.showSuccessMessage(String.format("Reservation with ID '%d' is successfully removed!", selectedReservation.getId()));
+      MessageHelper.showSuccessMessage(
+          String.format("Reservation with ID '%d' is successfully removed!", selectedReservation.getId()));
       return true;
     }
-    
+
     return false;
   }
-  
+
   /**
    * @param hotelName is the name of the hotel to be removed
    * @return true if hotelName is successfully removed, otherwise false
-   * */
+   */
   public boolean removeHotel(String hotelName) {
     Hotel selectedHotel = findHotelByName(hotelName);
     if (selectedHotel != null && selectedHotel.areEmptyReservations()) {
-      int confirmation = InputHelper.askConfirmation(String.format("REMOVING Hotel '%s': Are you sure?", selectedHotel.getName()));
+      int confirmation = InputHelper
+          .askConfirmation(String.format("REMOVING Hotel '%s': Are you sure?", selectedHotel.getName()));
       if (confirmation == 1) {
         MessageHelper.showCancelMessage();
         return false;
@@ -424,19 +436,19 @@ public class HRSController {
       MessageHelper.showSuccessMessage(String.format("Hotel '%s' successfully removed!", selectedHotel.getName()));
       return true;
     }
-    
+
     return false;
   }
-  
+
   /**
    * Modifies the price by a specified percentage on a given date.
    * 
-   * @param hotelName is the name of the hotel that the room belongs to
-   * @param roomName is the name of the room that the reservation belongs to
-   * @param dateInput is the date or day that will be modified
+   * @param hotelName     is the name of the hotel that the room belongs to
+   * @param roomName      is the name of the room that the reservation belongs to
+   * @param dateInput     is the date or day that will be modified
    * @param modifierInput is the modifier to be used
    * @return true if modification of price on date is successful, otherwise false
-   * */
+   */
   public boolean datePriceModifier(String hotelName, String roomName, int dateInput, int modifierInput) {
     if (checkIfHotelExists(hotelName) != null && checkIfRoomExists(roomName, hotelName) != null) {
       Hotel selectedHotel = findHotelByName(hotelName);
@@ -445,41 +457,67 @@ public class HRSController {
       if (selectedDate != null) {
         double parsedModifier = (double) modifierInput / 100;
         selectedDate.setModifiedPrice(parsedModifier);
-        MessageHelper.showSuccessMessage(String.format("Successfully modified the price by %d%% on Day '%d'!", modifierInput, dateInput));
+        MessageHelper.showSuccessMessage(
+            String.format("Successfully modified the price by %d%% on Day '%d'!", modifierInput, dateInput));
         return true;
-      }
-      else
+      } else
         MessageHelper.showErrorMessage(String.format("Day %d does not exist! Please try again.", dateInput));
     }
     return false;
   }
-  
+
   public boolean areDatesValid(int checkInDate, int checkOutDate) {
     if (checkInDate <= checkOutDate) {
       return true; // valid
     }
     return false;
   }
-  
+
   public boolean bookRoom(String hotelName, String guestName, String roomType, int checkInDate, int checkOutDate) {
     if (checkIfHotelExists(hotelName) != null) {
       Hotel selectedHotel = findHotelByName(hotelName);
       ArrayList<Room> availableRoomsOnDate = selectedHotel.getAvailableRoomsOnDate(checkInDate, checkOutDate, roomType);
       if (availableRoomsOnDate.isEmpty()) {
-        MessageHelper.showErrorMessage(String.format("No %s rooms available on Day %d to %d", roomType, checkInDate, checkOutDate));
+        MessageHelper.showErrorMessage(
+            String.format("No %s rooms available on Day %d to %d", roomType, checkInDate, checkOutDate));
         return false;
       }
       Room assignedRoom = availableRoomsOnDate.getFirst();
       assignedRoom.addReservation(guestName, checkInDate, checkOutDate);
       if (checkInDate == checkOutDate)
-        MessageHelper.showSuccessMessage(String.format("Successfully booked a room (ROOM: '%s') for an OVERNIGHT stay on Day %d", assignedRoom.getName(), checkInDate));
-      else 
-        MessageHelper.showSuccessMessage(String.format("Successfully booked a room (ROOM: '%s') on Day %d to %d", assignedRoom.getName(), checkInDate, checkOutDate));
+        MessageHelper
+            .showSuccessMessage(String.format("Successfully booked a room (ROOM: '%s') for an OVERNIGHT stay on Day %d",
+                assignedRoom.getName(), checkInDate));
+      else
+        MessageHelper.showSuccessMessage(String.format("Successfully booked a room (ROOM: '%s') on Day %d to %d",
+            assignedRoom.getName(), checkInDate, checkOutDate));
       return true;
     }
     return false;
   }
-  
+
+  public boolean isDiscountCodeValid(String discountCode) {
+    if (discountCode.equals("I_WORK_HERE") || discountCode.equals("STAY4_GET1") || discountCode.equals("PAYDAY"))
+      return true;
+    else
+      return false;
+  }
+
+  // PRIO: todos for last
+  // - applying discount to reservation
+  // - createTemporaryReservation to show total price (and price breakdown list?)
+  // - in ViewSpecificReservationFrame, add JLabel for "Discount Code: N/A"
+  // - maybe also the: if already booked reservation, then change date price, the
+  // said booked reservation price should not changed
+  // - pretty UI
+  // - documentation
+  // - misc
+  // - demo video
+  public void applyDiscount(String discountCode) {
+  }
+
+  public HashMap<String, String> createTemporaryReservation() {
+  }
 
   // /**
   // * Simulates the booking of a room in a specified hotel for a guest within a

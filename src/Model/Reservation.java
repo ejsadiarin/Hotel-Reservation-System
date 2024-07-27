@@ -33,7 +33,7 @@ public class Reservation {
     this.checkOutDate = checkOutDate;
     this.costPerNight = room.getPricePerNight();
     this.isDiscounted = false;
-    setDiscountCode("NA");
+    setDiscountCode("N/A");
   }
 
   public Reservation(String guestName, Room room, int checkInDate, int checkOutDate, String discountCode) {
@@ -161,6 +161,6 @@ public class Reservation {
       }
     }
 
-    return rawTotalPrice; // default discountCode "NA"
+    return rawTotalPrice; // default discountCode "N/A"
   }
 }
