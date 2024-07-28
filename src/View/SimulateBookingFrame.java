@@ -4,6 +4,8 @@ import Controller.HRSController;
 import Helper.MessageHelper;
 import View.Component.TableData;
 
+import java.text.ChoiceFormat;
+
 import javax.swing.table.DefaultTableModel;
 
 public class SimulateBookingFrame extends javax.swing.JFrame {
@@ -324,12 +326,19 @@ public class SimulateBookingFrame extends javax.swing.JFrame {
       MessageHelper.showErrorMessage("Check-in and Check-out dates must be valid integers.");
       return;
     }
+
     if (!controller.areDatesValid(checkIn, checkOut)) {
       MessageHelper.showErrorMessage("Invalid dates!");
       return;
     }
-    confirmBookingFrame = new ConfirmBookingFrame(view, controller, hotelName, guestNameInput, roomTypeInput, checkIn,
-        checkOut, "N/A", false);
+
+    if (!controller.isARoomAvailable(hotelName, roomTypeInput, checkIn, checkOut)) {
+      MessageHelper.showErrorMessage(String.format("No %s rooms available on Day %d to %d", roomTypeInput, checkIn, checkOut));
+      return;
+    }
+
+    // if everything is good and valid, then proceed to confirming the book
+    confirmBookingFrame = new ConfirmBookingFrame(view, controller, hotelName, guestNameInput, roomTypeInput, checkIn, checkOut, "N/A", false);
     confirmBookingFrame.setVisible(true);
     SimulateBookingFrame.this.dispose();
   }// GEN-LAST:event_jButton4ActionPerformed

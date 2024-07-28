@@ -149,9 +149,9 @@ public class Room {
    * @param checkInDate  the check-in date
    * @param checkOutDate the check-out date
    */
-  public void addReservation(String guestName, int checkInDate, int checkOutDate) {
+  public void addReservation(String guestName, int checkInDate, int checkOutDate, String discountCode) {
     if (reserveDates(checkInDate, checkOutDate)) {
-      reservations.add(new Reservation(reservations.size() + 1, guestName, this, checkInDate, checkOutDate));
+      reservations.add(new Reservation(reservations.size() + 1, guestName, this, checkInDate, checkOutDate, discountCode));
     }
   }
 

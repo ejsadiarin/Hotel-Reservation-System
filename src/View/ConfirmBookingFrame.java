@@ -8,6 +8,8 @@ import Controller.HRSController;
 import Helper.InputHelper;
 import Helper.MessageHelper;
 
+import java.util.HashMap;
+
 /**
  *
  * @author exquisite
@@ -16,6 +18,7 @@ public class ConfirmBookingFrame extends javax.swing.JFrame {
   private MainView view;
   private HRSController controller;
   private SimulateBookingFrame simulateBookingFrame;
+  private HashMap<String, String> tempReservationInfo;
   private String hotelName;
   private String guestName;
   private String roomType;
@@ -254,7 +257,7 @@ public class ConfirmBookingFrame extends javax.swing.JFrame {
   private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jButton4ActionPerformed
     // TODO add your handling code here:
     /* Book */
-    boolean isBooked = controller.bookRoom(hotelName, guestName, roomType, checkInDate, checkOutDate);
+    boolean isBooked = controller.bookRoom(hotelName, tempReservationInfo.get("Guest Name"), tempReservationInfo.get("Room Type"), checkInDate, checkOutDate, tempReservationInfo.get("Discount Code"));
     if (!isBooked) {
       MessageHelper.showErrorMessage("Booking failed.");
       return;
@@ -269,23 +272,36 @@ public class ConfirmBookingFrame extends javax.swing.JFrame {
     /* Enter Discount Code */
     String discountCodeInput = InputHelper.askInputString("Enter Discount Code");
     if (controller.isDiscountCodeValid(discountCodeInput)) {
-      // call controller function
-      // then refresh this confirmview
+      // controller.applyDiscount(discountCodeInput);
+      
+      // refresh current view
       ConfirmBookingFrame newConfirmBookingFrame = new ConfirmBookingFrame(view, controller, hotelName, guestName,
           roomType, checkInDate, checkOutDate, discountCodeInput, true);
       newConfirmBookingFrame.setVisible(true);
       ConfirmBookingFrame.this.dispose();
     }
+    else
+      MessageHelper.showErrorMessage("Invalid Discount Code!");
   }// GEN-LAST:event_jButton2ActionPerformed
 
   public void fetchData() {
-    jLabel7.setText(hotelName); // hotel name
-    jLabel3.setText(guestName); // guest name
-    jLabel5.setText(roomType); // room type
-    jLabel8.setText(String.valueOf(checkInDate)); // check in date
-    jLabel11.setText(String.valueOf(checkOutDate)); // check out date
-    jLabel14.setText(hotelName); // TODO: total price
-    jLabel17.setText(discountCode); // discount code
+    tempReservationInfo = controller.createTemporaryReservation(hotelName, roomType, guestName, checkInDate, checkOutDate, discountCode);
+    if (tempReservationInfo != null) {
+      jLabel7.setText(hotelName); // hotel name
+      jLabel3.setText(tempReservationInfo.get("Guest Name")); // guest name
+      jLabel5.setText(tempReservationInfo.get("Room Type")); // room type
+      jLabel8.setText(tempReservationInfo.get("Check In Date")); // check in date
+      jLabel11.setText(tempReservationInfo.get("Check Out Date")); // check out date
+      jLabel14.setText(tempReservationInfo.get("Total Price")); // total price
+      jLabel17.setText(tempReservationInfo.get("Discount Code")); // discount code
+    }
+    else {
+      // if 
+      MessageHelper.showErrorMessage("Invalid data marker. Returning...");
+      simulateBookingFrame = new SimulateBookingFrame(view, controller, hotelName);
+      simulateBookingFrame.setVisible(true);
+      ConfirmBookingFrame.this.dispose();
+    }
   }
 
   // Variables declaration - do not modify//GEN-BEGIN:variables

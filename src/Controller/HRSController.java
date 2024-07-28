@@ -473,24 +473,29 @@ public class HRSController {
     return false;
   }
 
-  public boolean bookRoom(String hotelName, String guestName, String roomType, int checkInDate, int checkOutDate) {
+  public boolean isARoomAvailable(String hotelName, String roomType, int checkInDate, int checkOutDate) {
+    if (areDatesValid(checkInDate, checkOutDate)) {
+      Hotel selectedHotel = findHotelByName(hotelName);
+      ArrayList<Room> availableRoomsOnDate = selectedHotel.getAvailableRoomsOnDate(checkInDate, checkOutDate, roomType);
+      return !availableRoomsOnDate.isEmpty(); // true
+    }
+    return false;
+  }
+
+  public boolean bookRoom(String hotelName, String guestName, String roomType, int checkInDate, int checkOutDate, String discountCode) {
     if (checkIfHotelExists(hotelName) != null) {
       Hotel selectedHotel = findHotelByName(hotelName);
       ArrayList<Room> availableRoomsOnDate = selectedHotel.getAvailableRoomsOnDate(checkInDate, checkOutDate, roomType);
       if (availableRoomsOnDate.isEmpty()) {
-        MessageHelper.showErrorMessage(
-            String.format("No %s rooms available on Day %d to %d", roomType, checkInDate, checkOutDate));
+        MessageHelper.showErrorMessage(String.format("No %s rooms available on Day %d to %d", roomType, checkInDate, checkOutDate));
         return false;
       }
       Room assignedRoom = availableRoomsOnDate.getFirst();
-      assignedRoom.addReservation(guestName, checkInDate, checkOutDate);
+      assignedRoom.addReservation(guestName, checkInDate, checkOutDate, discountCode);
       if (checkInDate == checkOutDate)
-        MessageHelper
-            .showSuccessMessage(String.format("Successfully booked a room (ROOM: '%s') for an OVERNIGHT stay on Day %d",
-                assignedRoom.getName(), checkInDate));
+        MessageHelper.showSuccessMessage(String.format("Successfully booked a room (ROOM: '%s') for an OVERNIGHT stay on Day %d", assignedRoom.getName(), checkInDate));
       else
-        MessageHelper.showSuccessMessage(String.format("Successfully booked a room (ROOM: '%s') on Day %d to %d",
-            assignedRoom.getName(), checkInDate, checkOutDate));
+        MessageHelper.showSuccessMessage(String.format("Successfully booked a room (ROOM: '%s') on Day %d to %d", assignedRoom.getName(), checkInDate, checkOutDate));
       return true;
     }
     return false;
@@ -503,58 +508,49 @@ public class HRSController {
       return false;
   }
 
-  // PRIO: todos for last
-  // - applying discount to reservation
-  // - createTemporaryReservation to show total price (and price breakdown list?)
-  // - in ViewSpecificReservationFrame, add JLabel for "Discount Code: N/A"
-  // - maybe also the: if already booked reservation, then change date price, the
-  // said booked reservation price should not changed
-  // - pretty UI
-  // - documentation
-  // - misc
-  // - demo video
-  public void applyDiscount(String discountCode) {
+  /* PRIO: todos for last
+    - [ ] applying discount to reservation
+    - [x] createTemporaryReservation to show total price 
+    - [ ] (and price breakdown list?)
+    - [ ] in ViewSpecificReservationFrame, add JLabel for "Discount Code: N/A"
+    - [ ] maybe also the: if already booked reservation, then change date price, the id booked reservation price should not changed
+    - [ ] pretty UI
+    - [ ] documentation
+    - [ ] misc
+    - [ ] demo video
+   */
+  public void applyDiscount(HashMap<String,String> reservationToBeMade, String discountCode) {
   }
 
-  public HashMap<String, String> createTemporaryReservation() {
+  /**
+   * @return a HashMap information of the created temporary reservation, otherwise null
+   * */
+  public HashMap<String, String> createTemporaryReservation(String hotelName, String roomType, String guestName, int checkInDate, int checkOutDate, String discountCode) {
+    if (checkIfHotelExists(hotelName) != null) {
+      HashMap<String, String> tempReservationInfo = new HashMap<>();
+      Hotel selectedHotel = findHotelByName(hotelName);
+      ArrayList<Room> availableRoomsOnDate = selectedHotel.getAvailableRoomsOnDate(checkInDate, checkOutDate, roomType);
+      Room assignedRoom = availableRoomsOnDate.getFirst();
+      
+      // create clones
+      Room tempAssignedRoom = new Room(assignedRoom.getName(), assignedRoom.getPricePerNight(), assignedRoom.getRoomType());
+      Reservation tempReservation = new Reservation(1, guestName, tempAssignedRoom, checkInDate, checkOutDate, discountCode);
+      
+      // put all info to HashMap then return
+      tempReservationInfo.put("Total Price", String.valueOf(tempReservation.getTotalPrice()));
+      tempReservationInfo.put("Room Name", tempReservation.getRoom().getName());
+      tempReservationInfo.put("Room Type", tempReservation.getRoom().getRoomType());
+      tempReservationInfo.put("Guest Name", tempReservation.getGuestName());
+      tempReservationInfo.put("Check In Date", String.valueOf(tempReservation.getCheckInDate()));
+      tempReservationInfo.put("Check Out Date", String.valueOf(tempReservation.getCheckOutDate()));
+      tempReservationInfo.put("Discount Code", tempReservation.getDiscountCode());
+      
+      return tempReservationInfo;
+    }
+    
+    return null;
   }
 
-  // /**
-  // * Simulates the booking of a room in a specified hotel for a guest within a
-  // * date range.
-  // *
-  // * @param hotelName the name of the hotel
-  // * @param guestName the name of the guest
-  // * @param checkInDate the check-in date
-  // * @param checkOutDate the check-out date
-  // */
-  // public void simulateBooking(String hotelName, String guestName, int
-  // checkInDate, int checkOutDate) {
-  // Hotel chosenHotel = findHotelByName(hotelName);
-  //
-  // if (chosenHotel != null) {
-  // ArrayList<Room> availableRooms =
-  // chosenHotel.getAvailableRoomsOnDate(checkInDate, checkOutDate);
-  // if (availableRooms.isEmpty())
-  // System.out.printf("No rooms available from day %d to day %d in hotel
-  // '%s'.\n", checkInDate, checkOutDate,
-  // hotelName);
-  // else {
-  // System.out.printf("Available rooms from day %d to day %d in hotel '%s':\n",
-  // checkInDate, checkOutDate,
-  // hotelName);
-  // for (Room room : availableRooms)
-  // System.out.printf("%s\n", room.getName());
-  //
-  // // automated booking of room - get first available room
-  // Room roomToBook = availableRooms.getFirst();
-  // roomToBook.addReservation(guestName, checkInDate, checkOutDate);
-  // System.out.printf("Booking successful for room '%s'.\n",
-  // roomToBook.getName());
-  // }
-  // } else
-  // System.out.printf("Hotel '%s' not found.\n", hotelName);:
-  // }
 
   /**
    * Finds a hotel by its name.

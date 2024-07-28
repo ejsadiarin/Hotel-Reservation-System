@@ -20,29 +20,21 @@ public class Reservation {
    * Constructs a new Reservation with the specified guest name, room, check-in
    * date, and check-out date.
    *
+   * @param Id           the ID of the reservation
    * @param guestName    the name of the guest making the reservation
    * @param room         the room being reserved
    * @param checkInDate  the check-in date for the reservation
    * @param checkOutDate the check-out date for the reservation
+   * @param discountCode the discount code for the reservation
    */
-  public Reservation(int Id, String guestName, Room room, int checkInDate, int checkOutDate) {
+  public Reservation(int Id, String guestName, Room room, int checkInDate, int checkOutDate, String discountCode) {
     this.Id = Id;
     this.guestName = guestName;
     this.room = room;
     this.checkInDate = checkInDate;
     this.checkOutDate = checkOutDate;
     this.costPerNight = room.getPricePerNight();
-    this.isDiscounted = false;
-    setDiscountCode("N/A");
-  }
-
-  public Reservation(String guestName, Room room, int checkInDate, int checkOutDate, String discountCode) {
-    this.guestName = guestName;
-    this.room = room;
-    this.checkInDate = checkInDate;
-    this.checkOutDate = checkOutDate;
-    this.costPerNight = room.getPricePerNight();
-    this.isDiscounted = true;
+    this.isDiscounted = checkIfValidDiscountCode(discountCode);
     setDiscountCode(discountCode);
   }
 
@@ -98,7 +90,6 @@ public class Reservation {
    * @return the total price of the reservation
    */
   public double getTotalPrice() {
-    // TODO: check if stay (number of days of stay) is accurate 1-2 = 1 day stay
     double totalPrice = 0.0;
     int stay = checkOutDate - checkInDate;
     if (stay < 1)
@@ -115,8 +106,8 @@ public class Reservation {
     }
 
     if (isDiscounted) {
-      // TODO: call calculateDiscount here - check first if isDiscounted == false, if
-      // true then no discount for this reservation
+      // TODO: call calculateDiscount here - check first if isDiscounted == false, if true then no discount for this
+      // reservation
       // TODO: how tf do i get discountCode from view to here
     }
 
@@ -162,5 +153,12 @@ public class Reservation {
     }
 
     return rawTotalPrice; // default discountCode "N/A"
+  }
+  
+  public boolean checkIfValidDiscountCode(String discountCode) {
+    if (discountCode.equals("I_WORK_HERE") || discountCode.equals("STAY4_GET1") || discountCode.equals("PAYDAY"))
+      return true;
+    else
+      return false;
   }
 }
