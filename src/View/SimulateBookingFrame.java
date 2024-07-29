@@ -323,7 +323,7 @@ public class SimulateBookingFrame extends javax.swing.JFrame {
       }
 
       // if everything is good and valid, then proceed to confirming the book
-      confirmBookingFrame = new ConfirmBookingFrame(view, controller, hotelName, guestNameInput, roomTypeInput, checkIn, checkOut, "N/A", false);
+      confirmBookingFrame = new ConfirmBookingFrame(view, controller, hotelName, guestNameInput, roomTypeInput, checkIn, checkOut, "N/A");
       confirmBookingFrame.setVisible(true);
       SimulateBookingFrame.this.dispose();
     }
