@@ -30,7 +30,7 @@ public class Room {
 
     // Initialize all days to available
     for (int i = 0; i < 31; i++) {
-      this.availabilityDates.add(new AvailabilityDate(i + 1, pricePerNight));
+      this.availabilityDates.add(new AvailabilityDate(i + 1, getPricePerNight()));
     }
   }
 
