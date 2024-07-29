@@ -151,7 +151,7 @@ public class ConfirmBookingFrame extends javax.swing.JFrame {
 
         jLabel14.setFont(new java.awt.Font("Clarity City", 2, 14)); // NOI18N
         jLabel14.setForeground(new java.awt.Color(153, 255, 153));
-        jLabel14.setText("guest");
+        jLabel14.setText("price");
 
         jLabel4.setFont(new java.awt.Font("Clarity City", 1, 14)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(255, 255, 255));
@@ -329,7 +329,6 @@ public class ConfirmBookingFrame extends javax.swing.JFrame {
       jLabel14.setText(tempReservationInfo.get("Total Price")); // total price
       jLabel17.setText(tempReservationInfo.get("Discount Code")); // discount code
     } else {
-      // if
       MessageHelper.showErrorMessage("Invalid data marker. Returning...");
       simulateBookingFrame = new SimulateBookingFrame(view, controller, hotelName);
       simulateBookingFrame.setVisible(true);

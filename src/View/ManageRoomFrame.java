@@ -115,7 +115,7 @@ public class ManageRoomFrame extends javax.swing.JFrame {
         jLabel3.setForeground(new java.awt.Color(255, 255, 102));
         jLabel3.setText("Reservations");
 
-        jButton3.setBackground(new java.awt.Color(255, 153, 0));
+        jButton3.setBackground(new java.awt.Color(153, 204, 255));
         jButton3.setFont(new java.awt.Font("Clarity City", 1, 14)); // NOI18N
         jButton3.setText("Modify Price on Date");
         jButton3.addActionListener(new java.awt.event.ActionListener() {
@@ -128,9 +128,9 @@ public class ManageRoomFrame extends javax.swing.JFrame {
         jLabel4.setForeground(new java.awt.Color(255, 255, 255));
         jLabel4.setText("Price Per Night:");
 
-        jTable3.setBackground(new java.awt.Color(153, 204, 0));
+        jTable3.setBackground(new java.awt.Color(0, 0, 102));
         jTable3.setFont(new java.awt.Font("Clarity City", 1, 16)); // NOI18N
-        jTable3.setForeground(new java.awt.Color(153, 0, 51));
+        jTable3.setForeground(new java.awt.Color(204, 204, 204));
         jTable3.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -174,7 +174,7 @@ public class ManageRoomFrame extends javax.swing.JFrame {
         jLabel5.setText("jLabel5");
 
         jLabel6.setFont(new java.awt.Font("Clarity City", 1, 18)); // NOI18N
-        jLabel6.setForeground(new java.awt.Color(255, 204, 51));
+        jLabel6.setForeground(new java.awt.Color(255, 102, 255));
         jLabel6.setText("Date Prices");
 
         jLabel1.setFont(new java.awt.Font("Clarity City", 1, 36)); // NOI18N

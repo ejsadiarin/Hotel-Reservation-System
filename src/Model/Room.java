@@ -32,6 +32,18 @@ public class Room {
     }
   }
 
+  public Room(Room room) {
+    this.name = room.getName();
+    this.pricePerNight = room.getPricePerNight();
+    this.reservations = new ArrayList<>();
+    this.availabilityDates = new ArrayList<>();
+    this.roomType = room.getRoomType();
+
+    for (AvailabilityDate date : room.getAvailabilityDates()) {
+      this.availabilityDates.add(new AvailabilityDate(date));
+    }
+  }
+
   /**
    * Gets the name of the room.
    *

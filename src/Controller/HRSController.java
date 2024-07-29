@@ -554,8 +554,7 @@ public class HRSController {
       if (selectedDate != null) {
         double parsedModifier = (double) modifierInput / 100;
         selectedDate.setModifiedPrice(parsedModifier);
-        MessageHelper.showSuccessMessage(
-            String.format("Successfully modified the price by %d%% on Day '%d'!", modifierInput, dateInput));
+        MessageHelper.showSuccessMessage(String.format("Successfully modified the price by %d%% on Day '%d'!", modifierInput, dateInput));
         return true;
       } else
         MessageHelper.showErrorMessage(String.format("Day %d does not exist! Please try again.", dateInput));
@@ -700,10 +699,9 @@ public class HRSController {
       Room assignedRoom = availableRoomsOnDate.getFirst();
 
       // create clones
-      Room tempAssignedRoom = new Room(assignedRoom.getName(), assignedRoom.getPricePerNight(),
-          assignedRoom.getRoomType());
-      Reservation tempReservation = new Reservation(tempAssignedRoom.getReservations().size() + 1, guestName,
-          tempAssignedRoom, checkInDate, checkOutDate, discountCode);
+      Room tempAssignedRoom = new Room(assignedRoom);
+      tempAssignedRoom.addReservation(guestName, checkInDate, checkOutDate, discountCode);
+      Reservation tempReservation = tempAssignedRoom.getReservations().getFirst();
 
       // put all info to HashMap then return
       tempReservationInfo.put("Total Price", String.valueOf(tempReservation.getTotalPrice()));

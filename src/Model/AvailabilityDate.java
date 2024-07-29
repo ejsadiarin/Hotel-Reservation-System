@@ -25,6 +25,20 @@ public class AvailabilityDate {
   }
 
   /**
+   * Constructs a new AvailabilityDate with the specified date number, availability, base price, modified price, and modifier.
+   *
+   * @param date the availability date instance to be copied from
+   */
+  public AvailabilityDate(AvailabilityDate date) {
+    this.dateNumber = date.getDateNumber();
+    this.available = date.isAvailable();
+    this.basePrice = date.getBasePrice();
+    this.modifiedPrice = date.getModifiedPrice();
+    this.isModified = date.getIsModified();
+    this.modifier = date.getModifier();
+  }
+
+  /**
    * Gets the date number.
    *
    * @return the date number
