@@ -254,6 +254,7 @@ public class HRSController {
         specificReservationInfo.put("Check In Date", String.valueOf(selectedReservation.getCheckInDate()));
         specificReservationInfo.put("Check Out Date", String.valueOf(selectedReservation.getCheckOutDate()));
         specificReservationInfo.put("Total Price", String.valueOf(selectedReservation.getTotalPrice()));
+        specificReservationInfo.put("Discount Code", selectedReservation.getDiscountCode());
       }
       return specificReservationInfo;
     }
@@ -467,10 +468,20 @@ public class HRSController {
   }
 
   public boolean areDatesValid(int checkInDate, int checkOutDate) {
-    if (checkInDate <= checkOutDate) {
-      return true; // valid
+    if (!(checkInDate <= checkOutDate)) {
+      MessageHelper.showErrorMessage("Invalid dates!");
+      return false;
     }
-    return false;
+    else if (checkInDate == 31) {
+      MessageHelper.showErrorMessage("Cannot check-in on Day 31!");
+      return false;
+    }
+    else if (checkOutDate == 1) {
+      MessageHelper.showErrorMessage("Cannot check-out on Day 1!");
+      return false;
+    }
+    else
+      return true; // valid
   }
 
   public boolean isARoomAvailable(String hotelName, String roomType, int checkInDate, int checkOutDate) {
@@ -502,16 +513,15 @@ public class HRSController {
   }
 
   public boolean isDiscountCodeValid(String discountCode) {
-    if (discountCode.equals("I_WORK_HERE") || discountCode.equals("STAY4_GET1") || discountCode.equals("PAYDAY"))
+    if (discountCode.equals("I_WORK_HERE") || discountCode.equals("STAY4_GET1") || discountCode.equals("PAYDAY") || discountCode.equals("N/A"))
       return true;
     else
       return false;
   }
 
   /* PRIO: todos for last
-    - [ ] applying discount to reservation
+    - [x] applying discount to reservation
     - [x] createTemporaryReservation to show total price 
-    - [ ] (and price breakdown list?)
     - [ ] in ViewSpecificReservationFrame, add JLabel for "Discount Code: N/A"
     - [ ] maybe also the: if already booked reservation, then change date price, the id booked reservation price should not changed
     - [ ] pretty UI
@@ -519,7 +529,37 @@ public class HRSController {
     - [ ] misc
     - [ ] demo video
    */
-  public void applyDiscount(HashMap<String,String> reservationToBeMade, String discountCode) {
+  public boolean isDiscountApplied(HashMap<String,String> reservationToBeMade, String discountCode) {
+    int checkInDate = Integer.parseInt(reservationToBeMade.get("Check In Date"));
+    int checkOutDate = Integer.parseInt(reservationToBeMade.get("Check Out Date"));
+    int stay = checkInDate - checkOutDate;
+    
+    if (isDiscountCodeValid(discountCode)) {
+      // handle error cases
+      if (discountCode.equals("STAY4_GET1") && stay < 5) {
+        MessageHelper.showErrorMessage(String.format("Cannot apply discount code '%s', reservation is less than 5 days!", discountCode));
+        return false;
+      }
+      
+      if (discountCode.equals("PAYDAY")) {
+        for (int i = checkInDate; i < checkOutDate; i++) {
+          if ((i == 15 || i == 30) && (checkOutDate != 15 && checkOutDate != 30))
+            return true;
+        }
+        if (checkOutDate == 15 || checkOutDate == 30) 
+          MessageHelper.showErrorMessage("Check-out date cannot be on day 15 or day 30 when using discount code 'PAYDAY'!");
+        else
+          MessageHelper.showErrorMessage(String.format("Cannot apply discount code '%s', reservation doesn't cover day 15 or day 30!", discountCode));
+        
+        return false;
+      }
+      
+      return true;
+    }
+    else
+      MessageHelper.showErrorMessage("Invalid discount code!");
+    
+    return false;
   }
 
   /**
@@ -534,7 +574,7 @@ public class HRSController {
       
       // create clones
       Room tempAssignedRoom = new Room(assignedRoom.getName(), assignedRoom.getPricePerNight(), assignedRoom.getRoomType());
-      Reservation tempReservation = new Reservation(1, guestName, tempAssignedRoom, checkInDate, checkOutDate, discountCode);
+      Reservation tempReservation = new Reservation(tempAssignedRoom.getReservations().size()+1, guestName, tempAssignedRoom, checkInDate, checkOutDate, discountCode);
       
       // put all info to HashMap then return
       tempReservationInfo.put("Total Price", String.valueOf(tempReservation.getTotalPrice()));

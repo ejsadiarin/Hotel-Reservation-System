@@ -327,20 +327,18 @@ public class SimulateBookingFrame extends javax.swing.JFrame {
       return;
     }
 
-    if (!controller.areDatesValid(checkIn, checkOut)) {
-      MessageHelper.showErrorMessage("Invalid dates!");
-      return;
+    if (controller.areDatesValid(checkIn, checkOut)) {
+      if (!controller.isARoomAvailable(hotelName, roomTypeInput, checkIn, checkOut)) {
+        MessageHelper.showErrorMessage(String.format("No %s rooms available on Day %d to %d", roomTypeInput, checkIn, checkOut));
+        return;
+      }
+
+      // if everything is good and valid, then proceed to confirming the book
+      confirmBookingFrame = new ConfirmBookingFrame(view, controller, hotelName, guestNameInput, roomTypeInput, checkIn, checkOut, "N/A", false);
+      confirmBookingFrame.setVisible(true);
+      SimulateBookingFrame.this.dispose();
     }
 
-    if (!controller.isARoomAvailable(hotelName, roomTypeInput, checkIn, checkOut)) {
-      MessageHelper.showErrorMessage(String.format("No %s rooms available on Day %d to %d", roomTypeInput, checkIn, checkOut));
-      return;
-    }
-
-    // if everything is good and valid, then proceed to confirming the book
-    confirmBookingFrame = new ConfirmBookingFrame(view, controller, hotelName, guestNameInput, roomTypeInput, checkIn, checkOut, "N/A", false);
-    confirmBookingFrame.setVisible(true);
-    SimulateBookingFrame.this.dispose();
   }// GEN-LAST:event_jButton4ActionPerformed
 
   private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jButton5ActionPerformed

@@ -12,9 +12,8 @@ public class Reservation {
   private int checkInDate;
   private int checkOutDate;
   private Room room;
-  private double costPerNight;
-  private boolean isDiscounted;
   private String discountCode;
+  private double totalPrice;
 
   /**
    * Constructs a new Reservation with the specified guest name, room, check-in
@@ -33,9 +32,8 @@ public class Reservation {
     this.room = room;
     this.checkInDate = checkInDate;
     this.checkOutDate = checkOutDate;
-    this.costPerNight = room.getPricePerNight();
-    this.isDiscounted = checkIfValidDiscountCode(discountCode);
     setDiscountCode(discountCode);
+    this.totalPrice = calculateTotalPrice(discountCode);
   }
 
   /**
@@ -83,6 +81,17 @@ public class Reservation {
     return room;
   }
 
+  public String getDiscountCode() {
+    return this.discountCode;
+  }
+
+  public void setDiscountCode(String discountCode) {
+    if (discountCode.isEmpty())
+      this.discountCode = "N/A";
+    else
+      this.discountCode = discountCode;
+  }
+
   /**
    * Calculates the total price of the reservation based on the check-in and
    * check-out dates and the cost per night.
@@ -90,45 +99,7 @@ public class Reservation {
    * @return the total price of the reservation
    */
   public double getTotalPrice() {
-    double totalPrice = 0.0;
-    int stay = checkOutDate - checkInDate;
-    if (stay < 1)
-      stay = 1;
-
-    if (stay == 1)
-      totalPrice = room.getPriceOnDate(checkInDate);
-
-    // handle modified date price
-    if (stay > 1) {
-      for (int i = checkInDate; i < checkOutDate; i++) {
-        totalPrice += room.getPriceOnDate(i);
-      }
-    }
-
-    if (isDiscounted) {
-      // TODO: call calculateDiscount here - check first if isDiscounted == false, if true then no discount for this
-      // reservation
-      // TODO: how tf do i get discountCode from view to here
-    }
-
-    return totalPrice; // if not discounted then just rawTotalPrice
-  }
-
-  /**
-   * Gets the cost per night for the room reserved.
-   *
-   * @return the cost per night
-   */
-  public double getCostPerNight() {
-    return this.costPerNight;
-  }
-
-  public String getDiscountCode() {
-    return this.discountCode;
-  }
-
-  public void setDiscountCode(String discountCode) {
-    this.discountCode = discountCode;
+    return this.totalPrice;
   }
 
   /**
@@ -136,23 +107,48 @@ public class Reservation {
    *
    * @return the discount price that is subtracted from the original total price
    */
-  public double calculateDiscountedPrice(String discountCode, double rawTotalPrice, int stay) {
-    if (discountCode.equals("I_WORK_HERE"))
-      return rawTotalPrice * 0.10 - rawTotalPrice;
-    else if (discountCode.equals("STAY_4_GET_1")) {
-      // then first day is free
-      if (stay >= 5)
-        return (stay - 1) * getCostPerNight() + getCostPerNight(); // handle negative diff value (for overnight)
-    } else if (discountCode.equals("PAYDAY")) {
-      // stop when availability encountered is true
-      for (int i = room.getIndexOfReservedDate(checkInDate); i <= room.getIndexOfReservedDate(checkOutDate); i++) {
-        // if i covers day 15 or 30 (excluding checkout: 15 or checkout: 30)
-        if ((i >= 15 && i <= 30) && (checkOutDate != 15 && checkOutDate != 30))
-          return rawTotalPrice * 0.07 - rawTotalPrice;
+  public double calculateTotalPrice(String discountCode) {
+    double calculatedTotalPrice = 0.0;
+    
+    // get raw total price first
+    int stay = checkOutDate - checkInDate;
+    if (stay < 1)
+      stay = 1;
+
+    if (stay == 1)
+      calculatedTotalPrice = room.getPriceOnDate(checkInDate);
+
+    // handle modified date price
+    if (stay > 1) {
+      for (int i = checkInDate; i < checkOutDate; i++) {
+        if (i == checkInDate && discountCode.equals("STAY4_GET1")) {
+          continue; // skip first iteration if STAY4_GET1
+        }
+        calculatedTotalPrice += room.getPriceOnDate(i);
       }
     }
 
-    return rawTotalPrice; // default discountCode "N/A"
+    // if discounted then calculate
+    if (checkIfValidDiscountCode(discountCode)) {
+      if (discountCode.equals("I_WORK_HERE"))
+        return calculatedTotalPrice - (calculatedTotalPrice * 0.10);
+
+      if (discountCode.equals("STAY4_GET1")) {
+        // then first day is free
+        if (stay >= 5)
+          return calculatedTotalPrice; // first day is free is calculated in the loop above
+      }
+
+      if (discountCode.equals("PAYDAY")) {
+        // if range of check-in & check-out date covers 15 or 30 (excluding checkout-15-or-30)
+        for (int i = checkInDate; i < checkOutDate; i++) {
+          if ((i == 15 || i == 30) && (checkOutDate != 15 && checkOutDate != 30))
+            return calculatedTotalPrice - (calculatedTotalPrice * 0.07);
+        }
+      }
+    }
+
+    return calculatedTotalPrice; 
   }
   
   public boolean checkIfValidDiscountCode(String discountCode) {

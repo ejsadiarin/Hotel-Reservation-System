@@ -271,17 +271,13 @@ public class ConfirmBookingFrame extends javax.swing.JFrame {
     // TODO add your handling code here:
     /* Enter Discount Code */
     String discountCodeInput = InputHelper.askInputString("Enter Discount Code");
-    if (controller.isDiscountCodeValid(discountCodeInput)) {
-      // controller.applyDiscount(discountCodeInput);
-      
+    if (controller.isDiscountApplied(tempReservationInfo, discountCodeInput)) {
       // refresh current view
       ConfirmBookingFrame newConfirmBookingFrame = new ConfirmBookingFrame(view, controller, hotelName, guestName,
           roomType, checkInDate, checkOutDate, discountCodeInput, true);
       newConfirmBookingFrame.setVisible(true);
       ConfirmBookingFrame.this.dispose();
     }
-    else
-      MessageHelper.showErrorMessage("Invalid Discount Code!");
   }// GEN-LAST:event_jButton2ActionPerformed
 
   public void fetchData() {

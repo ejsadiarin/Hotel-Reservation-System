@@ -72,19 +72,6 @@ public class Room {
     return this.roomType;
   }
 
-  public void setRoomType(String newRoomType) {
-    if (newRoomType.equals("Deluxe")) {
-      this.roomType = "Deluxe";
-      setPricePerNight(getPricePerNight() * 1.20);
-    } else if (newRoomType.equals("Executive")) {
-      this.roomType = "Executive";
-      setPricePerNight(getPricePerNight() * 1.35);
-    } else {
-      this.roomType = "Standard"; // default
-      setPricePerNight(getPricePerNight());
-    }
-  }
-
   public void setRoomType(String newRoomType, double newPrice) {
     if (newRoomType.equals("Deluxe")) {
       this.roomType = "Deluxe";
