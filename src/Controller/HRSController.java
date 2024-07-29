@@ -12,10 +12,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
- * The HotelReservationSystem class manages the operations related to hotel
- * reservations.
- * This allows creating hotels, viewing hotel details, managing hotel
- * properties, and simulating bookings.
+ * The HotelReservationSystem class manages the operations related to hotel reservations.
+ * This allows creating hotels, viewing hotel details, managing hotel properties, and simulating bookings.
  */
 public class HRSController {
   private ArrayList<Hotel> hotels;
@@ -27,17 +25,13 @@ public class HRSController {
     this.hotels = new ArrayList<>();
   }
 
-  // public void showMainView() {
-  // this.view.setContentPane(this.view.getContentPane());
-  // this.view.invalidate();
-  // this.view.validate();
-  // }
-
   /**
    * Creates a new hotel with the specified name and number of rooms.
+   *
+   * @param hotelName  the name of the hotel
+   * @param numOfRooms the number of rooms of the hotel
    */
   public void createHotel(String hotelName, int numOfRooms) {
-
     for (Hotel hotel : hotels) {
       if (hotel.getName().equals(hotelName)) {
         MessageHelper.showErrorMessage(String.format("Hotel name '%s' already exists.", hotelName));
@@ -52,8 +46,6 @@ public class HRSController {
       MessageHelper
           .showSuccessMessage(String.format("Hotel '%s' successfully created with %d rooms.", hotelName, numOfRooms));
     }
-
-    // TODO: Clear text field in CreateHotelPanel view
   }
 
   /**
@@ -71,6 +63,12 @@ public class HRSController {
     return hotelNames;
   }
 
+  /**
+   * Gets the information on the specified hotel and puts it in a HashMap
+   *
+   * @param hotelName the name of the hotel to get information from
+   * @return a HashMap of String that represents the information of the hotel
+   */
   public HashMap<String, String> getHotelGeneralInfo(String hotelName) {
     HashMap<String, String> info = new HashMap<>();
     Hotel selectedHotel = findHotelByName(hotelName);
@@ -91,8 +89,10 @@ public class HRSController {
   }
 
   /**
-   * @param hotelName is the name of the hotel to be checked
-   * @return name of the hotel, otherwise null.
+   * Checks if the hotel exists.
+   *
+   * @param hotelName the name of the hotel to be checked
+   * @return the name of the hotel, otherwise null
    */
   public String checkIfHotelExists(String hotelName) {
     Hotel hotel = findHotelByName(hotelName);
@@ -103,6 +103,13 @@ public class HRSController {
     return null;
   }
 
+  /**
+   * Checks if the room exists in the hotel.
+   * 
+   * @param roomName  the name of the room to be checked
+   * @param hotelName the name of the hotel to be checked
+   * @return the name of the room, otherwise null
+   */
   public String checkIfRoomExists(String roomName, String hotelName) {
     if (checkIfHotelExists(hotelName) != null) {
       Hotel selectedHotel = findHotelByName(hotelName);
@@ -114,6 +121,14 @@ public class HRSController {
     return null;
   }
 
+  /**
+   * Checks if the reservation exists in the room.
+   * 
+   * @param hotelName     the name of the hotel to be checked
+   * @param roomName      the name of the room to be checked
+   * @param reservationId the ID of the reservation to be checked
+   * @return the ID of the reservation, otherwise null
+   */
   public String checkIfReservationExists(String hotelName, String roomName, String reservationId) {
     if (checkIfHotelExists(hotelName) != null && checkIfRoomExists(roomName, hotelName) != null) {
       Hotel selectedHotel = findHotelByName(hotelName);
@@ -126,13 +141,11 @@ public class HRSController {
     return null;
   }
 
-  // public HashMap<> getRoomsOnDate() {
-  //
-  // }
-
-  /*
+  /**
+   * Gets the information of all rooms in the hotel.
    * 
-   * @return room name, room type, price per night, and number of reservations
+   * @param hotelName the name of the hotel to get the room information from
+   * @return an ArrayList of HashMaps that represents the information of all rooms in the hotel
    */
   public ArrayList<HashMap<String, String>> getAllRoomInfoOnHotel(String hotelName) {
     if (checkIfHotelExists(hotelName) != null) {
@@ -149,6 +162,13 @@ public class HRSController {
     return null;
   }
 
+  /**
+   * Gets the information of all dates in the room.
+   * 
+   * @param hotelName the name of the hotel to get the room information from
+   * @param roomName  the name of the room to get the date information from
+   * @return an ArrayList of HashMaps that represents the information of all dates
+   */
   public ArrayList<HashMap<String, String>> getAllDatesOnRoom(String hotelName, String roomName) {
     if (checkIfHotelExists(hotelName) != null && checkIfRoomExists(roomName, hotelName) != null) {
       ArrayList<HashMap<String, String>> listOfDateInfo = new ArrayList<>();
@@ -164,6 +184,13 @@ public class HRSController {
     return null;
   }
 
+  /**
+   * Gets the information of all reservations in the room.
+   * 
+   * @param hotelName the name of the hotel to get the room information from
+   * @param roomName  the name of the room to get the reservation information from
+   * @return an ArrayList of HashMaps that represents the information of all Reservations
+   */
   public ArrayList<HashMap<String, String>> getAllReservationInfoOnRoom(String hotelName, String roomName) {
     if (checkIfHotelExists(hotelName) != null && checkIfRoomExists(roomName, hotelName) != null) {
       ArrayList<HashMap<String, String>> listOfReservationInfo = new ArrayList<>();
@@ -184,9 +211,13 @@ public class HRSController {
 
   /**
    * Gets the available rooms given a certain check-in and check-out date.
+   *
+   * @param hotelName    the name of the hotel to get the room information from
+   * @param checkInDate  the check-in date for the Reservation
+   * @param checkOutDate the check-out date for the Reservation
+   * @return an ArrayList of HashMaps that represents the information of all rooms available on a certain date range
    */
-  public ArrayList<HashMap<String, String>> getAllRoomsAvailableOnDate(String hotelName, int checkInDate,
-      int checkOutDate) {
+  public ArrayList<HashMap<String, String>> getAllRoomsAvailableOnDate(String hotelName, int checkInDate, int checkOutDate) {
     ArrayList<HashMap<String, String>> allRoomsAvailableOnDateList = new ArrayList<>();
     Hotel selectedHotel = findHotelByName(hotelName);
     ArrayList<Room> availableRooms = selectedHotel.getAvailableRoomsOnDate(checkInDate, checkOutDate);
@@ -201,6 +232,13 @@ public class HRSController {
     return allRoomsAvailableOnDateList;
   }
 
+  /**
+   * Gets the information of a specific room in the hotel.
+   * 
+   * @param hotelName the name of the hotel to get the room information from
+   * @param roomName  the name of the room to get the information from
+   * @return a HashMap that represents the information of the room
+   */
   public HashMap<String, String> getSpecificRoomInfo(String hotelName, String roomName) {
     if (checkIfHotelExists(hotelName) != null && checkIfRoomExists(roomName, hotelName) != null) {
       HashMap<String, String> specificRoomInfo = new HashMap<>();
@@ -224,6 +262,14 @@ public class HRSController {
     return null;
   }
 
+  /**
+   * Gets the information of a specific date in the room.
+   * 
+   * @param hotelName  the name of the hotel to get the room information from
+   * @param roomName   the name of the room to get the date information from
+   * @param dateNumber the number of the date to get the information from
+   * @return a HashMap that represents the information of the date
+   */
   public HashMap<String, String> getSpecificDateInfo(String hotelName, String roomName, int dateNumber) {
     if (checkIfHotelExists(hotelName) != null && checkIfRoomExists(roomName, hotelName) != null) {
       HashMap<String, String> specificDateInfo = new HashMap<>();
@@ -242,6 +288,14 @@ public class HRSController {
     return null;
   }
 
+  /**
+   * Gets the information of a specific reservation in the room.
+   * 
+   * @param hotelName the name of the hotel to get the room information from
+   * @param roomName  the name of the room to get the reservation information from
+   * @param id        the ID of the reservation to get the information from
+   * @return a HashMap that represents the information of the reservation
+   */
   public HashMap<String, String> getSpecificReservationInfo(String hotelName, String roomName, int id) {
     if (checkIfHotelExists(hotelName) != null && checkIfRoomExists(roomName, hotelName) != null) {
       HashMap<String, String> specificReservationInfo = new HashMap<>();
@@ -263,6 +317,10 @@ public class HRSController {
   }
 
   /**
+   * Gets the list of booked dates in a room in a hotel.
+   * 
+   * @param hotelName the name of the hotel to get the room information from
+   * @param roomName  the name of the room to get the date information from
    * @return the list of date numbers as a string of the booked dates in a room
    */
   public ArrayList<String> getRoomBookedDatesList(String hotelName, String roomName) {
@@ -281,6 +339,13 @@ public class HRSController {
     return null;
   }
 
+  /**
+   * Gets the list of available dates in a room in a hotel.
+   * 
+   * @param hotelName the name of the hotel to get the room information from
+   * @param roomName  the name of the room to get the date information from
+   * @return the list of date numbers as a string of the available dates in a room
+   */
   public ArrayList<String> getRoomAvailableDatesList(String hotelName, String roomName) {
     if (checkIfHotelExists(hotelName) != null && checkIfRoomExists(roomName, hotelName) != null) {
       ArrayList<String> availableDates = new ArrayList<>();
@@ -297,6 +362,13 @@ public class HRSController {
     return null;
   }
 
+  /**
+   * Gets the list of reservations in a room in a hotel.
+   * 
+   * @param hotelName the name of the hotel to get the room information from
+   * @param roomName  the name of the room to get the reservation information from
+   * @return the list of reservation IDs as a string of the reservations in a room
+   */
   public ArrayList<String> getPriceBreakdownOnReservationList(String hotelName, String roomName, String reservationId) {
     if (checkIfReservationExists(hotelName, roomName, reservationId) != null) {
       ArrayList<String> listOfPriceBreakdown = new ArrayList<>();
@@ -323,6 +395,10 @@ public class HRSController {
   }
 
   /**
+   * Changes the name of the hotel.
+   * 
+   * @param hotelToChange is the name of the hotel to be changed
+   * @param newName       is the new name of the hotel
    * @return true if successful, otherwise false
    */
   public boolean changeHotelName(String hotelToChange, String newName) {
@@ -340,6 +416,12 @@ public class HRSController {
     return false;
   }
 
+  /**
+   * Adds the a room on a hotel
+   * 
+   * @param hotelName is the name of the hotel that a new room will be added to
+   * @param roomType  is the type of the room to be added
+   */
   public void addRoom(String hotelName, String roomType) {
     if (!(roomType.equals("Standard") || roomType.equals("Deluxe") || roomType.equals("Executive"))) {
       MessageHelper.showErrorMessage("Invalid room type!");
@@ -358,6 +440,12 @@ public class HRSController {
     }
   }
 
+  /**
+   * Removes a room in a hotel.
+   * 
+   * @param hotelName    is the name of the hotel that the room belongs to
+   * @param roomToRemove is the name of the room to be removed
+   */
   public void removeRoom(String hotelName, String roomToRemove) {
     Hotel selectedHotel = findHotelByName(hotelName);
     Room selectedRoom = selectedHotel.getRoom(roomToRemove);
@@ -378,6 +466,12 @@ public class HRSController {
           "Cannot remove rooms since there are some reservations existing or room doesn't exist at all.");
   }
 
+  /**
+   * Updates the base price of a hotel.
+   * 
+   * @param hotelName    is the name of the hotel that the base price will be updated
+   * @param newBasePrice is the new base price to be set
+   */
   public void updateBasePrice(String hotelName, double newBasePrice) {
     Hotel selectedHotel = findHotelByName(hotelName);
     if (selectedHotel.areEmptyReservations()) {
@@ -421,6 +515,8 @@ public class HRSController {
   }
 
   /**
+   * Removes a hotel given the hotel name.
+   * 
    * @param hotelName is the name of the hotel to be removed
    * @return true if hotelName is successfully removed, otherwise false
    */
@@ -467,23 +563,36 @@ public class HRSController {
     return false;
   }
 
+  /**
+   * Checks if the dates are valid.
+   * 
+   * @param checkInDate  the check-in date for the Reservation
+   * @param checkOutDate the check-out date for the Reservation
+   * @return true if the dates are valid, otherwise false
+   */
   public boolean areDatesValid(int checkInDate, int checkOutDate) {
     if (!(checkInDate <= checkOutDate)) {
       MessageHelper.showErrorMessage("Invalid dates!");
       return false;
-    }
-    else if (checkInDate == 31) {
+    } else if (checkInDate == 31) {
       MessageHelper.showErrorMessage("Cannot check-in on Day 31!");
       return false;
-    }
-    else if (checkOutDate == 1) {
+    } else if (checkOutDate == 1) {
       MessageHelper.showErrorMessage("Cannot check-out on Day 1!");
       return false;
-    }
-    else
+    } else
       return true; // valid
   }
 
+  /**
+   * Checks if a room is available in a hotel given the room type and date range.
+   * 
+   * @param hotelName    the name of the hotel to check
+   * @param roomType     the type of room to check
+   * @param checkInDate  the check-in date for the Reservation
+   * @param checkOutDate the check-out date for the Reservation
+   * @return true if a room is available, otherwise false
+   */
   public boolean isARoomAvailable(String hotelName, String roomType, int checkInDate, int checkOutDate) {
     if (areDatesValid(checkInDate, checkOutDate)) {
       Hotel selectedHotel = findHotelByName(hotelName);
@@ -493,89 +602,114 @@ public class HRSController {
     return false;
   }
 
+  /**
+   * Books a room in a specified hotel for a guest.
+   *
+   * @param hotelName    the name of the hotel where the room is to be booked.
+   * @param guestName    the name of the guest for whom the room is to be booked.
+   * @param roomType     the type of room to be booked.
+   * @param checkInDate  the check-in date for the booking.
+   * @param checkOutDate the check-out date for the booking.
+   * @param discountCode the discount code for the booking.
+   *
+   * @return true if the room was successfully booked, otherwise returns false.
+   */
   public boolean bookRoom(String hotelName, String guestName, String roomType, int checkInDate, int checkOutDate, String discountCode) {
     if (checkIfHotelExists(hotelName) != null) {
       Hotel selectedHotel = findHotelByName(hotelName);
       ArrayList<Room> availableRoomsOnDate = selectedHotel.getAvailableRoomsOnDate(checkInDate, checkOutDate, roomType);
       if (availableRoomsOnDate.isEmpty()) {
-        MessageHelper.showErrorMessage(String.format("No %s rooms available on Day %d to %d", roomType, checkInDate, checkOutDate));
+        MessageHelper.showErrorMessage(
+            String.format("No %s rooms available on Day %d to %d", roomType, checkInDate, checkOutDate));
         return false;
       }
       Room assignedRoom = availableRoomsOnDate.getFirst();
       assignedRoom.addReservation(guestName, checkInDate, checkOutDate, discountCode);
       if (checkInDate == checkOutDate)
-        MessageHelper.showSuccessMessage(String.format("Successfully booked a room (ROOM: '%s') for an OVERNIGHT stay on Day %d", assignedRoom.getName(), checkInDate));
+        MessageHelper
+            .showSuccessMessage(String.format("Successfully booked a room (ROOM: '%s') for an OVERNIGHT stay on Day %d",
+                assignedRoom.getName(), checkInDate));
       else
-        MessageHelper.showSuccessMessage(String.format("Successfully booked a room (ROOM: '%s') on Day %d to %d", assignedRoom.getName(), checkInDate, checkOutDate));
+        MessageHelper.showSuccessMessage(String.format("Successfully booked a room (ROOM: '%s') on Day %d to %d",
+            assignedRoom.getName(), checkInDate, checkOutDate));
       return true;
     }
     return false;
   }
 
+  /**
+   * Checks if the provided discount code is valid.
+   *
+   * @param discountCode A string representing the discount code to be validated
+   * @return true if the discount code is one of the predefined valid codes
+   */
   public boolean isDiscountCodeValid(String discountCode) {
-    if (discountCode.equals("I_WORK_HERE") || discountCode.equals("STAY4_GET1") || discountCode.equals("PAYDAY") || discountCode.equals("N/A"))
+    if (discountCode.equals("I_WORK_HERE") || discountCode.equals("STAY4_GET1") || discountCode.equals("PAYDAY")
+        || discountCode.equals("N/A"))
       return true;
     else
       return false;
   }
 
-  /* PRIO: todos for last
-    - [x] applying discount to reservation
-    - [x] createTemporaryReservation to show total price 
-    - [ ] in ViewSpecificReservationFrame, add JLabel for "Discount Code: N/A"
-    - [ ] maybe also the: if already booked reservation, then change date price, the id booked reservation price should not changed
-    - [ ] pretty UI
-    - [ ] documentation
-    - [ ] misc
-    - [ ] demo video
+  /**
+   * Checks if the discount code is applied to the reservation.
+   * 
+   * @param reservationToBeMade the reservation to be made
+   * @param discountCode        the discount code to be applied
+   * @return true if the discount code is applied, otherwise false
    */
-  public boolean isDiscountApplied(HashMap<String,String> reservationToBeMade, String discountCode) {
+  public boolean isDiscountApplied(HashMap<String, String> reservationToBeMade, String discountCode) {
     int checkInDate = Integer.parseInt(reservationToBeMade.get("Check In Date"));
     int checkOutDate = Integer.parseInt(reservationToBeMade.get("Check Out Date"));
-    int stay = checkInDate - checkOutDate;
-    
+    int stay = checkOutDate - checkInDate;
+
     if (isDiscountCodeValid(discountCode)) {
       // handle error cases
       if (discountCode.equals("STAY4_GET1") && stay < 5) {
-        MessageHelper.showErrorMessage(String.format("Cannot apply discount code '%s', reservation is less than 5 days!", discountCode));
+        MessageHelper.showErrorMessage( String.format("Cannot apply discount code '%s', reservation is less than 5 days!", discountCode));
         return false;
       }
-      
+
       if (discountCode.equals("PAYDAY")) {
         for (int i = checkInDate; i < checkOutDate; i++) {
-          if ((i == 15 || i == 30) && (checkOutDate != 15 && checkOutDate != 30))
+          if ((i == 15 || i == 30))
             return true;
         }
-        if (checkOutDate == 15 || checkOutDate == 30) 
-          MessageHelper.showErrorMessage("Check-out date cannot be on day 15 or day 30 when using discount code 'PAYDAY'!");
-        else
-          MessageHelper.showErrorMessage(String.format("Cannot apply discount code '%s', reservation doesn't cover day 15 or day 30!", discountCode));
-        
+        MessageHelper.showErrorMessage(String .format("Cannot apply discount code '%s', reservation doesn't cover day 15 or day 30!", discountCode));
         return false;
       }
-      
       return true;
-    }
-    else
+
+    } else
       MessageHelper.showErrorMessage("Invalid discount code!");
-    
+
     return false;
   }
 
   /**
+   * Creates a temporary reservation for a guest.
+   * 
+   * @param hotelName    the name of the hotel where the room is to be booked
+   * @param roomType     the type of room to be booked
+   * @param guestName    the name of the guest for whom the room is to be booked
+   * @param checkInDate  the check-in date for the booking
+   * @param checkOutDate the check-out date for the booking
+   * @param discountCode the discount code for the booking
    * @return a HashMap information of the created temporary reservation, otherwise null
-   * */
+   */
   public HashMap<String, String> createTemporaryReservation(String hotelName, String roomType, String guestName, int checkInDate, int checkOutDate, String discountCode) {
     if (checkIfHotelExists(hotelName) != null) {
       HashMap<String, String> tempReservationInfo = new HashMap<>();
       Hotel selectedHotel = findHotelByName(hotelName);
       ArrayList<Room> availableRoomsOnDate = selectedHotel.getAvailableRoomsOnDate(checkInDate, checkOutDate, roomType);
       Room assignedRoom = availableRoomsOnDate.getFirst();
-      
+
       // create clones
-      Room tempAssignedRoom = new Room(assignedRoom.getName(), assignedRoom.getPricePerNight(), assignedRoom.getRoomType());
-      Reservation tempReservation = new Reservation(tempAssignedRoom.getReservations().size()+1, guestName, tempAssignedRoom, checkInDate, checkOutDate, discountCode);
-      
+      Room tempAssignedRoom = new Room(assignedRoom.getName(), assignedRoom.getPricePerNight(),
+          assignedRoom.getRoomType());
+      Reservation tempReservation = new Reservation(tempAssignedRoom.getReservations().size() + 1, guestName,
+          tempAssignedRoom, checkInDate, checkOutDate, discountCode);
+
       // put all info to HashMap then return
       tempReservationInfo.put("Total Price", String.valueOf(tempReservation.getTotalPrice()));
       tempReservationInfo.put("Room Name", tempReservation.getRoom().getName());
@@ -584,13 +718,12 @@ public class HRSController {
       tempReservationInfo.put("Check In Date", String.valueOf(tempReservation.getCheckInDate()));
       tempReservationInfo.put("Check Out Date", String.valueOf(tempReservation.getCheckOutDate()));
       tempReservationInfo.put("Discount Code", tempReservation.getDiscountCode());
-      
+
       return tempReservationInfo;
     }
-    
+
     return null;
   }
-
 
   /**
    * Finds a hotel by its name.

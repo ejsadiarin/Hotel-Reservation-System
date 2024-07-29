@@ -142,7 +142,7 @@ public class Reservation {
       if (discountCode.equals("PAYDAY")) {
         // if range of check-in & check-out date covers 15 or 30 (excluding checkout-15-or-30)
         for (int i = checkInDate; i < checkOutDate; i++) {
-          if ((i == 15 || i == 30) && (checkOutDate != 15 && checkOutDate != 30))
+          if ((i == 15 || i == 30))
             return calculatedTotalPrice - (calculatedTotalPrice * 0.07);
         }
       }
