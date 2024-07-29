@@ -619,19 +619,15 @@ public class HRSController {
       Hotel selectedHotel = findHotelByName(hotelName);
       ArrayList<Room> availableRoomsOnDate = selectedHotel.getAvailableRoomsOnDate(checkInDate, checkOutDate, roomType);
       if (availableRoomsOnDate.isEmpty()) {
-        MessageHelper.showErrorMessage(
-            String.format("No %s rooms available on Day %d to %d", roomType, checkInDate, checkOutDate));
+        MessageHelper.showErrorMessage(String.format("No %s rooms available on Day %d to %d", roomType, checkInDate, checkOutDate));
         return false;
       }
       Room assignedRoom = availableRoomsOnDate.getFirst();
       assignedRoom.addReservation(guestName, checkInDate, checkOutDate, discountCode);
       if (checkInDate == checkOutDate)
-        MessageHelper
-            .showSuccessMessage(String.format("Successfully booked a room (ROOM: '%s') for an OVERNIGHT stay on Day %d",
-                assignedRoom.getName(), checkInDate));
+        MessageHelper.showSuccessMessage(String.format("Successfully booked a room (ROOM: '%s') for an OVERNIGHT stay on Day %d", assignedRoom.getName(), checkInDate));
       else
-        MessageHelper.showSuccessMessage(String.format("Successfully booked a room (ROOM: '%s') on Day %d to %d",
-            assignedRoom.getName(), checkInDate, checkOutDate));
+        MessageHelper.showSuccessMessage(String.format("Successfully booked a room (ROOM: '%s') on Day %d to %d", assignedRoom.getName(), checkInDate, checkOutDate));
       return true;
     }
     return false;
@@ -644,8 +640,7 @@ public class HRSController {
    * @return true if the discount code is one of the predefined valid codes
    */
   public boolean isDiscountCodeValid(String discountCode) {
-    if (discountCode.equals("I_WORK_HERE") || discountCode.equals("STAY4_GET1") || discountCode.equals("PAYDAY")
-        || discountCode.equals("N/A"))
+    if (discountCode.equals("I_WORK_HERE") || discountCode.equals("STAY4_GET1") || discountCode.equals("PAYDAY") || discountCode.equals("N/A"))
       return true;
     else
       return false;

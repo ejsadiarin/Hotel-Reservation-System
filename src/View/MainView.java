@@ -89,7 +89,7 @@ public class MainView extends javax.swing.JFrame {
 
         jInternalFrame1.setVisible(true);
 
-        jLabel2.setFont(new java.awt.Font("Clarity City", 0, 24)); // NOI18N
+        jLabel2.setFont(new java.awt.Font("Comic Sans MS", 0, 24)); // NOI18N
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jLabel2.setText("Dwin Hotels");
 
@@ -143,7 +143,7 @@ public class MainView extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(18, Short.MAX_VALUE))
+                .addContainerGap(9, Short.MAX_VALUE))
         );
 
         pack();
@@ -202,6 +202,9 @@ public class MainView extends javax.swing.JFrame {
 
   }// GEN-LAST:event_jButton1ActionPerformed
 
+  /**
+   * Refreshes the hotel list in the main view.
+   */
   public void refreshHotelList() {
     jList1.setModel(hotelListModel);
     jScrollPane1.setViewportView(jList1);

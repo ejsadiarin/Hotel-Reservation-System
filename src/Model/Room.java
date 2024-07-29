@@ -3,10 +3,8 @@ package Model;
 import java.util.ArrayList;
 
 /**
- * The Room class represents a hotel room, including its name, price per night,
- * availability,
- * and reservations. It provides methods to manage reservations and check
- * availability.
+ * The Room class represents a hotel room, including its name, price per night, availability, and reservations.
+ * It provides methods to manage reservations and check availability.
  */
 public class Room {
   private String name;
@@ -68,10 +66,21 @@ public class Room {
     }
   }
 
+  /**
+   * Gets the type of the room.
+   *
+   * @return the type of the room
+   */
   public String getRoomType() {
     return this.roomType;
   }
 
+  /**
+   * Sets the type of the room and updates the price per night.
+   *
+   * @param newRoomType the new type of the room
+   * @param newPrice    the new price per night
+   */
   public void setRoomType(String newRoomType, double newPrice) {
     if (newRoomType.equals("Deluxe")) {
       this.roomType = "Deluxe";
@@ -86,8 +95,7 @@ public class Room {
   }
 
   /**
-   * Checks if the room is available between the specified check-in and check-out
-   * dates.
+   * Checks if the room is available between the specified check-in and check-out dates.
    *
    * @param checkIn  the check-in date
    * @param checkOut the check-out date
@@ -138,7 +146,8 @@ public class Room {
    */
   public void addReservation(String guestName, int checkInDate, int checkOutDate, String discountCode) {
     if (reserveDates(checkInDate, checkOutDate)) {
-      reservations.add(new Reservation(reservations.size() + 1, guestName, this, checkInDate, checkOutDate, discountCode));
+      reservations
+          .add(new Reservation(reservations.size() + 1, guestName, this, checkInDate, checkOutDate, discountCode));
     }
   }
 
@@ -152,12 +161,7 @@ public class Room {
     if (reservation != null) {
       reservation.getRoom().cancelReserveDates(reservation.getCheckInDate(), reservation.getCheckOutDate());
       reservations.remove(reservation);
-      // TODO: refactor this, should not have printf in Model (do this notifs in
-      // controller or view)
-      System.out.printf("Reservation for '%s' removed from room '%s'.\n", reservation.getGuestName(),
-          reservation.getRoom().getName());
-    } else
-      System.out.printf("Reservation for '%s' not found. Exiting...\n", reservation.getGuestName());
+    }
   }
 
   /**
@@ -206,10 +210,21 @@ public class Room {
     return totalEarnings;
   }
 
+  /**
+   * Gets the total number of reservations for the room.
+   *
+   * @return the total number of reservations
+   */
   public ArrayList<AvailabilityDate> getAvailabilityDates() {
     return this.availabilityDates;
   }
 
+  /**
+   * Gets the availability date for the specified date number.
+   *
+   * @param dateNumber the date number
+   * @return the availability date, otherwise null
+   */
   public AvailabilityDate getAvailabilityDate(int dateNumber) {
     for (AvailabilityDate date : getAvailabilityDates()) {
       if (date.getDateNumber() == dateNumber)
@@ -219,6 +234,11 @@ public class Room {
     return null;
   }
 
+  /**
+   * Gets the list of reserved dates for the room.
+   *
+   * @return the list of reserved dates
+   */
   public ArrayList<AvailabilityDate> getReservedDates() {
     ArrayList<AvailabilityDate> reservedDates = new ArrayList<>();
     for (AvailabilityDate date : getAvailabilityDates()) {
@@ -229,6 +249,12 @@ public class Room {
     return reservedDates;
   }
 
+  /**
+   * Gets the index of the reserved date in the list of availability dates.
+   *
+   * @param date the date number
+   * @return the index of the reserved date, otherwise 0
+   */
   public int getIndexOfReservedDate(int date) {
     for (int i = date - 1; i < getAvailabilityDates().size(); i++) {
       if (!getAvailabilityDates().get(i).isAvailable())
@@ -238,8 +264,10 @@ public class Room {
   }
 
   /**
-   * @param selectedDate is the starting date (not the index) to view the price of
-   * @return the price on the given date
+   * Gets the price for the specified date.
+   *
+   * @param selectedDate the selected date
+   * @return the price for the date
    */
   public double getPriceOnDate(int selectedDate) {
     double priceResult = 0;

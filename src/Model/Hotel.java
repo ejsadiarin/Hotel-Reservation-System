@@ -5,7 +5,8 @@ import java.util.Arrays;
 import java.util.Collections;
 
 /**
- * The Hotel class represents a hotel with a unique name, a collection of rooms, and various properties 
+ * The Hotel class represents a hotel with a unique name, a collection of rooms,
+ * and various properties
  * related to room pricing and availability.
  */
 public class Hotel {
@@ -20,7 +21,7 @@ public class Hotel {
   /**
    * Constructs a new Hotel with the specified name and number of rooms.
    *
-   * @param name the unique name of the hotel
+   * @param name       the unique name of the hotel
    * @param numOfRooms the number of rooms to initialize in the hotel
    */
   public Hotel(String name, int numOfRooms) {
@@ -31,11 +32,11 @@ public class Hotel {
     this.setNumOfRooms(numOfRooms);
     this.uniqueNamesList = new ArrayList<>(Arrays.asList(
         "Azure", "Moonlight", "Crystal", "Emerald", "Golden", "Sapphire", "Amber", "Silver", "Ruby", "Tranquil",
-        "Serene", "Velvet", "Celestial", "Coral", "Majestic", "Whispering", "Sunlit", "Enchanted", "Harmony", "Blissful",
+        "Serene", "Velvet", "Celestial", "Coral", "Majestic", "Whispering", "Sunlit", "Enchanted", "Harmony",
+        "Blissful",
         "Dreamy", "Radiant", "Garden", "Opal", "Starlight", "Mystic", "Aurora", "Paradise", "Cozy", "Enigma",
         "Horizon", "Zenith", "Mirage", "Orchid", "Sunrise", "Lotus", "Eclipse", "Glimmer", "Serenade", "Cascade",
-        "Harmony", "Solstice", "Seraph", "Elysian", "Luminous", "Whisper", "Nirvana", "Radiance", "Essence", "Breeze"
-    ));
+        "Harmony", "Solstice", "Seraph", "Elysian", "Luminous", "Whisper", "Nirvana", "Radiance", "Essence", "Breeze"));
     this.usedNamesList = new ArrayList<>();
     this.initializeRooms(this.numOfRooms);
   }
@@ -58,14 +59,29 @@ public class Hotel {
     this.name = name;
   }
 
+  /**
+   * Gets the list of unique names for rooms in the hotel.
+   * 
+   * @return the list of unique names
+   */
   public ArrayList<String> getUniqueNamesList() {
     return this.uniqueNamesList;
   }
 
+  /**
+   * Gets the list of used names for rooms in the hotel.
+   * 
+   * @return the list of used names
+   */
   public ArrayList<String> getUsedNamesList() {
     return this.usedNamesList;
   }
 
+  /**
+   * Generates a unique name for a room in the hotel.
+   * 
+   * @return a unique name for a room
+   */
   public String getUniqueName() {
     Collections.shuffle(uniqueNamesList);
     for (String name : getUniqueNamesList()) {
@@ -76,7 +92,7 @@ public class Hotel {
     }
     return "Roomu" + (getRooms().size() + 1); // fallback
   }
-  
+
   /**
    * Gets the list of rooms in the hotel.
    *
@@ -114,7 +130,7 @@ public class Hotel {
     }
     return null;
   }
-  
+
   /**
    * Adds a new room to the hotel, utilizing an automated naming generation based on the current number of rooms.
    * 
@@ -157,10 +173,11 @@ public class Hotel {
   public void setNumOfRooms(int numOfRooms) {
     // if invalid numOfRooms then set to default minimum of 1 room
     if (numOfRooms > getMaxRooms() || numOfRooms < 1) {
-      System.out.printf("Cannot have %d number of rooms (minimum is 1, maximum is 50). Defaulting to minimum of 1 room.\n", numOfRooms);
+      System.out.printf(
+          "Cannot have %d number of rooms (minimum is 1, maximum is 50). Defaulting to minimum of 1 room.\n",
+          numOfRooms);
       this.numOfRooms = 1;
-    }
-    else
+    } else
       this.numOfRooms = numOfRooms;
   }
 
@@ -172,11 +189,11 @@ public class Hotel {
   public int getMaxRooms() {
     return this.maxRooms;
   }
-  
+
   /**
    * Gets the list of available rooms within a specific date range.
    *
-   * @param checkInDate the check-in date
+   * @param checkInDate  the check-in date
    * @param checkOutDate the check-out date
    * @return the list of all available rooms on a date
    */
@@ -194,29 +211,35 @@ public class Hotel {
   /**
    * Gets the list of available rooms filtered by room type within a specific date range.
    *
-   * @param checkInDate the check-in date
+   * @param checkInDate  the check-in date
    * @param checkOutDate the check-out date
-   * @param roomType the type of room
+   * @param roomType     the type of room
    * @return the list of all available rooms by room type on a date
    */
   public ArrayList<Room> getAvailableRoomsOnDate(int checkInDate, int checkOutDate, String roomType) {
     ArrayList<Room> availableRooms = new ArrayList<>();
-    
+
     for (Room room : getRoomsByType(roomType)) {
       if (room.isAvailable(checkInDate, checkOutDate))
         availableRooms.add(room);
     }
-    
+
     return availableRooms;
   }
-  
+
+  /**
+   * Gets the list of rooms filtered by room type.
+   *
+   * @param roomType the type of room
+   * @return the list of all rooms by room type
+   */
   public ArrayList<Room> getRoomsByType(String roomType) {
     ArrayList<Room> roomTypeList = new ArrayList<>();
     for (Room room : getRooms()) {
       if (room.getRoomType().equals(roomType))
         roomTypeList.add(room);
     }
-    
+
     return roomTypeList;
   }
 
@@ -253,7 +276,7 @@ public class Hotel {
     this.basePrice = basePrice;
     for (Room room : rooms) {
       // price per night is updated based on room type
-      room.setRoomType(room.getRoomType(), basePrice); 
+      room.setRoomType(room.getRoomType(), basePrice);
     }
   }
 

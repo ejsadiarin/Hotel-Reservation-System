@@ -1,10 +1,8 @@
 package Model;
 
 /**
- * The Reservation class represents a reservation made by a guest, including
- * details such as
- * guest name, check-in and check-out dates, the reserved room, and the cost per
- * night.
+ * The Reservation class represents a reservation made by a guest, including details such as
+ * guest name, check-in and check-out dates, the reserved room, and the cost per night.
  */
 public class Reservation {
   private int Id;
@@ -81,10 +79,20 @@ public class Reservation {
     return room;
   }
 
+  /**
+   * Gets the discount code associated with the reservation.
+   *
+   * @return the discount code
+   */
   public String getDiscountCode() {
     return this.discountCode;
   }
 
+  /**
+   * Sets the discount code for the reservation.
+   *
+   * @param discountCode the discount code
+   */
   public void setDiscountCode(String discountCode) {
     if (discountCode.isEmpty())
       this.discountCode = "N/A";
@@ -93,8 +101,7 @@ public class Reservation {
   }
 
   /**
-   * Calculates the total price of the reservation based on the check-in and
-   * check-out dates and the cost per night.
+   * Calculates the total price of the reservation based on the check-in and check-out dates and the cost per night.
    *
    * @return the total price of the reservation
    */
@@ -103,9 +110,10 @@ public class Reservation {
   }
 
   /**
-   * Calculates the discount given a discount code
+   * Calculates the total price of the reservation based on the check-in and check-out dates and the cost per night.
    *
-   * @return the discount price that is subtracted from the original total price
+   * @param discountCode the discount code
+   * @return the total price of the reservation
    */
   public double calculateTotalPrice(String discountCode) {
     double calculatedTotalPrice = 0.0;
@@ -151,6 +159,12 @@ public class Reservation {
     return calculatedTotalPrice; 
   }
   
+  /**
+   * Checks if the discount code is valid.
+   *
+   * @param discountCode the discount code
+   * @return true if the discount code is valid, otherwise false
+   */
   public boolean checkIfValidDiscountCode(String discountCode) {
     if (discountCode.equals("I_WORK_HERE") || discountCode.equals("STAY4_GET1") || discountCode.equals("PAYDAY"))
       return true;
