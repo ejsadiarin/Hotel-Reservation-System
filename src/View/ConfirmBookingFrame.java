@@ -21,7 +21,8 @@ public class ConfirmBookingFrame extends javax.swing.JFrame {
   /**
    * Creates new form ConfirmBookingFrame
    */
-  public ConfirmBookingFrame(MainView view, HRSController controller, String hotelName, String guestName, String roomType, int checkInDate, int checkOutDate, String discountCode) {
+  public ConfirmBookingFrame(MainView view, HRSController controller, String hotelName, String guestName,
+      String roomType, int checkInDate, int checkOutDate, String discountCode) {
     this.view = view;
     this.controller = controller;
     this.hotelName = hotelName;
@@ -31,6 +32,7 @@ public class ConfirmBookingFrame extends javax.swing.JFrame {
     this.checkOutDate = checkOutDate;
     this.discountCode = discountCode;
     initComponents();
+    setLocationRelativeTo(null);
     fetchData();
   }
 
@@ -44,131 +46,132 @@ public class ConfirmBookingFrame extends javax.swing.JFrame {
   // <editor-fold defaultstate="collapsed" desc="Generated
   // <editor-fold defaultstate="collapsed" desc="Generated
   // <editor-fold defaultstate="collapsed" desc="Generated
-    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
-    private void initComponents() {
+  // <editor-fold defaultstate="collapsed" desc="Generated
+  // Code">//GEN-BEGIN:initComponents
+  private void initComponents() {
 
-        jPanel1 = new javax.swing.JPanel();
-        jLabel16 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
-        jLabel17 = new javax.swing.JLabel();
-        jLabel7 = new javax.swing.JLabel();
-        jLabel8 = new javax.swing.JLabel();
-        jLabel9 = new javax.swing.JLabel();
-        jButton2 = new javax.swing.JButton();
-        jLabel10 = new javax.swing.JLabel();
-        jButton3 = new javax.swing.JButton();
-        jLabel11 = new javax.swing.JLabel();
-        jButton4 = new javax.swing.JButton();
-        jLabel12 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        jLabel13 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
-        jLabel14 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
-        jLabel15 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
+    jPanel1 = new javax.swing.JPanel();
+    jLabel16 = new javax.swing.JLabel();
+    jLabel6 = new javax.swing.JLabel();
+    jLabel17 = new javax.swing.JLabel();
+    jLabel7 = new javax.swing.JLabel();
+    jLabel8 = new javax.swing.JLabel();
+    jLabel9 = new javax.swing.JLabel();
+    jButton2 = new javax.swing.JButton();
+    jLabel10 = new javax.swing.JLabel();
+    jButton3 = new javax.swing.JButton();
+    jLabel11 = new javax.swing.JLabel();
+    jButton4 = new javax.swing.JButton();
+    jLabel12 = new javax.swing.JLabel();
+    jLabel2 = new javax.swing.JLabel();
+    jLabel13 = new javax.swing.JLabel();
+    jLabel3 = new javax.swing.JLabel();
+    jLabel14 = new javax.swing.JLabel();
+    jLabel4 = new javax.swing.JLabel();
+    jLabel15 = new javax.swing.JLabel();
+    jLabel5 = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setResizable(false);
+    setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+    setResizable(false);
 
-        jPanel1.setBackground(new java.awt.Color(51, 0, 51));
+    jPanel1.setBackground(new java.awt.Color(51, 0, 51));
 
-        jLabel16.setFont(new java.awt.Font("Clarity City", 1, 14)); // NOI18N
-        jLabel16.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel16.setText("Discount Code:");
+    jLabel16.setFont(new java.awt.Font("Clarity City", 1, 14)); // NOI18N
+    jLabel16.setForeground(new java.awt.Color(255, 255, 255));
+    jLabel16.setText("Discount Code:");
 
-        jLabel6.setFont(new java.awt.Font("Clarity City", 1, 14)); // NOI18N
-        jLabel6.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel6.setText("Hotel Name:");
+    jLabel6.setFont(new java.awt.Font("Clarity City", 1, 14)); // NOI18N
+    jLabel6.setForeground(new java.awt.Color(255, 255, 255));
+    jLabel6.setText("Hotel Name:");
 
-        jLabel17.setFont(new java.awt.Font("Clarity City", 2, 14)); // NOI18N
-        jLabel17.setForeground(new java.awt.Color(153, 255, 153));
-        jLabel17.setText("STAY4_GET1");
+    jLabel17.setFont(new java.awt.Font("Clarity City", 2, 14)); // NOI18N
+    jLabel17.setForeground(new java.awt.Color(153, 255, 153));
+    jLabel17.setText("STAY4_GET1");
 
-        jLabel7.setFont(new java.awt.Font("Clarity City", 2, 14)); // NOI18N
-        jLabel7.setForeground(new java.awt.Color(153, 255, 153));
-        jLabel7.setText("hotel");
+    jLabel7.setFont(new java.awt.Font("Clarity City", 2, 14)); // NOI18N
+    jLabel7.setForeground(new java.awt.Color(153, 255, 153));
+    jLabel7.setText("hotel");
 
-        jLabel8.setFont(new java.awt.Font("Clarity City", 2, 14)); // NOI18N
-        jLabel8.setForeground(new java.awt.Color(153, 255, 153));
-        jLabel8.setText("guest");
+    jLabel8.setFont(new java.awt.Font("Clarity City", 2, 14)); // NOI18N
+    jLabel8.setForeground(new java.awt.Color(153, 255, 153));
+    jLabel8.setText("guest");
 
-        jLabel9.setFont(new java.awt.Font("Clarity City", 1, 14)); // NOI18N
-        jLabel9.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel9.setText("Check-in Date:");
+    jLabel9.setFont(new java.awt.Font("Clarity City", 1, 14)); // NOI18N
+    jLabel9.setForeground(new java.awt.Color(255, 255, 255));
+    jLabel9.setText("Check-in Date:");
 
-        jButton2.setBackground(new java.awt.Color(255, 204, 255));
-        jButton2.setFont(new java.awt.Font("Clarity City", 3, 14)); // NOI18N
-        jButton2.setText("Enter Discount Code");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
-            }
-        });
+    jButton2.setBackground(new java.awt.Color(255, 204, 255));
+    jButton2.setFont(new java.awt.Font("Clarity City", 3, 14)); // NOI18N
+    jButton2.setText("Enter Discount Code");
+    jButton2.addActionListener(new java.awt.event.ActionListener() {
+      public void actionPerformed(java.awt.event.ActionEvent evt) {
+        jButton2ActionPerformed(evt);
+      }
+    });
 
-        jLabel10.setFont(new java.awt.Font("Clarity City", 1, 14)); // NOI18N
-        jLabel10.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel10.setText("Check-out Date:");
+    jLabel10.setFont(new java.awt.Font("Clarity City", 1, 14)); // NOI18N
+    jLabel10.setForeground(new java.awt.Color(255, 255, 255));
+    jLabel10.setText("Check-out Date:");
 
-        jButton3.setBackground(new java.awt.Color(255, 102, 102));
-        jButton3.setFont(new java.awt.Font("Clarity City", 1, 18)); // NOI18N
-        jButton3.setForeground(new java.awt.Color(255, 255, 255));
-        jButton3.setText("Cancel");
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
-            }
-        });
+    jButton3.setBackground(new java.awt.Color(255, 102, 102));
+    jButton3.setFont(new java.awt.Font("Clarity City", 1, 18)); // NOI18N
+    jButton3.setForeground(new java.awt.Color(255, 255, 255));
+    jButton3.setText("Cancel");
+    jButton3.addActionListener(new java.awt.event.ActionListener() {
+      public void actionPerformed(java.awt.event.ActionEvent evt) {
+        jButton3ActionPerformed(evt);
+      }
+    });
 
-        jLabel11.setFont(new java.awt.Font("Clarity City", 2, 14)); // NOI18N
-        jLabel11.setForeground(new java.awt.Color(153, 255, 153));
-        jLabel11.setText("guest");
+    jLabel11.setFont(new java.awt.Font("Clarity City", 2, 14)); // NOI18N
+    jLabel11.setForeground(new java.awt.Color(153, 255, 153));
+    jLabel11.setText("guest");
 
-        jButton4.setBackground(new java.awt.Color(153, 255, 153));
-        jButton4.setFont(new java.awt.Font("Clarity City", 1, 18)); // NOI18N
-        jButton4.setText("Confirm Booking");
-        jButton4.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton4ActionPerformed(evt);
-            }
-        });
+    jButton4.setBackground(new java.awt.Color(153, 255, 153));
+    jButton4.setFont(new java.awt.Font("Clarity City", 1, 18)); // NOI18N
+    jButton4.setText("Confirm Booking");
+    jButton4.addActionListener(new java.awt.event.ActionListener() {
+      public void actionPerformed(java.awt.event.ActionEvent evt) {
+        jButton4ActionPerformed(evt);
+      }
+    });
 
-        jLabel12.setFont(new java.awt.Font("Clarity City", 1, 36)); // NOI18N
-        jLabel12.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel12.setText("Confirm Booking");
+    jLabel12.setFont(new java.awt.Font("Clarity City", 1, 36)); // NOI18N
+    jLabel12.setForeground(new java.awt.Color(255, 255, 255));
+    jLabel12.setText("Confirm Booking");
 
-        jLabel2.setFont(new java.awt.Font("Clarity City", 1, 14)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel2.setText("Guest Name:");
+    jLabel2.setFont(new java.awt.Font("Clarity City", 1, 14)); // NOI18N
+    jLabel2.setForeground(new java.awt.Color(255, 255, 255));
+    jLabel2.setText("Guest Name:");
 
-        jLabel13.setFont(new java.awt.Font("Clarity City", 1, 14)); // NOI18N
-        jLabel13.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel13.setText("Total Price:");
+    jLabel13.setFont(new java.awt.Font("Clarity City", 1, 14)); // NOI18N
+    jLabel13.setForeground(new java.awt.Color(255, 255, 255));
+    jLabel13.setText("Total Price:");
 
-        jLabel3.setFont(new java.awt.Font("Clarity City", 2, 14)); // NOI18N
-        jLabel3.setForeground(new java.awt.Color(153, 255, 153));
-        jLabel3.setText("guest");
+    jLabel3.setFont(new java.awt.Font("Clarity City", 2, 14)); // NOI18N
+    jLabel3.setForeground(new java.awt.Color(153, 255, 153));
+    jLabel3.setText("guest");
 
-        jLabel14.setFont(new java.awt.Font("Clarity City", 2, 14)); // NOI18N
-        jLabel14.setForeground(new java.awt.Color(153, 255, 153));
-        jLabel14.setText("price");
+    jLabel14.setFont(new java.awt.Font("Clarity City", 2, 14)); // NOI18N
+    jLabel14.setForeground(new java.awt.Color(153, 255, 153));
+    jLabel14.setText("price");
 
-        jLabel4.setFont(new java.awt.Font("Clarity City", 1, 14)); // NOI18N
-        jLabel4.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel4.setText("Room Type:");
+    jLabel4.setFont(new java.awt.Font("Clarity City", 1, 14)); // NOI18N
+    jLabel4.setForeground(new java.awt.Color(255, 255, 255));
+    jLabel4.setText("Room Type:");
 
-        jLabel15.setFont(new java.awt.Font("Clarity City", 2, 12)); // NOI18N
-        jLabel15.setForeground(new java.awt.Color(204, 204, 204));
-        jLabel15.setText("Please check your information details below:");
+    jLabel15.setFont(new java.awt.Font("Clarity City", 2, 12)); // NOI18N
+    jLabel15.setForeground(new java.awt.Color(204, 204, 204));
+    jLabel15.setText("Please check your information details below:");
 
-        jLabel5.setFont(new java.awt.Font("Clarity City", 2, 14)); // NOI18N
-        jLabel5.setForeground(new java.awt.Color(153, 255, 153));
-        jLabel5.setText("Executive");
+    jLabel5.setFont(new java.awt.Font("Clarity City", 2, 14)); // NOI18N
+    jLabel5.setForeground(new java.awt.Color(153, 255, 153));
+    jLabel5.setText("Executive");
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+    javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+    jPanel1.setLayout(jPanel1Layout);
+    jPanel1Layout.setHorizontalGroup(
+        jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(31, 31, 31)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -180,9 +183,12 @@ public class ConfirmBookingFrame extends javax.swing.JFrame {
                         .addComponent(jLabel17))
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                         .addGroup(jPanel1Layout.createSequentialGroup()
-                            .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 260,
+                                javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED,
+                                javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 220,
+                                javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
                             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addGroup(jPanel1Layout.createSequentialGroup()
@@ -207,23 +213,25 @@ public class ConfirmBookingFrame extends javax.swing.JFrame {
                                 .addGroup(jPanel1Layout.createSequentialGroup()
                                     .addGap(23, 23, 23)
                                     .addComponent(jButton2))
-                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                        .addComponent(jLabel13)
-                                        .addComponent(jLabel4))
-                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addGroup(jPanel1Layout.createSequentialGroup()
-                                            .addGap(7, 7, 7)
-                                            .addComponent(jLabel14))
-                                        .addGroup(jPanel1Layout.createSequentialGroup()
-                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                            .addComponent(jLabel5)))
-                                    .addGap(14, 14, 14))))))
-                .addContainerGap(39, Short.MAX_VALUE))
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING,
+                                    jPanel1Layout.createSequentialGroup()
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addGroup(jPanel1Layout
+                                            .createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                            .addComponent(jLabel13)
+                                            .addComponent(jLabel4))
+                                        .addGroup(
+                                            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                .addGroup(jPanel1Layout.createSequentialGroup()
+                                                    .addGap(7, 7, 7)
+                                                    .addComponent(jLabel14))
+                                                .addGroup(jPanel1Layout.createSequentialGroup()
+                                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                    .addComponent(jLabel5)))
+                                        .addGap(14, 14, 14))))))
+                .addContainerGap(39, Short.MAX_VALUE)));
+    jPanel1Layout.setVerticalGroup(
+        jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(43, 43, 43)
                 .addComponent(jLabel12)
@@ -252,24 +260,25 @@ public class ConfirmBookingFrame extends javax.swing.JFrame {
                     .addComponent(jLabel17))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(50, Short.MAX_VALUE))
-        );
+                    .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 35,
+                        javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 35,
+                        javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(50, Short.MAX_VALUE)));
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        );
+    javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+    getContentPane().setLayout(layout);
+    layout.setHorizontalGroup(
+        layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE,
+                Short.MAX_VALUE));
+    layout.setVerticalGroup(
+        layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE,
+                Short.MAX_VALUE));
 
-        pack();
-    }// </editor-fold>//GEN-END:initComponents
+    pack();
+  }// </editor-fold>//GEN-END:initComponents
 
   /**
    * Cancels booking
@@ -308,7 +317,8 @@ public class ConfirmBookingFrame extends javax.swing.JFrame {
     String discountCodeInput = InputHelper.askInputString("Enter Discount Code");
     if (controller.isDiscountApplied(tempReservationInfo, discountCodeInput)) {
       // refresh current view
-      ConfirmBookingFrame newConfirmBookingFrame = new ConfirmBookingFrame(view, controller, hotelName, guestName, roomType, checkInDate, checkOutDate, discountCodeInput);
+      ConfirmBookingFrame newConfirmBookingFrame = new ConfirmBookingFrame(view, controller, hotelName, guestName,
+          roomType, checkInDate, checkOutDate, discountCodeInput);
       newConfirmBookingFrame.setVisible(true);
       ConfirmBookingFrame.this.dispose();
     }
@@ -336,26 +346,26 @@ public class ConfirmBookingFrame extends javax.swing.JFrame {
     }
   }
 
-    // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
-    private javax.swing.JLabel jLabel10;
-    private javax.swing.JLabel jLabel11;
-    private javax.swing.JLabel jLabel12;
-    private javax.swing.JLabel jLabel13;
-    private javax.swing.JLabel jLabel14;
-    private javax.swing.JLabel jLabel15;
-    private javax.swing.JLabel jLabel16;
-    private javax.swing.JLabel jLabel17;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel jLabel9;
-    private javax.swing.JPanel jPanel1;
-    // End of variables declaration//GEN-END:variables
+  // Variables declaration - do not modify//GEN-BEGIN:variables
+  private javax.swing.JButton jButton2;
+  private javax.swing.JButton jButton3;
+  private javax.swing.JButton jButton4;
+  private javax.swing.JLabel jLabel10;
+  private javax.swing.JLabel jLabel11;
+  private javax.swing.JLabel jLabel12;
+  private javax.swing.JLabel jLabel13;
+  private javax.swing.JLabel jLabel14;
+  private javax.swing.JLabel jLabel15;
+  private javax.swing.JLabel jLabel16;
+  private javax.swing.JLabel jLabel17;
+  private javax.swing.JLabel jLabel2;
+  private javax.swing.JLabel jLabel3;
+  private javax.swing.JLabel jLabel4;
+  private javax.swing.JLabel jLabel5;
+  private javax.swing.JLabel jLabel6;
+  private javax.swing.JLabel jLabel7;
+  private javax.swing.JLabel jLabel8;
+  private javax.swing.JLabel jLabel9;
+  private javax.swing.JPanel jPanel1;
+  // End of variables declaration//GEN-END:variables
 }
