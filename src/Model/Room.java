@@ -262,20 +262,6 @@ public class Room {
   }
 
   /**
-   * Gets the index of the reserved date in the list of availability dates.
-   *
-   * @param date the date number
-   * @return the index of the reserved date, otherwise 0
-   */
-  public int getIndexOfReservedDate(int date) {
-    for (int i = date - 1; i < getAvailabilityDates().size(); i++) {
-      if (!getAvailabilityDates().get(i).isAvailable())
-        return i;
-    }
-    return 0;
-  }
-
-  /**
    * Gets the price for the specified date.
    *
    * @param selectedDate the selected date
