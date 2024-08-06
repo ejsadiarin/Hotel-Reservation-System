@@ -38,9 +38,9 @@ public class HRSController {
         return;
       }
     }
-    if (numOfRooms < 1 || numOfRooms > 50)
+    if (numOfRooms < 1 || numOfRooms > 30)
       MessageHelper.showErrorMessage(
-          String.format("'%d' number of rooms is not allowed (must be from 1 to 50 only).", numOfRooms));
+          String.format("'%d' number of rooms is not allowed (must be from 1 to 30 only).", numOfRooms));
     else {
       hotels.add(new Hotel(hotelName, numOfRooms));
       MessageHelper
@@ -378,8 +378,7 @@ public class HRSController {
       if (selectedReservation != null) {
         for (int i = selectedReservation.getCheckInDate() - 1; i < selectedReservation.getCheckOutDate(); i++) {
           if (selectedReservation.getCheckInDate() == selectedReservation.getCheckOutDate()) { // handle overnight case
-            listOfPriceBreakdown.add(
-                String.format("Overnight Stay %d: %.2f", i + 1, selectedReservation.getRoom().getPriceOnDate(i + 1)));
+            listOfPriceBreakdown.add(String.format("Overnight Stay %d: %.2f", i + 1, selectedReservation.getRoom().getPriceOnDate(i + 1)));
             break;
           }
           // if i != index of check out date, then add (prevents extra day issue)
@@ -621,7 +620,7 @@ public class HRSController {
         MessageHelper.showErrorMessage(String.format("No %s rooms available on Day %d to %d", roomType, checkInDate, checkOutDate));
         return false;
       }
-      Room assignedRoom = availableRoomsOnDate.getFirst();
+      Room assignedRoom = availableRoomsOnDate.get(0);
       assignedRoom.addReservation(guestName, checkInDate, checkOutDate, discountCode);
       if (checkInDate == checkOutDate)
         MessageHelper.showSuccessMessage(String.format("Successfully booked a room (ROOM: '%s') for an OVERNIGHT stay on Day %d", assignedRoom.getName(), checkInDate));
@@ -696,12 +695,12 @@ public class HRSController {
       HashMap<String, String> tempReservationInfo = new HashMap<>();
       Hotel selectedHotel = findHotelByName(hotelName);
       ArrayList<Room> availableRoomsOnDate = selectedHotel.getAvailableRoomsOnDate(checkInDate, checkOutDate, roomType);
-      Room assignedRoom = availableRoomsOnDate.getFirst();
+      Room assignedRoom = availableRoomsOnDate.get(0);
 
       // create clones
       Room tempAssignedRoom = new Room(assignedRoom);
       tempAssignedRoom.addReservation(guestName, checkInDate, checkOutDate, discountCode);
-      Reservation tempReservation = tempAssignedRoom.getReservations().getFirst();
+      Reservation tempReservation = tempAssignedRoom.getReservations().get(0);
 
       // put all info to HashMap then return
       tempReservationInfo.put("Total Price", String.valueOf(tempReservation.getTotalPrice()));

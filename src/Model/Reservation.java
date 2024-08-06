@@ -1,8 +1,12 @@
 package Model;
 
+import java.util.HashMap;
+
 /**
- * The Reservation class represents a reservation made by a guest, including details such as
- * guest name, check-in and check-out dates, the reserved room, and the cost per night.
+ * The Reservation class represents a reservation made by a guest, including
+ * details such as
+ * guest name, check-in and check-out dates, the reserved room, and the cost per
+ * night.
  */
 public class Reservation {
   private int Id;
@@ -101,7 +105,8 @@ public class Reservation {
   }
 
   /**
-   * Calculates the total price of the reservation based on the check-in and check-out dates and the cost per night.
+   * Calculates the total price of the reservation based on the check-in and
+   * check-out dates and the cost per night.
    *
    * @return the total price of the reservation
    */
@@ -110,14 +115,16 @@ public class Reservation {
   }
 
   /**
-   * Calculates the total price of the reservation based on the check-in and check-out dates and the cost per night.
+   * Calculates the total price of the reservation based on the check-in and
+   * check-out dates and the cost per night.
    *
    * @param discountCode the discount code
    * @return the total price of the reservation
    */
   public double calculateTotalPrice(String discountCode) {
     double calculatedTotalPrice = 0.0;
-    
+    double univTax = 1.10;
+
     // get raw total price first
     int stay = checkOutDate - checkInDate;
     if (stay < 1)
@@ -139,26 +146,27 @@ public class Reservation {
     // if discounted then calculate
     if (checkIfValidDiscountCode(discountCode)) {
       if (discountCode.equals("I_WORK_HERE"))
-        return calculatedTotalPrice - (calculatedTotalPrice * 0.10);
+        return (calculatedTotalPrice - (calculatedTotalPrice * 0.10)) * univTax;
 
       if (discountCode.equals("STAY4_GET1")) {
         // then first day is free
         if (stay >= 5)
-          return calculatedTotalPrice; // first day is free is calculated in the loop above
+          return calculatedTotalPrice * univTax; // first day is free is calculated in the loop above
       }
 
       if (discountCode.equals("PAYDAY")) {
-        // if range of check-in & check-out date covers 15 or 30 (excluding checkout-15-or-30)
+        // if range of check-in & check-out date covers 15 or 30 (excluding
+        // checkout-15-or-30)
         for (int i = checkInDate; i < checkOutDate; i++) {
           if ((i == 15 || i == 30))
-            return calculatedTotalPrice - (calculatedTotalPrice * 0.07);
+            return (calculatedTotalPrice - (calculatedTotalPrice * 0.07)) * univTax;
         }
       }
     }
 
-    return calculatedTotalPrice; 
+    return calculatedTotalPrice * univTax;
   }
-  
+
   /**
    * Checks if the discount code is valid.
    *

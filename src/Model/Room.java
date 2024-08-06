@@ -3,7 +3,8 @@ package Model;
 import java.util.ArrayList;
 
 /**
- * The Room class represents a hotel room, including its name, price per night, availability, and reservations.
+ * The Room class represents a hotel room, including its name, price per night,
+ * availability, and reservations.
  * It provides methods to manage reservations and check availability.
  */
 public class Room {
@@ -96,10 +97,10 @@ public class Room {
   public void setRoomType(String newRoomType, double newPrice) {
     if (newRoomType.equals("Deluxe")) {
       this.roomType = "Deluxe";
-      setPricePerNight(newPrice * 1.20);
+      setPricePerNight(newPrice * 1.25);
     } else if (newRoomType.equals("Executive")) {
       this.roomType = "Executive";
-      setPricePerNight(newPrice * 1.35);
+      setPricePerNight(newPrice * 1.40);
     } else {
       this.roomType = "Standard"; // default
       setPricePerNight(newPrice);
@@ -107,7 +108,8 @@ public class Room {
   }
 
   /**
-   * Checks if the room is available between the specified check-in and check-out dates.
+   * Checks if the room is available between the specified check-in and check-out
+   * dates.
    *
    * @param checkIn  the check-in date
    * @param checkOut the check-out date

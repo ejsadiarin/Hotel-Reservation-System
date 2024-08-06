@@ -13,7 +13,7 @@ public class Hotel {
   private String name;
   private ArrayList<Room> rooms;
   private double basePrice;
-  private final int maxRooms; // always 50
+  private final int maxRooms; // always 30
   private int numOfRooms; // actual number of rooms (initialized rooms)
   private ArrayList<String> uniqueNamesList;
   private ArrayList<String> usedNamesList;
@@ -28,7 +28,7 @@ public class Hotel {
     this.name = name; // must be unique
     this.rooms = new ArrayList<>();
     this.basePrice = 1299.0;
-    this.maxRooms = 50;
+    this.maxRooms = 30;
     this.setNumOfRooms(numOfRooms);
     this.uniqueNamesList = new ArrayList<>(Arrays.asList(
         "Azure", "Moonlight", "Crystal", "Emerald", "Golden", "Sapphire", "Amber", "Silver", "Ruby", "Tranquil",
@@ -103,7 +103,9 @@ public class Hotel {
   }
 
   /**
-   * Initializes the rooms in the hotel with unique names and the base price, utilizing an automated naming generation based on the current number of rooms.
+   * Initializes the rooms in the hotel with unique names and the base price,
+   * utilizing an automated naming generation based on the current number of
+   * rooms.
    *
    * @param numOfRooms the number of rooms to initialize
    */
@@ -132,7 +134,8 @@ public class Hotel {
   }
 
   /**
-   * Adds a new room to the hotel, utilizing an automated naming generation based on the current number of rooms.
+   * Adds a new room to the hotel, utilizing an automated naming generation based
+   * on the current number of rooms.
    * 
    * @return true if room is successfully added, otherwise false
    */
@@ -209,7 +212,8 @@ public class Hotel {
   }
 
   /**
-   * Gets the list of available rooms filtered by room type within a specific date range.
+   * Gets the list of available rooms filtered by room type within a specific date
+   * range.
    *
    * @param checkInDate  the check-in date
    * @param checkOutDate the check-out date
@@ -267,7 +271,8 @@ public class Hotel {
   }
 
   /**
-   * Sets the base price for rooms in the hotel, assuming there are no reservations.
+   * Sets the base price for rooms in the hotel, assuming there are no
+   * reservations.
    *
    * @param basePrice the new base price
    */
